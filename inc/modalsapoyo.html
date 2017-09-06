@@ -1,0 +1,307 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="mdlEmpresa">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Agregar Empresa</h4>
+            </div>
+            <div class="modal-body">
+                <section class="content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="nav-tabs-custom box box-primary">
+                                <div class="tab-content">
+                                    <div class="box-body">
+                                        <div class="row">
+                                            <div class="col-md-4 col-sm-12">
+                                                <label>Rif:</label>
+                                                <input class="form-control" id="rifnuevo" required="required">
+                                            </div>
+                                            <div class="col-md-4 col-sm-12">
+                                                <label>Razon Social:</label>
+                                                <input class="form-control" id="rsocialnuevo" required="required">
+                                            </div>
+
+                                            <div class="col-md-4 col-sm-12">
+                                                <label>Tipo de Persona:</label>
+                                                <select class="form-control" style="width: 100%" id="tipoenuevo">
+                                                    <option selected="selected" value="S"></option>
+                                                    <option value="J">Juridica</option>
+                                                    <option value="N">Natural</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-md-12 col-sm-12">
+                                                <label>Dirección:</label>
+                                                <input class="form-control" id="direcnueva">
+                                            </div>
+                                        </div><br>
+                                        <div class="row">
+                                            <div class="col-md-4 col-sm-12" id="_txtmnrocuentanueva">
+                                                <label>Nro. de Cuenta:</label>
+                                                <input id="numerocuentanueva" class="form-control" type="text"
+                                                       maxlength="23"
+                                                       data-inputmask='"mask": "9999-9999-99-9999999999"'
+                                                       data-mask>
+                                            </div>
+                                            <div class="col-md-4 col-sm-12" id="_cmbmtipocuentaranueva">
+                                                <label>Tipo de Cuenta:</label>
+                                                <select class="form-control" style="width: 100%"
+                                                        id="tipodecuentanueva">
+                                                    <option selected="selected" value="S"></option>
+                                                    <option value="CA" selected="selected">AHORRO</option>
+                                                    <option value="CC">CORRIENTE</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4 col-sm-12" id="_cmbmtipofinanciera">
+                                                <label>Banco:</label>
+                                                <select class="form-control" style="width: 100%"
+                                                        id="banco">
+                                                    <option selected="selected" value="S"></option>
+                                                    <option value="0156">100%BANCO</option>
+                                                    <option value="0196">ABN AMRO BANK</option>
+                                                    <option value="0172">BANCAMIGA BANCO MICROFINANCIERO, C.A.</option>
+                                                    <option value="0171">BANCO ACTIVO BANCO COMERCIAL, C.A.</option>
+                                                    <option value="0166">BANCO AGRICOLA</option>
+                                                    <option value="0175">BANCO BICENTENARIO</option>
+                                                    <option value="0128">BANCO CARONI, C.A. BANCO UNIVERSAL</option>
+                                                    <option value="0164">BANCO DE DESARROLLO DEL MICROEMPRESARIO</option>
+                                                    <option value="0102">BANCO DE VENEZUELA S.A.I.C.A.</option>
+                                                    <option value="0114">BANCO DEL CARIBE C.A.</option>
+                                                    <option value="0149">BANCO DEL PUEBLO SOBERANO C.A.</option>
+                                                    <option value="0163">BANCO DEL TESORO</option>
+                                                    <option value="0176">BANCO ESPIRITO SANTO, S.A.</option>
+                                                    <option value="0115">BANCO EXTERIOR C.A.</option>
+                                                    <option value="0003">BANCO INDUSTRIAL DE VENEZUELA.</option>
+                                                    <option value="0173">BANCO INTERNACIONAL DE DESARROLLO, C.A.</option>
+                                                    <option value="0105">BANCO MERCANTIL C.A.</option>
+                                                    <option value="0191">BANCO NACIONAL DE CREDITO</option>
+                                                    <option value="0116">BANCO OCCIDENTAL DE DESCUENTO.</option>
+                                                    <option value="0138">BANCO PLAZA</option>
+                                                    <option value="0108">BANCO PROVINCIAL BBVA</option>
+                                                    <option value="0104">BANCO VENEZOLANO DE CREDITO S.A.</option>
+                                                    <option value="0168">BANCRECER S.A. BANCO DE DESARROLLO</option>
+                                                    <option value="0134">BANESCO BANCO UNIVERSAL</option>
+                                                    <option value="0177">BANFANB</option>
+                                                    <option value="0146">BANGENTE</option>
+                                                    <option value="0174">BANPLUS BANCO COMERCIAL C.A</option>
+                                                    <option value="0190">CITIBANK.</option>
+                                                    <option value="0121">CORP BANCA.</option>
+                                                    <option value="0157">DELSUR BANCO UNIVERSAL</option>
+                                                    <option value="0151">FONDO COMUN</option>
+                                                    <option value="0601">INSTITUTO MUNICIPAL DE CR&#201;DITO POPULAR</option>
+                                                    <option value="0169">MIBANCO BANCO DE DESARROLLO, C.A.</option>
+                                                    <option value="0137">SOFITASA</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </section>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="salvarEmpresa()">Guardar</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- MODAL DE REQUISITOS -->
+<div class="modal fade" id="requisitos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="border-radius: 8px;border:2px #337ab7 solid; ">
+            <div class="modal-header" style="background-color:#337ab7;color:white;">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">DOCUMENTACIÓN REQUERIDA PARA APOYOS ECONÓMICOS</h4>
+            </div>
+            <div class="modal-body">
+                <div class="panel panel-primary">
+                    <!-- Default panel contents -->
+                    <!-- List group -->
+                    <ul class="list-group">
+
+                        <li class="list-group-item">
+                            Carta dirigida al Presidente de la Junta Administradora <br>(Exposición de Motivos)
+                            <div class="material-switch pull-right">
+                                <input id="chm1-0" class="mdl-requisitos" name="chm1-0" value="0" type="checkbox"/>
+                                <label for="chm1-0" class="label-success"></label>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            Copia de la Cédula de Identidad y del Carnet del militar <br>y del familiar
+                            <div class="material-switch pull-right">
+                                <input id="chm1-1" name="chm1-1" class="mdl-requisitos" value="1" type="checkbox"/>
+                                <label for="chm1-1" class="label-success"></label>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            Copia de Informe médico firmado y sellado por el médico tratante
+                            <div class="material-switch pull-right">
+                                <input id="chm1-2" name="chn1-2" class="mdl-requisitos" value="2" type="checkbox"/>
+                                <label for="chm1-2" class="label-success"></label>
+                            </div>
+                        </li>
+                        <!--
+                        <li class="list-group-item">
+                            Copia de Informe Médico de Ingreso y Egreso
+                            <div class="material-switch pull-right">
+                                <input id="chm1-3" name="chn1-3" class="mdl-requisitos" value="3" type="checkbox"/>
+                                <label for="chm1-3" class="label-success"></label>
+                            </div>
+                        </li>-->
+
+                        <li class="list-group-item">
+                            Constancia de Agotamiento de Seguros Horizonte, C.A
+                            <div class="material-switch pull-right">
+                                <input id="chm1-4" name="chn1-4" class="mdl-requisitos" value="4" type="checkbox"/>
+                                <label for="chm1-4" class="label-success"></label>
+                            </div>
+                        </li>
+
+                        <!--<li class="list-group-item">
+                            Finiquito por Seguros Horizonte, C.A
+                            <div class="material-switch pull-right">
+                                <input id="chm1-5" name="chn1-5" class="mdl-requisitos" value="5" type="checkbox"/>
+                                <label for="chm1-5" class="label-success"></label>
+                            </div>
+                        </li>
+
+                         <li class="list-group-item">
+                            Constancia Original de Deuda
+                            <div class="material-switch pull-right">
+                                <input id="chm1-6" name="chn1-6" class="mdl-requisitos" value="6" type="checkbox"/>
+                                <label for="chm1-6" class="label-success"></label>
+                            </div>
+                        </li>-->
+
+                        <li class="list-group-item">
+                            Presupuesto Original
+                            <div class="material-switch pull-right">
+                                <input id="chm1-7" name="chn1-7" class="mdl-requisitos" value="7" type="checkbox"/>
+                                <label for="chm1-7" class="label-success"></label>
+                            </div>
+                        </li>
+                        <!--
+                        <li class="list-group-item">
+                            Factura Original
+                            <div class="material-switch pull-right">
+                                <input id="chm1-8" name="chn1-8" class="mdl-requisitos" value="8" type="checkbox"/>
+                                <label for="chm1-8" class="label-success"></label>
+                            </div>
+                        </li>-->
+
+                        <li class="list-group-item">
+                            Carta de Compromiso
+                            <div class="material-switch pull-right">
+                                <input id="chm1-9" name="chn1-9" class="mdl-requisitos" value="9" type="checkbox"/>
+                                <label for="chm1-9" class="label-success"></label>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            Carta Aval del Seguro
+                            <div class="material-switch pull-right">
+                                <input id="chm1-10" name="chn1-10" class="mdl-requisitos" value="9" type="checkbox"/>
+                                <label for="chm1-10" class="label-success"></label>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary btnrequisitos" data-dismiss="modal" disabled="true" onclick="crearPrograma();inactivarCheck('requisitos')">Continuar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="requisitosodon" tabindex="-1"
+     role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content"
+             style="border-radius: 8px;border:2px #337ab7 solid; ">
+            <div class="modal-header"
+                 style="background-color:#337ab7;color:white;">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">REQUSITOS NECESARIOS</h4>
+            </div>
+            <div class="modal-body">
+                <div class="panel panel-primary">
+                    <!-- Default panel contents -->
+                    <!-- List group -->
+                    <ul class="list-group">
+
+                        <li class="list-group-item">
+                            Opinión odontológica de la clinica IPSFA
+                            <div class="material-switch pull-right">
+                                <input id="chm5-13"
+                                       name="chm5-13" class="mdl-requisitosodon"
+                                       type="checkbox" value="13"/>
+                                <label for="chm5-13"
+                                       class="label-success"></label>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary btnrequisitos" data-dismiss="modal"
+                        onclick="inactivarCheck('requisitosodon')" disabled="true">Continuar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="requisitosmonto" tabindex="-1"
+     role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content"
+             style="border-radius: 8px;border:2px #337ab7 solid; ">
+            <div class="modal-header"
+                 style="background-color:#337ab7;color:white;">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">REQUSITOS NECESARIOS</h4>
+            </div>
+            <div class="modal-body">
+                <div class="panel panel-primary">
+                    <!-- Default panel contents -->
+                    <!-- List group -->
+                    <ul class="list-group">
+
+                        <li class="list-group-item">
+                            Constancia emitida por el hospital
+                            <div class="material-switch pull-right">
+                                <input id="chm3-1"
+                                       name="chm3-1" class="mdl-requisitosmonto"
+                                       type="checkbox" value="3"/>
+                                <label for="chm3-1"
+                                       class="label-success"></label>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary btnrequisitos" data-dismiss="modal"
+                        onclick="inactivarCheck('requisitosmonto')" disabled="true">Continuar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
