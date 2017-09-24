@@ -1,96 +1,41 @@
-<script src="js/buscar.js"></script>
-<script type="text/javascript">
-    $('#txtfechaex').datepicker({
-        autoclose: true,
-        format: "dd/mm/yyyy",
-        language: 'es',
-        endDate: "+0d",
+<style>
+    .diagnostico {
+        display: none;
+    }
 
-    })
-    $('[data-mask]').inputmask();
-</script>
+    .estudio {
+        display: none;
+    }
+</style>
 
-
-<script src="js/fdv.js"></script>
-<script type="text/javascript">
-    
-     var respuesta = militar.situacion;
-
-      if (respuesta == "ACT") 
-            msjferespuesta();
- 
-
-</script>
 
 <div class="container-fluid">
-    <form id="frmtodofe" action="#" method="post">
-        <div class="row">
-            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                <div class="panel panel-default">
-                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
-                       aria-expanded="true" aria-controls="collapseOne">
-                        <div class="panel-heading bg-light-blue" role="tab" id="headingOne">
-                            <h4 class="panel-title">
-                                Fe de Vida
-                            </h4>
-                        </div>
-                    </a>
-                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
-                         aria-labelledby="headingOne">
-                        <div class="panel-body">
-                            <form id="frmfe" action="#" method="post">
-                                <div class="row">
-                                    <div class="col-md-5 ">
-                                        <label>Afiliado:</label>
-                                        <select class="form-control" style="width: 100%" id="cmbbeneficiario"
-                                                required>
-                                            <option selected="selected" value="S"></option>
-                                        </select>
-                                    </div>
-
-                                    <div class="col-md-4 ">
-                                        <label>¿Residenciado en Venezuela?:</label>
-                                        <select class="form-control" style="width: 100%" id="cmbresidencia" required
-                                                onchange="obtenerResidencia()">
-                                            <option selected="selected" value="S"></option>
-                                            <option value="0">SI</option>
-                                            <option value="1">NO</option>
-
-                                        </select>
-
-                                    </div>
-
-                                    <div class="col-md-3 " id="datepicker">
-                                        <label>Fecha de Emisión:</label>
-                                        <div class="input-group date" style="z-index: 1030;">
-                                            <div class="input-group-addon">
-                                                <i class="fa fa-calendar"></i>
-                                            </div>
-                                            <div class="input-group input-group" style="width: 100%;">
-                                                <input type="text" class="form-control" id="txtfechaex" required>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </form>
-                            <div class="row" id="direccionextranjero" style="display: none;">
-                               <div class="col-md-12 ">
-                                    <label>País:</label>
-                                    <input type="text" class="form-control" id="txtpais">
-                                </div> 
-
-                                <div class="col-md-12 ">
-                                    <label>Direccion:</label>
-                                    <textarea class="form-control" rows="3" placeholder="Dirección"
-                                              id="txtdireccionex"></textarea>
+    <div class="row">
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
+                   aria-expanded="true" aria-controls="collapseOne">
+                    <div class="panel-heading bg-light-blue" role="tab" id="headingOne">
+                        <h4 class="panel-title">
+                            PRESTAMO DE EQUIPO MÉDICO
+                        </h4>
+                    </div>
+                </a>
+                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
+                     aria-labelledby="headingOne">
+                    <div class="panel-body">
+                        <form id="frmequipos" action="#" method="post">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12">
+                                    <label>Afiliado:</label>
+                                    <select class="form-control" style="width: 100%" id="cmbbeneficiario"
+                                            required="required">
+                                        <option selected="selected" value="S"></option>
+                                    </select>
                                 </div>
                             </div>
-
-
                             </br>
-
-                            <div class="panel panel-default" id="direccionactual">
+                            <div class="panel panel-default">
                                 <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
                                    href="#collapseTree" aria-expanded="false" aria-controls="collapseTree">
                                     <div class="panel-heading bg-blue" role="tab" id="headingTree">
@@ -107,7 +52,7 @@
                                                 <label>Estado:</label>
                                                 <select class="js-states form-control" style="width: 100%"
                                                         disabled="disabled"
-                                                        id="cmbmestado"  onchange="CiudadMunicipio()">
+                                                        id="cmbmestado" onchange="CiudadMunicipio()">
                                                     <option value="S" selected="selected"></option>
                                                 </select>
                                             </div>
@@ -115,7 +60,7 @@
                                                 <label>Ciudad:</label>
                                                 <select class="js-states form-control" style="width: 100%"
                                                         disabled="disabled"
-                                                        id="cmbmciudad" >
+                                                        id="cmbmciudad">
                                                     <option value="S" selected="selected"></option>
                                                 </select>
                                             </div>
@@ -123,8 +68,7 @@
                                                 <label>Municipio:</label>
                                                 <select class="js-states form-control" style="width: 100%"
                                                         disabled="disabled"
-                                                        id="cmbmmunicipio" 
-                                                        onchange="SeleccionarParroquia()">
+                                                        id="cmbmmunicipio" onchange="SeleccionarParroquia()">
                                                     <option value="S" selected="selected"></option>
                                                 </select>
                                             </div>
@@ -134,14 +78,14 @@
                                                 <label>Parroquia:</label>
                                                 <select class="js-states form-control" style="width: 100%"
                                                         disabled="disabled"
-                                                        id="cmbmparroquia" >
+                                                        id="cmbmparroquia">
                                                     <option value="S" selected="selected"></option>
                                                 </select>
                                             </div>
                                             <div class="col-md-4">
                                                 <label>Avenida / Edificio / Calle:</label>
                                                 <input id="txtmcalle" class="form-control" disabled="disabled"
-                                                       type="text" >
+                                                       type="text">
                                             </div>
                                             <div class="col-md-2">
                                                 <label># Casa:</label>
@@ -161,11 +105,10 @@
                                                     <div class="input-group-addon">
                                                         <i class="fa fa-phone"></i>
                                                     </div>
-                                                    <input id="txtmtelefono" class="form-control"
-                                                           disabled="disabled"
-                                                           type="text"
-                                                           data-inputmask='"mask": "(9999) 999-99-99"' data-mask
-                                                           >
+                                                    <input id="txtmtelefono" class="form-control" disabled="disabled"
+                                                           type="text" data-inputmask='"mask": "(9999) 999-99-99"'
+                                                           data-mask
+                                                           required>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
@@ -177,7 +120,7 @@
                                                     <input id="txtmcelular" class="form-control" disabled="disabled"
                                                            type="text"
                                                            data-inputmask='"mask": "(9999) 999-99-99"' data-mask
-                                                           >
+                                                           required>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 col-sm-12">
@@ -197,9 +140,8 @@
                                                 <button class="btn btn-primary btn-success" id="btnhabdire"
                                                         type="button"
                                                         onclick="habilitarDireccion(false)"
-                                                        style="margin-top:23px; margin-bottom: 20px;">Modificar
-                                                    &nbsp<i
-                                                            class="glyphicon glyphicon-edit"></i></button>
+                                                        style="margin-top:23px; margin-bottom: 20px;">Modificar &nbsp<i
+                                                        class="glyphicon glyphicon-edit"></i></button>
                                                 <button class="btn btn-primary btn-success" type="button"
                                                         onclick="habilitarDireccion(true)"
                                                         style="margin-top:23px; margin-bottom: 20px; display: none"
@@ -207,29 +149,31 @@
                                                         class="glyphicon glyphicon-save"></i></button>
                                             </div>
                                         </div>
-                                    </div> <!-- Grupo nombres-->
+                                    </div> <!-- panel-body -->
+                                </div> <!-- collapseTree -->
+                            </div> <!-- panel -->
+                            </br>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <a class="btn btn-app btn-success btnvolverentradac pull-left" href="#panelentrada"
+                                       style="background-color: #337ab7; color: white;">
+                                        <i class="fa fa-4x fa-arrow-left"></i>Volver
+                                    </a>
 
+                                    <a class="btn btn-app btn-success pull-right"
+                                       style="margin-right: 10px; background-color: #337ab7; color: white;"
+                                       onclick="generarCarta()" id="_btnSavlvar">
+                                        <i class="fa fa-file"></i>&nbsp;&nbsp;Generar
+                                    </a>
+                                    <br><br>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
-    </form>
-    <div class="row">
-        <div class="col-md-12">
-            <a class="btn btn-app btn-success btnvolverentrada pull-left" href="#panelentrada"
-               style="background-color: #337ab7;
-                    color: white;"><i class="fa fa-4x fa-arrow-left"></i>Volver</a>
-
-            <a type="button" id="btnGenerar" class="btn btn-app btn-success pull-right" style="margin-right: 10px;background-color: #337ab7;
-color: white;" onclick="generarPlanillaFdV()">
-                <i class="fa fa-file-text"></i>&nbsp;&nbsp;GENERAR FE DE VIDA
-            </a>
-            <br><br>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-</div>
-</div>
 
-</div>
-
+<script src="js/equiposMedicos.js"></script>

@@ -3,57 +3,64 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Bienestar</title>
+    <title>BIENESTAR</title>
+    <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+    <!-- Ionicons -->
     <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
-    <link rel="stylesheet" href="css/AdminLTE.min.css">
-    <link rel="stylesheet" href="css/checkbox.css">
-    <link rel="stylesheet" href="css/_all-skins_1.css">
-    <link rel="stylesheet" href="bower_components/iCheck/flat/blue.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="dist/css/checkbox.css">
+
+    <link rel="stylesheet" href="dist/css/_all-skins_1.css">
+    <link rel="stylesheet" href="plugins/iCheck/flat/blue.css">
     <link rel="stylesheet" href="dist/css/fonts.googleapis.css">
     <link rel="stylesheet" href="bower_components/select2/dist/css/select2.min.css">
     <link rel="stylesheet" href="bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
-    <link rel="stylesheet" href="bower_components/fancy/dist/jquery.fancybox.css">
-    <link rel="stylesheet" href="bower_components/jquery-ui/themes/ui-lightness/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/fancy/dist/jquery.fancybox.css">
 
-    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+     <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap 3.3.7 -->
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
+    <!-- AdminLTE App -->
+
     <script src="bower_components/notify/notify.min.js"></script>
-    <script src="js/utilidad.js"></script>
-    <script src="js/militar.js"></script>
-    <script src="js/config.js"></script>
-    <script src="js/controlador.js"></script>
-    <script src="js/buscar.js"></script>
-    <script src="js/buzon.js"></script>
-    <script src="bower_components/formato/numeral.js"></script>
+
     <script src="bower_components/select2/dist/js/select2.full.min.js"></script>
     <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-    <script src="bower_components/input-mask/jquery.inputmask.js"></script>
-    <script src="bower_components/input-mask/jquery.inputmask.date.extensions.js"></script>
-    <script src="bower_components/input-mask/jquery.inputmask.extensions.js"></script>
+    <!-- InputMask -->
+    <script src="plugins/input-mask/jquery.inputmask.js"></script>
+    <script src="plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+    <script src="plugins/input-mask/jquery.inputmask.extensions.js"></script>
     <script src="bower_components/moment/min/moment.min.js"></script>
     <script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
     <script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
     <script src="bower_components/bootstrap-datepicker/dist/locales/bootstrap-datepicker.es.min.js"></script>
+
     <script src="bower_components/fancy/dist/jquery.fancybox.min.js"></script>
-    <script src="js/adminlte/adminlte.min.js"></script>
+    <script src="dist/js/adminlte.min.js"></script>
+    <script src="js/utilidad.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/usuario.js"></script>
 </head>
 
 <body class="hold-transition skin-yellow">
 <header class="header" style="background-color:#3c8dbc">
     <div class="row">
         <div class="col-md-3 hidden-xs"><img src='images/ng.png' class="img-responsive" alt="Responsive image"
-                                             style='float: left;'></div>
+                                             style='float: left;'>
+        </div>
         <div class="col-md-6 hidden-xs">
             <center><img src='images/rv.png' class="img-responsive" alt="Responsive image" style="margin-top:6px">
             </center>
         </div>
         <div class="col-md-3 hidden-xs"><img src='images/lg.png' class="img-responsive" alt="Responsive image"
-                                             style="float:right;"></div>
+                                             style="float:right;">
+        </div>
     </div>
 </header>
 
@@ -76,7 +83,7 @@
                 <ul class="nav navbar-nav">
                     <li class="dropdown messages-menu" style="" id="_search" onclick="ActivarBuscar()">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-search"></i>
+                           <!-- <i class="fa fa-search"></i>-->
                         </a>
                     </li>
 
@@ -124,13 +131,12 @@
             <!-- Sidebar Menu -->
             <ul class="sidebar-menu" data-widget="tree" id='_menu'>
 
-                <li class='header'>Menu</li>
-                <li><a href="starter.html"><i class="fa fa-television"></i> <span>Inicio</span></a></li>
-                <li><a href="#" onclick="buzon(0)"><i class="fa fa-file-archive-o"></i> <span>Sec. Recepcion De SM.</span></a></li>
-                <li><a href="#" onclick="buzon(1)"><i class="fa fa-file-archive-o"></i> <span>Jefe de Seccion</span></a></li>
-                <li><a href="#" onclick="buzon(2)"><i class="fa fa-file-archive-o"></i> <span>Jefe Departamaneto CIS</span></a></li>
-                <li><a href="#" onclick="buzon(3)"><i class="fa fa-file-archive-o"></i> <span>Gerente De BYSS</span></a></li>
-                <li><a href="#" onclick="buzon(4)"><i class="fa fa-file-archive-o"></i> <span>Aprobado</span></a></li>
+                <li class='header'>MENU</li>
+                <li><a href="gestionusuarios.html"><i class="fa fa-television"></i> <span>Inicio</span></a></li>
+                <li><a href="gestionusuarios.html"><i class="fa fa-user"></i> <span>Crear Usuarios</span></a></li>
+                <li><a href="listadousuario.html"><i class="fa fa-users"></i> <span>Lista De Usuarios</span></a></li>
+                <li><a href="configuracionusuario.html"><i class="fa fa-television"></i> <span>Configuracion</span></a></li>
+                <li><a href=""><i class="fa fa-television"></i> <span>Auditoria</span></a></li>
             </ul>
             <!-- /.sidebar-menu -->
         </section>
@@ -139,36 +145,70 @@
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        <div id="modalgeneral"></div>
+       <section class="content" id="panelderecho">
+            <!-- Aqui empiezo -->
+            <section class="content">
 
-        <!-- Main content -->
-        <section class="content" id="panelderecho">
-            <div class="row" id="_bxBuscar"></div>
-            <div class="row" id="paneldatos" style="display: none">
-                <div class="col-md-9" id="opciones" style="display: none;"></div>
-                <div class="col-md-9" id="panelentrada" style="display: none"></div>
-                <div class="col-md-12" id="panellista" style="display: none"></div>
-                <div class="col-md-9" id="panelregistro" style="display: none"></div>
-                <div class="col-md-3" id="panelperfil"></div>
-            </div>
+                                   <div class="row">
+                                                                            <div class="col-xs-4 col-md-3">
+
+                                        <div class="col-sm-6">
+
+                                            <div class="dataTables_length" id="example1_length">
+                                                <label>Show </label>
+                                                    <select name="example1_length" aria-controls="example1" class="form-control input-sm">
+                                                            <option value="10">10</option>
+                                                            <option value="25">25</option>
+                                                            <option value="50">50</option>
+                                                            <option value="100">100</option>
+                                                   </select> entries
+
+                            
+
+                                             </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div id="example1_filter" class="dataTables_filter">
+                                                    <label>Search:
+                                                        <input class="form-control input-sm" placeholder="" aria-controls="example1" type="search">
+                                                    </label>
+                                            </div>
+                                    
+                                        </div>
+                                    </div>
+                                 </div>
+
+
+
+               <div class="row">
+                 <div class="col-md-12 ">
+                     <div class="nav-tabs-custom">
+                             <ul class="nav nav-tabs">
+                             <li class="active"><a href="#tab_1" data-toggle="tab">Listado de los Usuarios</a></li>
+                            </ul>
+                            <div class="container responsive">
+                                <table class="table responsive" id="tblUsuario">
+                                    <thead>
+                                      <tr>
+                                        <th>Gerencia</th>
+                                        <th>Departamento</th>
+                                        <th>Sistema</th>
+                                        <th>Nombres y Apellidos</th>
+                                        <th>Cedula</th>
+                                        <th>Usuario</th>
+                                        <th>Estatus</th>
+                                       </tr>
+                                    </thead>
+                                <tbody id="tblUsuarioCuerpo">
+                                    
+                                </tbody>
+                                </table>
+                            </div>
+                      </div>                        
+                  </div>                   
+              </div>                          
+          </section>
         </section>
-        <!-- /.content -->
-    </div>
-    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" id="modMsj">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="_titulo">Mensaje</h4>
-                </div>
-                <div class="modal-body" id="_contenido">
-
-                </div>
-                <div class="modal-footer" id="_botonesmsj">
-
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
     </div>
     <!-- /.content-wrapper -->
     <!-- Main Footer -->
@@ -180,7 +220,11 @@
         <!-- Default to the left -->
         <strong>Derechos reservados &copy; 2017 <a href="#">IPSFA</a>.</strong>
     </footer>
-</div>
+    <!-- ./wrapper -->
 
+    <!-- REQUIRED JS SCRIPTS -->
+
+    <!-- jQuery 3 -->
+   
 </body>
 </html>

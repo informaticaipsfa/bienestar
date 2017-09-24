@@ -78,11 +78,7 @@
                 </td>
 
                 <td class="textoCenter" rowspan="2">
-                    <h3>COMPROBANTE DE SOLICITUD DE REEMBOLSOS<br>POR SERVICIOS M&Eacute;DICOS</h3>
-                </td>
-                <td class="biz bde btop bajo" style="width: 25%">
-                    N° DE SOLITUD: <b id="lblnsolicitud"></b><br><br>
-                    FECHA: <b id="lblfecha"></b>
+                    <h3>COMPROBANTE DE TRATAMIENTO PROLONGADO</h3>
                 </td>
 
             </tr>
@@ -104,7 +100,7 @@
 
 
             <tr class="texto12 biz bde bajo btop" >
-                <td >CONCEPTOS:</td>
+                <td >SOLOCITUD:</td>
             </tr>
             <tr>
                 <td colspan="4">
@@ -135,9 +131,8 @@
     function imprimir() {
         $('#btnImprimir').hide();
         window.print();
-        window.close();
     }
-    //let pos='';
+    let pos='';
     $(function () {
         numeral.locale('es-es');
         $.obtener = function (key) {

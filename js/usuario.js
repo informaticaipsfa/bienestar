@@ -1,11 +1,11 @@
-class Rol{
-    construct(){
+class Roles{
+    constructor(){
         this.descripcion = "";
     }
 }
 
 class Privilegios{
-    construct(){
+    constructor(){
         this.metodo = "";
         this.descripcion = "";
         this.accion = "";
@@ -13,7 +13,7 @@ class Privilegios{
 }
 
 class Menu{
-    construct(){
+    constructor(){
         this.url = "";
         this.js = "";
         this.icono = "";
@@ -23,15 +23,15 @@ class Menu{
 }
 
 class Perfil{
-    construct(){
+    constructor(){
         this.descripcion = "";
         this.privilegios = new Array();
         this.menu = new Array();
     }
 }
 
-class Firma{
-    construct(){
+class FirmaDigital{
+    constructor(){
         this.direccionmac = "";
         this.direccionip = "";
         this.tiempo = "";
@@ -39,7 +39,7 @@ class Firma{
 }
 
 class Usuario{
-    construct(){
+    constructor(){
         this.cedula = "";
         this.nombre = "";
         this.login = "";
@@ -50,39 +50,55 @@ class Usuario{
         this.cargo = "";
         this.telefono = "";
         this.sistema = "";
+        this.FirmaDigital = new FirmaDigital ();
         this.token = "";
-        this.rol = new Rol();
-        this.perfil = new Perfil();
-        this.firma = new Firma();
+        this.Roles = new Roles();
+        this.Perfil = new Perfil();
+
+
     }
 
     Obtener(){
        this.cedula = $("#cedula").val();
        this.nombre = $("#nombre").val();
-       this.usuario = $("#seudonimo").val();
+       this.login = $("#usuario").val();
        this.Roles.descripcion = $("#rolUsuario").val();
        this.Perfil.descripcion = $("#perfilUsuario").val();
        this.cargo = $("#cargo").val();
        this.telefono = $("#telefono").val();
        this.correo = $("#correo").val();
-       this.FirmaDigital.DireccionIP = $("#direccionIp").val();
-       this.FirmaDigital.DireccionMAC = $("#direccionMac").val();
-       this.direccion = $("#direccionUsuario").val();
-       this.fechacreacion = $("#fechaCreacion").val();
+       this.FirmaDigital.direccionip = $("#direccionIp").val();
+       this.FirmaDigital.direccionmac = $("#direccionMac").val();
+       this.direccion = $("#direccionDomicilio").val();
+
+       return this;
+    }
+    Salvar(){
+      console.log(JSON.stringify(this.Obtener()));
+      var requestE = CargarAPI({
+          sURL: Conn.URL + "wusuario/crud",
+          metodo: 'POST',
+          valores: this.Obtener(),
+      });
+      requestE.then(function(xhRequest) {
+
+        console.log("Obteniendo Datos...");
+        console.log(xhRequest);
+      });
     }
 }
 
 let listaUsuario = null;
 let Conn = new Conexion();
-
+let util = new Utilidad();
 $(function () {
 
-    var requestE = CargarAPI({
+    var promesa = CargarAPI({
         sURL: Conn.URL + "wusuario/listar",
         metodo: 'GET',
         valores: '',
     });
-    requestE.then(function(xhRequest) {
+    promesa.then(function(xhRequest) {
         listaUsuario = JSON.parse(xhRequest.responseText);
         llenarLista();
         llenarUsuarios();
@@ -90,28 +106,46 @@ $(function () {
      $("#cmbUsuario").select2();
 });
 
-function llenarLista(){
-    $("#cmbListadoUsuario").html("");
-    $.each(listaUsuario,function(){
-        $("#cmbListadoUsuario").append("<option value='"+this.cedula+"'>"+this.nombre+"</option>");
-    });
+
+function Salvar(){
+  var usuario = new Usuario();
+  console.log("Enviando datos para salvar usuario");
+  usuario.Salvar();
+  console.log("Usuario Salvado!!!");
+
 }
+
+function llenarLista(){
+
+    $("#cmbListadoUsuario").html("");
+
+        listaUsuario.forEach(v => {
+            $("#tblUsuarioCuerpo").append(`
+            <tr><td>${v.sucursal}</td>
+            <td></td>
+            <td></td>
+            <td>${v.nombre}</td>
+            <td>${v.cedula}</td>
+            <td>${v.usuario}</td>
+            <td>${v.estatus}</td></tr>`) });
+    };
+
 
 function llenarUsuarios(){
     $("#cmbUsuario").html("");
-    $.each(listaUsuario,function(){
-        $("#cmbUsuario").append("<option value='"+this.cedula+"'>"+this.nombre+"</option>");
+    listaUsuario.forEach(v => {
+        $("#cmbUsuario").append(`<option value='${v.cedula}'>${v.nombre}</option>`);
     });
 }
 
 function cargarUsuario(){
     var usuario = $("#cmbListadoUsuario option:selected").val();
-    var requestE = CargarAPI({
+    var promesa = CargarAPI({
         sURL: Conn.URL + "wusuario/crud/"+usuario,
         metodo: 'GET',
         valores: '',
     });
-    requestE.then(function(xhRequest) {
+    promesa.then(function(xhRequest) {
         var datos = JSON.parse(xhRequest.responseText);
         llenarUsuario(datos);
     });
@@ -119,28 +153,38 @@ function cargarUsuario(){
 }
 
 function llenarUsuario(datos){
+
+    $("#fechaCreacion").val(datos.fechacreacion);
+    $("#sistema").val(datos.sistema);
+    $("#cmbGerencia").val(datos.sistema);
+    $("#cmbSucursal").val(datos.sucursal);
+    $("#departamento").val(datos.departamento);
+    $("#areaTrabajo").val(datos.departamento);
     $("#cedula").val(datos.cedula);
-    $("#nombre").val(datos.nombre);
-    $("#seudonimo").val(datos.usuario);
+    $("#apellidos").val(datos.nombre);
+    $("#nombres").val(datos.nombre);
+    $("#situacion").val(datos.situacion);
+    $("#cargo").val(datos.cargo);
     $("#rolUsuario").val(datos.Roles.descripcion);
     $("#perfilUsuario").val(datos.Perfil.descripcion);
-    $("#cargo").val(datos.cargo);
+    $("#funciones").val(datos.funciones);
+    $("#usuario").val(datos.usuario);
+    $("#direccionIp").val(datos.FirmaDigital.direccionip);
+    $("#direccionMac").val(datos.FirmaDigital.Direccionmac);
+    $("#direccionDomicilio").val(datos.direccion);
     $("#telefono").val(datos.telefono);
     $("#correo").val(datos.correo);
-    $("#direccionIp").val(datos.FirmaDigital.DireccionIP);
-    $("#direccionMac").val(datos.FirmaDigital.DireccionMAC);
-    $("#direccionUsuario").val(datos.direccion);
-    $("#fechaCreacion").val(datos.fechacreacion);
+    $("#estatus").val(datos.estatus);
 
 }
 function cargarMenu(){
     var usuario = $("#cmbUsuario option:selected").val();
-    var requestE = CargarAPI({
+    var promesa = CargarAPI({
         sURL: Conn.URL + "wusuario/crud/"+usuario,
         metodo: 'GET',
         valores: '',
     });
-    requestE.then(function(xhRequest) {
+    promesa.then(function(xhRequest) {
         var datos = JSON.parse(xhRequest.responseText);
         llenarMenu(datos);
     });
@@ -148,7 +192,7 @@ function cargarMenu(){
 
 function llenarMenu(){
     $("#cmbMenu").html("");
-    $.each(listaUsuario,function(){
-        $("#cmbMenu").append("<option value='"+this.cedula+"'>"+this.nombre+"</option>");
+    listaUsuario.forEach(v => {
+        $("#cmbMenu").append(`<option value='${v.cedula}'>${v.nombre}</option>`);
     });
 }

@@ -1,4 +1,6 @@
-<div id="listasProgramas" class="container-fluid box-body">
+
+
+  <div id="listasProgramas" class="container-fluid box-body">
     <a class="collapsed" role="button" data-toggle="collapse" data-parent="#listadoCompleto"
        href="#listadoCompleto" aria-expanded="false" aria-controls="listadoCompleto">
         <div class="panel-heading bg-blue" role="tab" id="headingTree">
@@ -9,10 +11,10 @@
     </a>
 
     <div class="panel-collapse collapse in" id="listadoCompleto">
-        <div class="panel-body bg-info">
-        <ul class="todo-list" id="lista" style="overflow-x:hidden;">
+        <div class="panel-body" style="background-color:#FFFFFF">
+            <ul class="todo-list" id="lista" style="overflow-x:hidden;">
 
-        </ul>
+            </ul>
         </div>
     </div>
 
@@ -26,31 +28,32 @@
         </div>
     </a>
     <div class="panel-collapse collapse" id="listadoCompletoApoyo">
-        <div class="panel-body bg-info">
-        <ul class="todo-list" id="listaApoyo" style="overflow-x:hidden;">
+        <div class="panel-body" style="background-color:#FFFFFF">
+            <ul class="todo-list" id="listaApoyo" style="overflow-x:hidden;">
 
-        </ul>
+            </ul>
         </div>
     </div>
-
 
 
     <a class="collapsed" role="button" data-toggle="collapse" data-parent="#listadoCompletoCarta"
        href="#listadoCompletoCarta" aria-expanded="false" aria-controls="listadoCompletoCarta">
         <div class="panel-heading bg-blue" role="tab" id="headingTree">
             <h4 class="panel-title">
-                Apoyos
+                Carta
             </h4>
         </div>
     </a>
     <div class="panel-collapse collapse" id="listadoCompletoCarta">
-        <div class="panel-body bg-info">
-        <ul class="todo-list" id="listaCarta" style="overflow-x:hidden;">
+        <div class="panel-body" style="background-color:#FFFFFF">
+            <ul class="todo-list" id="listaCarta" style="overflow-x:hidden;">
 
-        </ul>
+            </ul>
         </div>
     </div>
 </div>
+
+
 <script>
     $(function () {
         $('.todo-list').sortable({
@@ -64,7 +67,9 @@
         $('.todo-list').todoList();
     });
 </script>
-<div id="detallesProgramas" >
+
+
+<div id="detallesProgramas">
     <div class="box-body" id="detalle" style="display: none">
         <div class="row">
             <div class="col-md-12">
@@ -103,8 +108,8 @@
                         </div>
                         <!-- /.mailbox-read-info -->
                         <div class="mailbox-controls with-border text-center">
-                            <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="Borrar">
-                                <i class="fa fa-trash-o" style="color: red" onclick="cambiarEstatus('r')"></i>&nbsp
+                            <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="Borrar" onclick="cambiarEstatusReembolso('r')">
+                                <i class="fa fa-trash-o" style="color: red" ></i>&nbsp
                                 Rechazar
                             </button>
                             <div class="btn-group">
@@ -115,15 +120,16 @@
                                 </button>
                             </div>
                             <div class="btn-group">
-                                <button type="button" class="btn btn-default btn-sm impPlanillaReembolso" data-toggle="tooltip"
+                                <button type="button" class="btn btn-default btn-sm impPlanillaReembolso"
+                                        data-toggle="tooltip"
                                         onclick="planillaReembolso()"
-                                        data-container="body" >
+                                        data-container="body">
                                     <i class="fa fa-print"></i>&nbspImprimir Planilla
                                 </button>
                             </div>
                             <!-- /.btn-group -->
                             <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip"
-                                    onclick="cambiarEstatus('a')">
+                                    onclick="cambiarEstatusReembolso('a')">
                                 <i class="fa fa-check" style="color: green"></i>&nbsp Procesar
                             </button>
                             <div class="pull-right" id="cambioestatus" style="display: none">
@@ -134,7 +140,7 @@
                                     <option value="2">Gerencia</option>
                                 </select>
                                 <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip"
-                                        data-container="body" onclick="cambiarEstatus('e')" id="btncambioestatus">
+                                        data-container="body" onclick="cambiarEstatusReembolso('e')" id="btncambioestatus">
                                     <i class="fa fa-check" style="color: green"></i>&nbsp Cambio de Estatus
                                 </button>
                             </div>
@@ -148,16 +154,16 @@
                             <table class="table table-bordered">
                                 <thead>
                                 <tr class="bg-info">
-                                    <td><b>PARENT.</b></td>
-                                    <td><b>CEDULA</b></td>
-                                    <td><b>NOMBRE DEL FAMILIAR</td>
-                                    <td><b>CONCEPTO</b></td>
-                                    <td><b>FACTURA</b></td>
-                                    <td><b>FECHA</b></td>
-                                    <td><b>MONTO SOLICITADO</b></td>
-                                    <td>%</td>
-                                    <td><b>MONTO APROBADO</b></td>
-                                    <td></td>
+                                    <th><b>PARENT.</b></th>
+                                    <th><b>CEDULA</b></th>
+                                    <th><b>NOMBRE DEL FAMILIAR</th>
+                                    <th><b>CONCEPTO</b></th>
+                                    <th><b>FACTURA</b></th>
+                                    <th><b>FECHA</b></th>
+                                    <th><b>MONTO  <br>SOLICITADO</b></th>
+                                    <th><b>%</b></th>
+                                    <th><b>MONTO <br>APROBADO</b></th>
+                                    <th style="width:10px"><b>#</b></th>
                                 </tr>
                                 </thead>
                                 <tbody id="cuerpoEditarConceptos">
@@ -179,10 +185,10 @@
                                     <td style="width: 15px">
                                         <select id="estSeguimiento">
                                             <option value="0" selected="selected">Seguimiento</option>
-                                        <option value="0">En orden</option>
-                                        <option value="1">Con pendientes</option>
-                                        <option value="2">Con Recomendaciones</option>
-                                    </select></td>
+                                            <option value="0">En orden</option>
+                                            <option value="1">Con pendientes</option>
+                                            <option value="2">Con Recomendaciones</option>
+                                        </select></td>
                                 </tr>
                                 </thead>
                                 <tbody id="cuerpoObservaciones">
@@ -249,7 +255,7 @@
             <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-header with-border bg-light-blue">
-                        <h3 class="box-title">Datos de Apoyo economico</h3>
+                        <h3 class="box-title">Datos de Apoyo Económico</h3>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body no-padding">
@@ -325,16 +331,18 @@
                             <table class="table table-bordered">
                                 <thead>
                                 <tr class="bg-info">
-                                    <td>PArent.</td>
+                                    <td>Parent.</td>
                                     <td>Cedula</td>
                                     <td>Nombre</td>
                                     <td style="display: none">Razon Social</td>
                                     <td>Concepto</td>
-                                    <td>Factura</td>
-                                    <td>F.Factura</td>
-                                    <td>Monto Solicitado</td>
-                                    <td>%</td>
-                                    <td>Monto Aprobado</td>
+                                    <td>N° de Presuspuesto</td>
+                                    <td>F. de Presupuesto</td>
+                                    <td>Monto Total del Presupuesto</td>
+                                    <td>Monto Total a Cubrir por la Aseguradora</td>
+                                    <td>Otros Aportes</td>
+
+                                    <td>Monto a Cubrir por el IPSFA</td>
                                 </tr>
                                 </thead>
                                 <tbody id="cuerpoEditarConceptosApoyo">
@@ -342,8 +350,8 @@
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <td colspan="6" style="text-align: right">TOTALES</td>
-                                    <td id="totalterApoyo" style="text-align: right"></td>
+                                    <td colspan="8" style="text-align: right">TOTALES</td>
+                                    <!--<td id="totalterApoyo" style="text-align: right"></td>-->
                                     <td></td>
                                     <td id="totalaproApoyo" style="text-align: right"></td>
                                 </tr>

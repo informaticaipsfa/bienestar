@@ -36,21 +36,25 @@ class Utilidad {
     }
 
     SoloLetras(e) {
-        key = e.keyCode || e.which;
-        tecla = String.fromCharCode(key).toLowerCase();
-        letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
-        especiales = [8, 37, 39, 46];
+        var key = e.keyCode || e.which;
+        var tecla = String.fromCharCode(key).toLowerCase();
+        var letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
+        var especiales = [8, 37, 39, 46];
 
-        tecla_especial = false
+        var tecla_especial = false
         for(var i in especiales) {
             if(key == especiales[i]) {
                 tecla_especial = true;
                 break;
             }
         }
-        if(letras.indexOf(tecla) == -1 && !tecla_especial)
+        if(letras.indexOf(tecla) == -1 && !tecla_especial){
+
+
             return false;
-        return true;
+        }
+
+           return true;
     }
 
     SoloNumero(event,elemento,monto) {
@@ -108,8 +112,8 @@ class Utilidad {
     //Recibe  Fecha Formato: DD/MM/AAAA
     //Retorna Fecha Formato: AAAA-MM-DD
     ConvertirFechaUnix(f) {
-        f = f.split("/");
-        return f[2] + "-" + f[1] + "-" + f[0];
+        var fecha = f.split("/");
+        return fecha[2] + "-" + fecha[1] + "-" + fecha[0];
     }
 
 
@@ -238,10 +242,10 @@ class Utilidad {
                 situacion = "RETIRADO";
                 break;
             case "FCP":
-                situacion = "FALLECIDO CON PERNSION";
+                situacion = "FALLECIDO CON PENSION";
                 break;
             case "FSP":
-                situacion = "FALLECIDO SIN PENCION";
+                situacion = "FALLECIDO SIN PENSION";
                 break;
             case "I":
                 situacion = "INVALIDO";

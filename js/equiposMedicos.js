@@ -19,6 +19,36 @@ $(function () {
         verificaCheckModal("requisitosmastologia","btnAgconcepto");
     });
 
+   /* llenarCarta();
+        $(".btnvolverentrada2").click(function(){
+        $("#opciones").hide();
+        $("#panelentrada").show();
+        $("#panellista").hide();
+        $("#panelregistro").hide();
+    });*/
+
+   /* llenarReembolso();
+    $(".btnvolverentradar").click(function () {
+        $("#mdldesea").modal("show");
+
+        $("#btnsalir").click(function () {
+            $("#opciones").hide();
+            $("#panelentrada").show();
+            $("#panellista").hide();
+            $("#panelregistro").hide();
+            $('#mdldesea').modal('hide');
+            limpiarReembolso();
+            limpiarmdlempresa();
+            $("#rifnuevo").remove();
+            $("#sefue").remove();
+        })
+    });
+    $(".btncancelare").click(function () {
+        limpiarmdlempresa();
+        $("#rifnuevo").remove();
+        $("#sefue").remove();
+    });*/
+
     llenarCarta();
     $(".btnvolverentradac").click(function () {
         $("#mdldesea").modal("show");
@@ -30,6 +60,9 @@ $(function () {
             $("#panelregistro").hide();
             $('#mdldesea').modal('hide');
             limpiarCarta();
+            //limpiarmdlempresa();
+           // $("#rifnuevo").remove();
+           // $("#sefue").remove();
         })
     });
 });
@@ -37,6 +70,7 @@ $(function () {
 
 class Factura2{
     constructor() {
+        console.log("Creando objeto Factura2");
         this.Beneficiario = new Beneficiario();
     }
 }
@@ -49,13 +83,12 @@ class ConceptoCarta{
         this.DatoFactura = new Factura2();
         this.afiliado = '';
         this.requisito = new Array();
-        this.montoafiliado = 0.00;
-        this.porcentajeafi = 0.00;
     }
 }
 
 class Carta {
     constructor() {
+        console.log("Creando objeto carta");
         this.estatus = 0;
         this.montosolicitado = 0.00;
         this.cuentabancaria = new CuentaBancaria2();
@@ -98,7 +131,7 @@ function salvarEmpresa(){
 }
 
 function cargarFamiliar(pos){
-
+    console.log(pos);
 
     if(pos == "T"){
         if (militar.Persona.Telefono != undefined) {
@@ -126,6 +159,7 @@ function cargarFamiliar(pos){
     $("#perfilFamiliar").show();
 
     var fami = militar.Familiar[pos];
+    console.log(fami);
     $("#lblcedulaf").text(fami.Persona.DatoBasico.cedula);
     var ncf = fami.Persona.DatoBasico.nombreprimero+" "+fami.Persona.DatoBasico.apellidoprimero;
     $("#lblnombref").text(ncf);
@@ -156,7 +190,6 @@ function cargarFamiliar(pos){
 
 function llenarCarta(){
     $("#cmbbeneficiario").html('<option selected="selected" value="S"></option>');
-
     $("#_cargando").hide();
     if(militar.Persona != undefined){
         var ncompleto = militar.Persona.DatoBasico.nombreprimero +" "+militar.Persona.DatoBasico.apellidoprimero;
@@ -192,10 +225,11 @@ function llenarCarta(){
         Estados.ObtenerEstados();
         if (militar.Persona.Direccion != undefined) {
             var DIR = militar.Persona.Direccion[0];
+
             $("#cmbmestado").val(DIR.estado);
-            $("#cmbmmunicipio").html(`<option selected="selected" value="${DIR.municipio}">${DIR.municipio}</option>`);
-            $("#cmbmparroquia").html(`<option selected="selected" value="${DIR.parroquia}">${DIR.parroquia}</option>`);
-            $("#cmbmciudad").html(`<option selected="selected" value="${DIR.ciudad}">${DIR.ciudad}</option>`);
+            $("#cmbmmunicipio").html('<option selected="selected" value="' + DIR.municipio + '">' + DIR.municipio + '</option>');
+            $("#cmbmparroquia").html('<option selected="selected" value="' + DIR.parroquia + '">' + DIR.parroquia + '</option>');
+            $("#cmbmciudad").html('<option selected="selected" value="' + DIR.ciudad + '">' + DIR.ciudad + '</option>');
             $("#txtmcalle").val(DIR.calleavenida);
             $("#txtmcasa").val(DIR.casa);
             $("#txtmapto").val(DIR.apartamento);
@@ -236,7 +270,6 @@ function crearLista(){
             $("#perfilFamiliar").show();
         }else{
             $("#perfilFamiliar").hide();
-            $("#perfilMilitar").show();
         }
     });
 
@@ -247,17 +280,14 @@ function crearLista(){
 
 function generarCarta(){
 
-  if (Util.ValidarFormulario("frmcartaaval", "_btnSalvar")) {
-
     var aval = new Carta();
-    aval.montosolicitado = parseFloat($("#montosolicitado").val());
-
+    aval.montosolicitado = parseFloat($("#montosolicitado").val())
     var cuenta = new CuentaBancaria2();
     cuenta.cuenta= $("#empcuenta").val();
     cuenta.institucion = $("#empbanco").val();
     cuenta.tipo = $("#emptipoc").val();
     cuenta.cedula = $("#rifclinica").val();
-    cuenta.titular =$("#cmbclinica option:selected").text();
+    //cuenta.titular =$("#cmbclinica option:selected").text();
     aval.cuentabancaria = cuenta;
 
     var dir = new Direccion();
@@ -286,11 +316,11 @@ function generarCarta(){
     var concep = new ConceptoCarta();
     var facturaD = new Factura2();
 
-    var prov = new Beneficiario();
+    /*var prov = new Beneficiario();
     prov.rif = $("#rifclinica").val();
     prov.razonsocial = $("#cmbclinica option:selected").text();
     prov.tipoempresa = "J";
-    prov.direccion = "";
+    prov.direccion = "";*/
 
     facturaD.Beneficiario = prov;
     concep.DatoFactura = facturaD;
@@ -303,8 +333,6 @@ function generarCarta(){
     concep.diagnostico = $("#txtdiagnostico").val();
     concep.montopresupuesto = parseFloat($("#montopresupuesto").val());
     concep.montoseguro = parseFloat($("#montoacubrir").val());
-    concep.montoafiliado = parseFloat($("#montoafiliado").val());
-    concep.porcentajeafi = parseFloat($("#porcentajeafiliado").val());
     concep.numeropresupuesto = $("#numeropresupuesto").val();
     concep.fechapresupuesto = new Date(Util.ConvertirFechaUnix($("#txtfechapresupuesto").val())).toISOString();
     concep.fechaseguro =new Date(Util.ConvertirFechaUnix($("#txtfechaseguro").val())).toISOString();
@@ -318,8 +346,8 @@ function generarCarta(){
     wcarta.Carta = aval;
     wcarta.nombre = militar.Persona.DatoBasico.nombreprimero.trim()+' '+militar.Persona.DatoBasico.apellidoprimero.trim();
 
-console.log(wcarta);
 
+    console.log(JSON.stringify(wcarta));
     var urlGuardar = Conn.URL + "wcarta";
     var request2 = CargarAPI({
         sURL: urlGuardar,
@@ -328,12 +356,95 @@ console.log(wcarta);
     });
     request2.then(function(xhRequest) {
         res = JSON.parse(xhRequest.responseText);
-        if (res.msj != "") res.msj2 = "Se proceso con exito....";
-          msj2Respuesta(res.msj2);
         var idm = militar.Persona.DatoBasico.cedula;
-        var ventana = window.open("cartaAval.html?id="+idm + "&nm=" +res.msj , "_blank");
+
     });
-      }else {
+
+    if (Util.ValidarFormulario("frmequipos", "_btnSalvar")) {
+        var aval = new Carta();
+        aval.montosolicitado = parseFloat($("#montosolicitado").val())
+        var cuenta = new CuentaBancaria2();
+        cuenta.cuenta= $("#empcuenta").val();
+        cuenta.institucion = $("#empbanco").val();
+        cuenta.tipo = $("#emptipoc").val();
+        cuenta.cedula = $("#rifclinica").val();
+        //cuenta.titular =$("#cmbclinica option:selected").text();
+        aval.cuentabancaria = cuenta;
+
+        var dir = new Direccion();
+        dir.tipo = 0;
+        dir.estado = $("#cmbmestado option:selected").val();
+        dir.municipio = $("#cmbmmunicipio option:selected").val();
+        dir.parroquia = $("#cmbmparroquia option:selected").val();
+        dir.ciudad = $("#cmbmciudad").val();
+        dir.calleavenida = $("#txtmcalle").val().toUpperCase();
+        dir.casa = $("#txtmcasa").val().toUpperCase();
+        dir.apartamento = $("#txtmapto").val().toUpperCase();
+
+        var tele = new Telefono();
+        tele.domiciliario = $("#txtmtelefono").val();
+        tele.movil = $("#txtmcelular").val();
+
+        aval.Direccion = dir;
+
+        aval.Telefono.domiciliario = tele.domiciliario;
+        aval.Telefono.movil = tele.movil;
+
+        aval.Correo.principal = $("#txtmcorreo").val().toUpperCase();
+
+        var conceptos = new Array();
+
+        var concep = new ConceptoCarta();
+        var facturaD = new Factura2();
+
+        /*var prov = new Beneficiario();
+        prov.rif = $("#rifclinica").val();
+        prov.razonsocial = $("#cmbclinica option:selected").text();
+        prov.tipoempresa = "J";
+        prov.direccion = "";*/
+
+        facturaD.Beneficiario = prov;
+        concep.DatoFactura = facturaD;
+
+        var bene = $("#cmbbeneficiario option:selected").val().split('|');
+        var beneficiario = bene[1]+"-"+$("#cmbbeneficiario option:selected").text();
+        concep.afiliado = beneficiario;
+        concep.descripcion = $("#cmbestudio option:selected").text();
+        concep.motivo = $("#cmbmotivo option:selected").text();
+        concep.diagnostico = $("#txtdiagnostico").text();
+
+        concep.montopresupuesto = parseFloat($("#montopresupuesto").val());
+        concep.montoseguro = parseFloat($("#montoacubrir").val());
+        concep.numeropresupuesto = $("#numeropresupuesto").val();
+        concep.fechapresupuesto = new Date(Util.ConvertirFechaUnix($("#txtfechapresupuesto").val())).toISOString();
+        concep.fechaseguro =new Date(Util.ConvertirFechaUnix($("#txtfechaseguro").val())).toISOString();
+        conceptos.push(concep);
+
+        aval.Concepto = conceptos;
+
+        var wcarta = new WCarta();
+
+        wcarta.id = militar.Persona.DatoBasico.cedula;
+        wcarta.Carta = aval;
+        wcarta.nombre = militar.Persona.DatoBasico.nombreprimero.trim()+' '+militar.Persona.DatoBasico.apellidoprimero.trim();
+
+        console.log(JSON.stringify(wcarta));
+        var urlGuardar = Conn.URL + "wcarta";
+        var request2 = CargarAPI({
+            sURL: urlGuardar,
+            metodo: 'POST',
+            valores: wcarta,
+        });
+        request2.then(function(xhRequest) {
+            res = JSON.parse(xhRequest.responseText);
+                if (res.msj != "") res.msj2 = "Carta Aval procesada con Exito";
+                msj2Respuesta(res.msj2);
+                llenarCarta();
+            var idm = militar.Persona.DatoBasico.cedula;
+            var ventana = window.open("cartaAval.html?id="+idm + "&nm=" +res.msj , "_blank");
+        });
+
+    } else {
         $.notify("Debe ingresar todos los datos para realizar la Carta Aval");
     }
 }
@@ -373,8 +484,6 @@ function obtenerEstudio(){
             $("#cmbestudio").attr("disabled",true);
             $(".estudio").hide();
             $(".diagnostico").hide();
-            $(".seguro").hide();
-            $(".afiliado").hide();
             break;
         case "0":
             $("#cmbestudio").attr("disabled",false);
@@ -382,8 +491,6 @@ function obtenerEstudio(){
             $(".masto").show();
             $(".diagnostico").hide();
             $(".estudio").show();
-            $(".seguro").hide();
-            $(".afiliado").show();
             break;
         case "1":
             $("#cmbestudio").attr("disabled",false);
@@ -391,8 +498,6 @@ function obtenerEstudio(){
             $(".masto").hide();
             $(".diagnostico").show();
             $(".estudio").hide();
-            $(".seguro").show();
-            $(".afiliado").hide();
             break;
     }
     var modal = $("#cmbmotivo option:selected").attr("desplegar");
@@ -400,26 +505,6 @@ function obtenerEstudio(){
     $("#"+modal).modal("show");
 }
 
-function rifProveedor(){
-    var rif = $("#cmbclinica option:selected").val();
-    switch (rif){
-        case "S":
-            $("#rifclinica").val("");
-            break;
-        case "0":
-            $("#rifclinica").val("J-00213125-0");
-            break;
-        case "1":
-            $("#rifclinica").val("J-31043293-7");
-            break;
-        case "2":
-            $("#rifclinica").val("J-00025083-9");
-            break;
-    }
-    $("#empcuenta").val("");
-    $("#empbanco").val("");
-    $("#emptipoc").val("");
-}
 
 function calcularSolicitado(){
     var mntFactura = $("#montopresupuesto").val();
@@ -428,31 +513,12 @@ function calcularSolicitado(){
     if(isNaN(mntSolici)){
         $("#montosolicitado").val("");
     }else{$("#montosolicitado").val(mntSolici.toFixed(2));}
-}
 
-function limpiarcaja() {
-    if (($("#porcentajeafiliado").val()) == 0) {
-        $("#porcentajeafiliado").val("")
-    }
-}
-
-function calcularPorcentaje(){
-    var mntFactura = $("#montopresupuesto").val();
-    var porAfi = $("#porcentajeafiliado").val();
-    var mntAfi = parseFloat(mntFactura)*parseFloat(porAfi/100);
-    var mntIpsfa = parseFloat(mntFactura)*parseFloat((100-porAfi)/100);
-    if(isNaN(mntAfi)){
-        $("#montoafiliado").val("");
-    }else{$("#montoafiliado").val(mntAfi.toFixed(2));}
-    if(isNaN(mntIpsfa)){
-        $("#montosolicitado").val("");
-    }else{$("#montosolicitado").val(mntIpsfa.toFixed(2));}
 }
 
 function limpiarCarta() {
-    $('#frmcartaaval').each(function () {
+    $('#frmequipos').each(function () {
         this.reset();
         $("#cmbbeneficiario").select2("val", "");
     });
 }
-
