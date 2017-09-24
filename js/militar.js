@@ -1180,8 +1180,15 @@ class Clave {
 
 function CerrarSession(){
 	sessionStorage.removeItem('ipsfaToken');
-	$(location).attr("href","index.html");
+	$(location).attr("href","../index.html");
 }
 
+$(function (){
+  if (sessionStorage.getItem('ipsfaToken') == undefined ){
+		$(location).attr("href","../index.html");
+	}else{
+		$("#_body").show();
+	}
+});
 
 let militar = new Militar();
