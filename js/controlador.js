@@ -2,7 +2,6 @@ let Util = new Utilidad();
 
 class CuentaBancaria2 {
     constructor() {
-        console.log('Creando cuenta Bancaria');
         this.tipo = "";
         this.institucion = "";
         this.cuenta = "";
@@ -13,7 +12,6 @@ class CuentaBancaria2 {
 
 class Beneficiario {
     constructor() {
-        console.log('Creando objeto Beneficiario');
         this.rif = '';
         this.razonsocial = '';
         this.tipo = '';
@@ -24,7 +22,6 @@ class Beneficiario {
 
 class Factura {
     constructor() {
-        console.log("Creando objeto Factura");
         this.numero = '';
         this.control = '';
         this.fecha = '';
@@ -39,7 +36,6 @@ class Factura {
 
 class ConceptoReembolso {
     constructor() {
-        console.log("Creando objeto ConceptoReembolso");
         this.descripcion = '';
         this.DatoFactura = new Factura();
         this.afiliado = '';
@@ -49,7 +45,6 @@ class ConceptoReembolso {
 
 class ConceptoApoyo {
     constructor() {
-        console.log("Creando objeto ConceptoAyuda");
         this.descripcion = '';
         this.DatoFactura = new Factura();
         this.afiliado = '';
@@ -69,7 +64,6 @@ class Seguimiento{
 
 class Reembolso {
     constructor() {
-        console.log("Creando objeto Reembolso");
         this.estatus = 0;
         this.montosolicitado = 0.00;
         //this.numero = '';
@@ -90,7 +84,6 @@ class Reembolso {
 
 class Apoyo {
     constructor() {
-        console.log("Creando objeto apoyo");
         this.estatus = 0;
         this.montosolicitado = 0.00;
         this.cuentabancaria = new CuentaBancaria2();
@@ -111,7 +104,6 @@ class Apoyo {
 
 class Programa {
     constructor() {
-        console.log("Creando objeto Programa");
         this.Apoyo = new Array();
         this.Reembolso = new Array();
         this.CartaAval = new Array();
@@ -121,14 +113,12 @@ class Programa {
 
 class ServicioMedico {
     constructor() {
-        console.log("Creando objeto ServicoMedico");
         this.Programa = new Array();
     }
 }
 
 class CIS {
     constructor() {
-        console.log("Creando objeto CIS");
         this.ServicioMedico = new Array();
         this.Gasto = new Array();
         this.Equipomedico = new Array();
@@ -206,12 +196,12 @@ var Estados = new Estado();
 $(function () {
 
 
-  var requestE = CargarAPI({
+  var promesa = CargarAPI({
       sURL: Conn.URL + "estado",
       metodo: 'GET',
       valores: '',
   });
-  requestE.then(function(xhRequest) {
+  promesa.then(function(xhRequest) {
       Estados.Crear(JSON.parse(xhRequest.responseText));
   });
   CargarUrl("opciones","modulo_atencion");

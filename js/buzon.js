@@ -24,7 +24,7 @@ function listaBuzon(est) {
     });
     promesa.then(function (xhRequest) {
         lstBuzon = JSON.parse(xhRequest.responseText);
-        crearBuzon(est);
+        if(lstBuzon != null) crearBuzon(est);
     });
 
     //Apoyo
@@ -36,7 +36,7 @@ function listaBuzon(est) {
     });
     promesaApoyo.then(function (xhRequest) {
         lstBuzonApoyo = JSON.parse(xhRequest.responseText);
-        crearBuzonApoyo(est);
+        if(lstBuzonApoyo != null) crearBuzonApoyo(est);
     });
 
     //Carta Aval
@@ -48,7 +48,7 @@ function listaBuzon(est) {
     });
     promesaCarta.then(function (xhRequest) {
         lstBuzonCarta = JSON.parse(xhRequest.responseText);
-        crearBuzonCarta(est);
+        if(lstBuzonCarta != null) crearBuzonCarta(est);
     });
 }
 
@@ -59,7 +59,6 @@ function listaBuzon(est) {
 * @return void
 */
 function crearBuzon(est) {
-    console.log('Cargando el buzon de Reembolso...');
     $("#lista").html(`<li style="background-color:#CCCCCC">
                     <div class="row" >
                         <div class="col-sm-1" ><b>Reembolso</b></div>
@@ -232,7 +231,6 @@ function rechazarReembolso(num, est, id) {
 }
 
 function detalleBuzon(id, numero, est,tipo) {
-    console.log('Iniciando Detalle del Buzón...')
     var url = Conn.URL + "militar/crud/" + id;
     var promesa = CargarAPI({
         sURL: url,
@@ -342,9 +340,7 @@ function crearTablaConceptos(numero,est) {
             }
         });
     }
-
     validarDetalleReembolso(est);
-    console.log('Entregando contenido');
 }
 
 function CargarDetalleConcepto(v){
@@ -917,7 +913,6 @@ function actualizarApoyo(est) {
 
 /**CARTA AVAL***/
 function crearBuzonCarta(est) {
-    console.log('Cargando el buzon de Carta Aval...');
     $("#listaCarta").html(`<li style="background-color:#CCCCCC">
         <div class="row">
             <div class="col-sm-1"><b>Carta</b></div>
@@ -930,32 +925,50 @@ function crearBuzonCarta(est) {
         </div>
     </li>`);
 
-    $.each(lstBuzonCarta, function () {
-        var alertSegui = "";
-        switch (this.estatusseguimiento){
-            case 1:
-                alertSegui = '<small class="label label-danger"><i class="fa fa-info-circle"></i>Pendientes</small>';
-                break;
-            case 2:
-                alertSegui = '<small class="label label-info"><i class="fa fa-comment-o"></i>Recomendacion</small>';
-                break;
-        }
-        var item = '<li><div class="row"><div class="col-sm-1"><span class="text"><a href="#" onclick="detalleBuzon(\'' + this.id + '\',\'' + this.numero + '\','+est+',\'C\')"> ' + this.numero + '</a></span></div>\n' +
-            '                <div class="col-sm-1"><span class="text">' + this.id + '</span></div>\n' +
-            '                <div class="col-sm-3">' + this.nombre + '</div>\n' +
-            '                <div class="col-sm-1">' + Util.ConvertirFechaHumana(this.fechacreacion) + '</div>\n' +
-            '                <div class="col-sm-2">' + numeral(parseFloat(this.montosolicitado)).format('0,0[.]00 $') + '</div>\n' +
-            '                <div class="col-sm-2">' + numeral(parseFloat(this.montoaprobado)).format('0,0[.]00 $') + '</div>\n' +
-            '                <div class="col-sm-1">' + conviertEstatus(this.estatus)+alertSegui + '</div>\n' +
-            '                <div class="tools" style="margin-right: 50px;">\n' +
-            '                    <i class="fa  fa-check-square" style="color: green" onclick="verificarAprobacion(\'' + this.numero + '\',\'' + this.estatus + '\',\''+this.id+'\')"></i>\n' +
-            '                    <i class="fa fa-trash-o" onclick="verificarRechazo(\'' + this.numero + '\',\'' + this.estatus + '\',\''+this.id+'\')"></i>\n' +
-            '                </div>\n' +
-            '            </div>\n' +
-            '        </li>';
-        $("#listaCarta").append(item);
-    });
+  lstBuzonCarta.forEach(v => {
+      $("#listaCarta").append(CargarBuzonCarta(v, est));
+  });
 }
+
+/**
+* Cargar Datos del Buzones del sistema
+*
+* @param {object}
+* @return void
+*/
+function CargarBuzonCarta(v, est){
+  var alertSegui = "";
+  switch (v.estatusseguimiento){
+      case 1:
+          alertSegui = '<small class="label label-danger"><i class="fa fa-info-circle"></i>Pendientes</small>';
+          break;
+      case 2:
+          alertSegui = '<small class="label label-info"><i class="fa fa-comment-o"></i>Recomendacion</small>';
+          break;
+  }
+  var fcrea =  Util.ConvertirFechaHumana(v.fechacreacion);
+  var msoli = numeral(parseFloat(v.montosolicitado)).format('0,0[.]00 $');
+  var mapro = numeral(parseFloat(v.montoaprobado)).format('0,0[.]00 $');
+  var estatus = conviertEstatus(v.estatus) + alertSegui;
+  return `<li><div class="row">
+            <div class="col-sm-1"><span class="text">
+              <a href="#" onclick="detalleBuzon('${v.id}','${v.numero}','${est}','C')">${v.numero}</a></span></div>
+            <div class="col-sm-1"><span class="text">${v.id}</span></div>
+            <div class="col-sm-3">${v.nombre}</div>
+            <div class="col-sm-1">${fcrea}</div>
+            <div class="col-sm-2">${msoli}</div>
+            <div class="col-sm-2">${mapro}</div>
+            <div class="col-sm-1">${estatus}</div>
+            <div class="tools" style="margin-right: 50px;">
+                <i class="fa  fa-check-square" style="color: green"
+                  onclick="verificarAprobacion('${v.numero}','${v.estatus}','${v.id}')"></i>
+                <i class="fa fa-trash-o" onclick="verificarRechazo('${v.numero}','${v.estatus}','${v.id}')"></i>
+                </div>
+            </div>
+          </li>`;
+}
+
+
 
 function llenarBuzonCarta(numero,est) {
 
