@@ -289,6 +289,8 @@ function crearTablaConceptos(numero,est) {
     });
     CReembolso = lst[pos]; //Cargar detalles del reembolso
     if(CReembolso.Seguimiento.Estatus != undefined) $("#estSeguimiento").val(CReembolso.Seguimiento.Estatus);
+
+
     if(est > 2){
       activarCambioEstatus();
     }
@@ -296,7 +298,7 @@ function crearTablaConceptos(numero,est) {
     var jj = new Array();
     CReembolso.Concepto.forEach( v => {
         jj.push(v.afiliado);
-        $("#cuerpoEditarConceptos").append(CargarDetalleConcepto(v));
+        $("#cuerpoEditarConceptos").append(CargarDetalleConcepto(v, est));
     });
     $("#totalter").html(CReembolso.montosolicitado.toFixed(2));
     $("#totalapro").html(CReembolso.montoaprobado);
@@ -343,7 +345,7 @@ function crearTablaConceptos(numero,est) {
     validarDetalleReembolso(est);
 }
 
-function CargarDetalleConcepto(v){
+function CargarDetalleConcepto(v, est){
   var mntApo = 0;
   if(v.DatoFactura.montoaprobado > 0) mntApo = v.DatoFactura.montoaprobado;
   var ffact = Util.ConvertirFechaHumana(v.DatoFactura.fecha);
@@ -354,6 +356,14 @@ function CargarDetalleConcepto(v){
   var nombre = picar[0];
   var cedula = picar2[0];
   var fecha = Util.ConvertirFechaHumana(v.DatoFactura.fecha);
+  var desabilitar = "";
+  if ( est => 1) {
+    $("#btnImprimirPlanilla").show();
+  }else if( est == 0 ){
+    desabilitar = "disabled";
+  }
+  console.log(desabilitar);
+
   return `<tr>
             <td>${parent}</td>
             <td>${nombre}</td>
@@ -368,14 +378,15 @@ function CargarDetalleConcepto(v){
                 value="${v.DatoFactura.monto}"></td>
             <td><input type="number" class="porcentajecalculo"
                 onkeypress="return Util.SoloNumero(event,this)"
-                value="${v.DatoFactura.porcentaje}" onblur="calcularPorcen(this,'r')"></td>
+                value="${v.DatoFactura.porcentaje}" onblur="calcularPorcen(this,'r')" ${desabilitar}></td>
            <td><input type="text" value="${mntApo}" class="mntAcumulado"
                 onkeypress="return Util.SoloNumero(event,this,true)"
-                onblur="calcularAcumulado('r')"></td>
+                onblur="calcularAcumulado('r')" ${desabilitar}></td>
            <td style="width: 7%;">
                 <button type="button" class="btn btn-default btn-sm borrarconcepto"
                 title="Eliminar"><i class="fa fa-trash-o" style="color: red;"></i></button></td>
         </tr>`;
+
 }
 
 function calcularPorcen(obj, tipo){
