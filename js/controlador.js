@@ -191,6 +191,22 @@ class Estado{
     }
 }
 
+function IniciarSesion(){
+  if (sessionStorage.getItem('ipsfaToken') != undefined ){
+
+    var e = sessionStorage.getItem("ipsfaToken");
+    var s = e.split(".");
+    var json = JSON.parse(atob(s[1]));
+    Usuario = json.Usuario;
+
+
+    $("#_PerfilUsuario").html(Usuario.Perfil.descripcion);
+    $("#_NombreUsuario").html(Usuario.nombre);
+
+  }
+}
+
+
 var Conn = new Conexion();
 var Estados = new Estado();
 $(function () {
@@ -233,6 +249,7 @@ $(function () {
       }
   });
   numeral.locale('es-es');
+  IniciarSesion();
 
 });
 

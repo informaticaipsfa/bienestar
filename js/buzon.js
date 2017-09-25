@@ -378,7 +378,7 @@ function CargarDetalleConcepto(v){
         </tr>`;
 }
 
-function calcularPorcen(obj,tipo){
+function calcularPorcen(obj, tipo){
     var por = $(obj).parents("tr").eq(0).find("input.porcentajecalculo").val();
     var soli = $(obj).parents("tr").eq(0).find("input.mntsoli").val();
     var nuevoAprobado = soli*por/100;
@@ -590,16 +590,19 @@ function mostrarTextoObservacion(est){
     }
 }
 
-/** APOYO **/
+
+/**************************************
+* Datos para el Apoyos Económicos
+***************************************/
 
 function cambiarEstatusApoyo(tipo){
     var estatus = 0;
     switch (tipo){
         case "a":
-            verificarAprobacionApoyo(copia.numero ,copia.estatus,$("#lblcedulaApoyo").text());
+            verificarAprobacionApoyo(copia.numero, copia.estatus, $("#lblcedulaApoyo").text());
             break;
         case "r":
-            verificarRechazoApoyo(copia.numero ,copia.estatus,$("#lblcedulaApoyo").text());
+            verificarRechazoApoyo(copia.numero, copia.estatus, $("#lblcedulaApoyo").text());
             break;
         case "e":
             estatus = $("#cmbcambioestatusApoyo").val();
@@ -609,7 +612,7 @@ function cambiarEstatusApoyo(tipo){
 }
 
 function verificarAprobacionApoyo(num, esta,id) {
-    $("#_contenido").html("¿Está seguro que APROBAR el apoyo " + num + "?");
+    $("#_contenido").html(`¿Está seguro que desea Aprobar el apoyo ${num}?`);
     var botones = `<button type="button" class="btn btn-success" data-dismiss="modal" id="_aceptar"
                     onClick="aprobarApoyo('${num}','${esta}','${id}')">Si</button>
                    <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>`;
@@ -617,8 +620,8 @@ function verificarAprobacionApoyo(num, esta,id) {
     $('#modMsj').modal('show');
 }
 
-function verificarRechazoApoyo(num, esta,id) {
-    $("#_contenido").html("¿Está seguro que RECHAZAR el apoyo " + num + "?");
+function verificarRechazoApoyo(num, esta, id) {
+    $("#_contenido").html(`¿Está seguro que desea Rechazar el apoyo ${num}?`);
     var botones = `<button type="button" class="btn btn-success" data-dismiss="modal" id="_aceptar"
                     onClick="rechazarApoyo('${num}','${esta}','${id}')">Si</button>
                    <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>`;
@@ -760,6 +763,7 @@ function crearTablaConceptosApoyo(numero,est){
     });
     copia = lst[pos];
     $("#estSeguimiento").val(copia.Seguimiento.Estatus);
+    console.log(est);
     if(est > 2){
         activarCambioEstatus("apoyo");
     }
@@ -785,14 +789,13 @@ function crearTablaConceptosApoyo(numero,est){
                     <td style="display: none">${v.DatoFactura.Beneficiario.rif}</td>
                     <td style="display: none">${v.DatoFactura.Beneficiario.razonsocial}</td>
                     <td><input type="text" style="width: 100%" class="ffactApoyo" value="${fecha}"></input></td>
-                    <td><input type="text" onblur="calcularPorcen(this,'a')" class="mntsoli"
+                    <td><input type="text" onblur="CalcularMontoApoyo(this,'a')" class="mntsoli"
                         onkeypress="return Util.SoloNumero(event,this,true)" value="${v.DatoFactura.monto}"/></td>
-                        <td><input type="text" onblur="calcularPorcen(this,'a')"  class="mntacubrir"
+                        <td><input type="text" onblur="CalcularMontoApoyo(this,'a')"  class="mntacubrir"
                         onkeypress="return Util.SoloNumero(event,this,true)" style="width: 100%" value="${v.montoaseguradora}" /></td>
-                        <td><input type="text" style="width: 100%" onblur="calcularPorcen(this,'a')"  class="mntacubrir"
+                        <td><input type="text" style="width: 100%" onblur="CalcularMontoApoyo(this,'a')"  class="mntaseguradora"
                         onkeypress="return Util.SoloNumero(event,this,true)" value="${v.montoaportar}" ></td>
-                     <td><input type="text" value="${copia.montosolicitado}" class="mntAcumulado"
-                        onkeypress="return Util.SoloNumero(event,this,true)" onblur="calcularAcumulado('a')"></td>
+                     <td><input type="text" value="${copia.montosolicitado}" class="mntAcumulado" disabled></td>
                     <td style="width: 7%;">
                     <button type="button" class="btn btn-default btn-sm borrarconcepto" title="Eliminar">
                     <i class="fa fa-trash-o" style="color: red;"></i></button>
@@ -812,15 +815,22 @@ function crearTablaConceptosApoyo(numero,est){
     $(".mntsoli").on("keypress",function(e){
         var key = e.keyCode || e.which;
         if(key == 13){
-            calcularPorcen(this,'a');
+            CalcularMontoApoyo(this,'a');
         }
     });
-    $(".porcentajecalculo").on("keypress",function(e){
+    $(".mntacubrir").on("keypress",function(e){
         var key = e.keyCode || e.which;
         if(key == 13){
-            calcularPorcen(this,'a');
+            CalcularMontoApoyo(this,'a');
         }
     });
+    $(".mntaseguradora").on("keypress",function(e){
+        var key = e.keyCode || e.which;
+        if(key == 13){
+            CalcularMontoApoyo(this,'a');
+        }
+    });
+
 
     /**
      * Crear tabla de objservaciones
@@ -835,8 +845,68 @@ function crearTablaConceptosApoyo(numero,est){
             else $("#cuerpoObservacionesApoyo").append('<tr><td>' + this.contenido + '</td><td></td></tr>');
         });
     }
-    activarCambioEstatus();
+    //activarCambioEstatus();
 }
+
+
+function CalcularMontoApoyo(obj, tipo){
+    var solicitado = $(obj).parents("tr").eq(0).find("input.mntsoli").val();
+    var cubierto = $(obj).parents("tr").eq(0).find("input.mntacubrir").val();
+    var asegurado = $(obj).parents("tr").eq(0).find("input.mntaseguradora").val();
+
+    var montoTotal = parseFloat(solicitado) - (parseFloat(cubierto) + parseFloat(asegurado));
+
+    $(obj).parents("tr").eq(0).find("input.mntAcumulado").val(montoTotal.toFixed(2));
+    calcularAcumuladoApoyo(tipo);
+}
+
+function calcularAcumuladoApoyo(tipo) {
+    var idTabla = "";
+    var idTotal = "";
+    var idTotalSol = "";
+    switch(tipo){
+        case "r":
+          idTabla = "cuerpoEditarConceptos";
+          idTotal = "totalapro";
+          idTotalSol = "totalter";
+          break;
+        case "a":
+          idTabla = "cuerpoEditarConceptosApoyo";
+          idTotal = "totalaproApoyo";
+          idTotalSol="totalterApoyo";
+          break;
+        case "c":
+          idTabla = "cuerpoEditarConceptosCarta";
+          idTotal = "totalaproCarta";
+          idTotalSol="totalterCarta";
+          break;
+    }
+
+    var acumulado = 0;
+    var acumulado2 = 0;
+    $("#"+idTabla+" tr").each(function () {
+        var mnt = $(this).find("input.mntAcumulado").eq(0).val();
+        var sol = $(this).find("input.mntsoli").eq(0).val();
+        if(parseFloat(mnt) > parseFloat(sol)){
+            //mnt = sol;
+            //$(this).find("input.mntAcumulado").eq(0).val(mnt);
+            $.notify("El  monto aprobado no debe ser mayor al solicitado");
+        }
+        acumulado2 = parseFloat(acumulado2)+parseFloat(sol);
+        acumulado = parseFloat(acumulado) + parseFloat(mnt);
+    });
+    acumulado = parseFloat(acumulado).toFixed(2);
+    acumulado2 = parseFloat(acumulado2).toFixed(2);
+    $("#"+idTotal).html(acumulado);
+    $("#"+idTotalSol).html(acumulado2);
+}
+
+
+
+
+
+
+
 
 function planillaReembolso(){
     var ventana = window.open("planillaReembolso.html?id="+militarActivo.Persona.DatoBasico.cedula+"&pos="+posicionModificar, "_blank");

@@ -292,8 +292,8 @@
                         </div>
                         <!-- /.mailbox-read-info -->
                         <div class="mailbox-controls with-border text-center">
-                            <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="Borrar">
-                                <i class="fa fa-trash-o" style="color: red" onclick="cambiarEstatusApoyo('r')"></i>&nbsp
+                            <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="Borrar" onclick="cambiarEstatusApoyo('r')">
+                                <i class="fa fa-trash-o" style="color: red" ></i>&nbsp
                                 Borrar
                             </button>
                             <div class="btn-group">
@@ -308,7 +308,7 @@
                                     onclick="cambiarEstatusApoyo('a')">
                                 <i class="fa fa-check" style="color: green"></i>&nbsp Aceptar
                             </button>
-                            <div class="pull-right" id="cambioestatusApoyo" style="display: none">
+                            <div class="pull-right" id="cambioestatusApoyo" style="display: none; ">
                                 <select id="cmbcambioestatusApoyo">
                                     <option value=""></option>
                                     <option value="0">Pendiente</option>
@@ -331,18 +331,18 @@
                             <table class="table table-bordered">
                                 <thead>
                                 <tr class="bg-info">
-                                    <td>Parent.</td>
-                                    <td>Cedula</td>
-                                    <td>Nombre</td>
-                                    <td style="display: none">Razon Social</td>
-                                    <td>Concepto</td>
-                                    <td>N° de Presuspuesto</td>
-                                    <td>F. de Presupuesto</td>
-                                    <td>Monto Total del Presupuesto</td>
-                                    <td>Monto Total a Cubrir por la Aseguradora</td>
-                                    <td>Otros Aportes</td>
-
-                                    <td>Monto a Cubrir por el IPSFA</td>
+                                    <td><b>PARENT.<b></td>
+                                    <td><b>CEDULA</b></td>
+                                    <td><b>NOMBRE</b></td>
+                                    <td style="display: none">RAZON SOCIAL</b></td>
+                                    <td><b>CONCEPTO</b></td>
+                                    <td><b>N° PRESUPUESTO</b></td>
+                                    <td><b>F. PRESUPUESTO</b></td>
+                                    <td><b>MONTO TOTAL PRESUPUESTO</b></td>
+                                    <td><b>MONTO A CUBRIR ASEGURADORA</b></td>
+                                    <td><b>OTROS APORTES</b></td>
+                                    <td><b>MONTO A CUBRIR IPSFA</b></td>
+                                    <td><b>#</b></td>
                                 </tr>
                                 </thead>
                                 <tbody id="cuerpoEditarConceptosApoyo">
