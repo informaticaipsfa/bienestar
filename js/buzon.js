@@ -923,6 +923,9 @@ function calcularAcumuladoApoyo(tipo) {
 function planillaReembolso(){
     var ventana = window.open("planillaReembolso.html?id="+militarActivo.Persona.DatoBasico.cedula+"&pos="+posicionModificar, "_blank");
 }
+function planillaApoyo(){
+    var ventana = window.open("PlanillaApoyo.html?id="+militarActivo.Persona.DatoBasico.cedula+"&pos="+posicionModificar, "_blank");
+}
 
 function actualizarApoyo(est) {
     var conceptos = new Array();
