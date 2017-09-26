@@ -5,13 +5,13 @@ class WFedeVida {
         this.nombre = "";
         this.Direccion = new Direccion();
         this.Telefono = new Telefono();
-        this.Correo = new Correo(); 
+        this.Correo = new Correo();
         this.idf = "";
         this.direccionex = "";
         this.paisex = "";
         this.residenciadoex = "";
         this.fechaex = "";
-      
+
          }
 
 
@@ -181,12 +181,12 @@ function cargarFamiliar(pos){
             $("#txtmapto").val(DIR.apartamento);
         }
         $("#perfilFamiliar").hide();
-        $("#perfilMilitar").show(); 
+        $("#perfilMilitar").show();
 
         return true;
     }
     $("#perfilFamiliar").show();
-    $("#perfilMilitar").hide(); 
+    $("#perfilMilitar").hide();
     var fami = militar.Familiar[pos];
     $("#lblcedulaf").text(fami.Persona.DatoBasico.cedula);
     var ncf = fami.Persona.DatoBasico.nombreprimero+" "+fami.Persona.DatoBasico.apellidoprimero;
@@ -232,7 +232,7 @@ function generarPlanillaFdV(){
     var tele = new Telefono();
     tele.domiciliario = $("#txtmtelefono").val();
     tele.movil = $("#txtmcelular").val();
-    
+
     wfedevida.Direccion = dir;
     wfedevida.Telefono.domiciliario = tele.domiciliario;
     wfedevida.Telefono.movil = tele.movil;
@@ -241,7 +241,7 @@ function generarPlanillaFdV(){
     var bene = $("#cmbbeneficiario option:selected").val().split('|');
     var beneficiario = bene[1]+"-"+$("#cmbbeneficiario option:selected").text();
      wfedevida.afiliado = beneficiario;
-   
+
     wfedevida.id = militar.Persona.DatoBasico.cedula;
     wfedevida.nombre = militar.Persona.DatoBasico.nombreprimero.trim()+" "+militar.Persona.DatoBasico.apellidoprimero.trim();
     wfedevida.direccionex = $("#txtdireccionex").val();
@@ -266,8 +266,8 @@ function generarPlanillaFdV(){
             msjRespuesta(respuesta.msj);
             llenarfe();
             if($("#txtdireccionex").val()== ""){
-            var ventana = window.open("FedeVidaSobre.html?id="+militar.Persona.DatoBasico.cedula+"&idf="+bene[1], "_blank");}
-            else{var ventana = window.open("FedeVidaSobreex.html?id="+militar.Persona.DatoBasico.cedula+"&idf="+bene[1], "_blank");}
+            var ventana = window.open("rpt.fe.FedeVidaSobre.html?id="+militar.Persona.DatoBasico.cedula+"&idf="+bene[1], "_blank");}
+            else{var ventana = window.open("rpt.fe.FedeVidaSobreex.html?id="+militar.Persona.DatoBasico.cedula+"&idf="+bene[1], "_blank");}
         }
     });
 
@@ -285,17 +285,17 @@ function obtenerResidencia() {
     switch (motivo){
         case "0": //SI
             $("#direccionextranjero").hide();
-           
+
             $("#direccionactual").attr("disabled",true);
-           
+
         break;
         case "1": //NO
             $("#direccionextranjero").attr("disabled",true);
-           
+
             $("#direccionextranjero").show();
              $("#direccionactual").attr("disabled",false);
 
-            
+
         break;
     }
 }

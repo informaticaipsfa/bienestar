@@ -21,11 +21,7 @@ function formatoCombo(state) {
 
 
 function ActivarBuscar() {
-    $("#_bxBuscar").show();
-    $("#panelentrada").hide();
-    $("#panellista").hide();
-    $("#panelregistro").hide();
-    $("#paneldatos").hide();
+    $(location).attr('href','starter.html');
 }
 
 function Buscar(id) {
@@ -208,7 +204,7 @@ function imprimirrecibore(pos) {
         pos = militar.CIS.ServicioMedico.Programa.Reembolso.length;
         pos--;
     }
-    var ventana = window.open("inc/reciboReembolso.html?id=" + militar.Persona.DatoBasico.cedula + "&pos=" + pos, "_blank");
+    var ventana = window.open("rpt/reembolso/reciboReembolso.html?id=" + militar.Persona.DatoBasico.cedula + "&pos=" + pos, "_blank");
 }
 
 function imprimirreciboapo(pos) {
@@ -216,7 +212,7 @@ function imprimirreciboapo(pos) {
         pos = militar.CIS.ServicioMedico.Programa.Apoyo.length;
         pos--;
     }
-    var ventana = window.open("inc/reciboApoyo.html?id=" + militar.Persona.DatoBasico.cedula +"&pos="+ pos, "_blank");
+    var ventana = window.open("rpt/apoyo/reciboApoyo.html?id=" + militar.Persona.DatoBasico.cedula +"&pos="+ pos, "_blank");
 }
 
 function imprimirrecibocarta(pos) {
@@ -354,12 +350,16 @@ function detalleVisible(pos) {
 }
 
 function historicoApoyo() {
-    $("#historicoApoyos").html('<thead>\n' +
-        '                        <tr class="bg-info"><td class="pbuscar">#Apoyo</td><td>F. Solicitud</td><td class="pbuscar">Factura</td><td style="width: 20%">Monto a Cubrir por el IPSFA.<td>Estado</td></tr>\n' +
-        '                        </thead>\n' +
-        '                        <tbody id="cuerporeembolsos">\n' +
-        '\n' +
-        '                        </tbody>');
+    $("#historicoApoyos").html(`<thead>
+          <tr class="bg-info">
+            <td class="pbuscar">#Apoyo</td>
+            <td>F. Solicitud</td>
+            <td class="pbuscar">Factura</td>
+            <td style="width: 20%">Monto a Cubrir por el IPSFA.<td>Estado</td>
+          </tr>
+          </thead>
+          <tbody id="cuerporeembolsos">
+          </tbody>`);
 
     var t = $('#historicoApoyos').DataTable({
         destroy: true,
@@ -402,12 +402,12 @@ function historicoApoyo() {
                 nfac = "Sin factura";
             }
             if (this.Concepto.length > 1) {
-                listaFact = "<div class=\"dropdown\">\n" +
-                    "            <button class=\"btn btn-default dropdown-toggle\" type=\"button\" id=\"dropdownMenu" + i + "\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\n" +
-                    "            " + nfac +
-                    "            <span class=\"fa fa-plus\"></span>\n" +
-                    "            </button>\n" +
-                    "            <ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu" + i + "\">";
+                listaFact = `<div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle"
+                      type="button" id="dropdownMenu${i}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">${nfac}
+                      <span class="fa fa-plus"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu${i}">`;
                 $.each(this.Concepto, function () {
                     var nfac2 = this.DatoFactura.numero;
                     if (nfac2 == "") nfac2 = "Sin Factura"
@@ -418,13 +418,14 @@ function historicoApoyo() {
                 listaFact = nfac;
             }
             t.row.add([
-                "<a href='#cuerpoLstConceptos' onclick=\"detalleVisibleApoyo(" + i + ")\">" + this.numero + "</a>" +
-                "<button type='button' class='btn btn-default btn-sm pull-right' onclick=\"imprimirreciboapo(" + i + ")\">" + "<i class='fa fa-print'>" + "</i>" + "</button>", //1
-                "<b>" + fcrea + "</b>",
-                listaFact,
-                numeral(parseFloat(this.montosolicitado)).format('0,0[.]00 $'),
-                // numeral(parseFloat(this.montoaprobado)).format('0,0[.]00 $'),
-                est
+                `<a href='#cuerpoLstConceptos' onclick="detalleVisibleApoyo(${i})">${this.numero}</a>
+                  <button type='button' class='btn btn-default btn-sm pull-right'
+                    onclick="imprimirreciboapo(${i})"><i class='fa fa-print'></i>
+                  </button>`, //1
+                  `<b>${fcrea}</b>`,
+                  listaFact,
+                  numeral(parseFloat(this.montosolicitado)).format('0,0[.]00 $'),
+                  est
             ]).draw(false);
             i++;
         });

@@ -331,7 +331,7 @@ console.log(wcarta);
         if (res.msj != "") res.msj2 = "Se proceso con exito....";
           msj2Respuesta(res.msj2);
         var idm = militar.Persona.DatoBasico.cedula;
-        var ventana = window.open("cartaAval.html?id="+idm + "&nm=" +res.msj , "_blank");
+        var ventana = window.open("rpt.carta.cartaAval.html?id="+idm + "&nm=" +res.msj , "_blank");
     });
       }else {
         $.notify("Debe ingresar todos los datos para realizar la Carta Aval");
@@ -455,4 +455,3 @@ function limpiarCarta() {
         $("#cmbbeneficiario").select2("val", "");
     });
 }
-

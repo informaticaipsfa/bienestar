@@ -351,7 +351,7 @@ function generarPlanilla() {
             $("#panelentrada").show();
             $("#panellista").hide();
             $("#panelregistro").hide();
-            var ventana = window.open("inc/reciboApoyo.html?id=" + militar.Persona.DatoBasico.cedula, "_blank");
+            var ventana = window.open("rpt/apoyo/reciboApoyo.html?id=" + militar.Persona.DatoBasico.cedula, "_blank");
         });
     } else {
         $.notify("Debe ingresar todos los datos para realizar el reembolso");
