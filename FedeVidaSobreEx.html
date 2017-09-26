@@ -232,13 +232,13 @@
                         <td width="486" rowspan="3">
                             <div align="center"><strong>SOLICITUD FE DE VIDA </strong></div>
                         </td>
-                        <td colspan="3" class="texto14">1.Número:</td>
+                        <td colspan="3" class="texto14">1.Número: <label id="lblnumero1"></label></td>
                     </tr>
                     <tr>
-                        <td colspan="3" class="texto14 ">2.Fecha:</td>
+                        <td colspan="3" class="texto14 ">2.Fecha: <label id="lblfechacreacion2"></label></td>
                     </tr>
                     <tr>
-                        <td width="135" height="23" class="texto14 "><b id="lblfechacreacion2"></b></td>
+                        <td width="135" height="23" class="texto14 "></td>
                         <td width="114" class="texto12 "></td>
                         <td width="115" class="texto12 "></td>
                     </tr>
@@ -353,10 +353,10 @@
                         <td width="486" rowspan="3">
                             <div align="center"><strong>SOLICITUD FE DE VIDA </strong></div>
                          </td>
-                        <td colspan="3" class="texto12">1.Número:</td>
+                        <td colspan="3" class="texto12">1.Número: <label id="lblnumero3"></label></td>
                    </tr>
                       <tr>
-                        <td colspan="3" class="texto12 ">2.Fecha: </td>
+                        <td colspan="3" class="texto12 ">2.Fecha: <label id="lblfechacreacion5"></label> </td>
                       </tr>
                      <tr>
                         <td width="135" height="23"></td>
@@ -599,6 +599,7 @@
         $("#lblfechacreacion2").html(Util.ConvertirFechaHumana(fdv.fechacreacion));
         $("#lblfechacreacion3").html(Util.ConvertirFechaHumana(fdv.fechacreacion));
         $("#lblfechacreacion4").html(Util.ConvertirFechaHumana(fdv.fechacreacion));
+        $("#lblfechacreacion5").html(Util.ConvertirFechaHumana(fdv.fechacreacion));
         $("#lblfechacreacionex").html(Util.ConvertirFechaHumana(fdv.fechacreacion));
          $("#lblfechaemision").html(Util.ConvertirFechaHumana(fdv.fechaex));
          $("#lblfechaemisionafiex").html(Util.ConvertirFechaHumana(fdv.fechaex));
@@ -613,6 +614,8 @@
 
         $("#lblnumero").html(fdv.numero);
         $("#lblnumero1").html(fdv.numero);
+        $("#lblnumero2").html(fdv.numero);
+        $("#lblnumero3").html(fdv.numero);
      //   alert(DIREX);
 
         
