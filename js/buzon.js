@@ -357,10 +357,11 @@ function CargarDetalleConcepto(v, est){
   var cedula = picar2[0];
   var fecha = Util.ConvertirFechaHumana(v.DatoFactura.fecha);
   var desabilitar = "";
-  if ( est => 1) {
-    $("#btnImprimirPlanilla").show();
-  }else if( est == 0 ){
+  $("#btnImprimirPlanilla").hide();
+  if ( est == 0 ) {
     desabilitar = "disabled";
+  }else {
+    $("#btnImprimirPlanilla").show();
   }
   console.log(desabilitar);
 
