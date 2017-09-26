@@ -914,7 +914,10 @@ function planillaReembolso(){
     var ventana = window.open("rpt/reembolso/planillaReembolso.html?id="+militarActivo.Persona.DatoBasico.cedula+"&pos="+posicionModificar, "_blank");
 }
 function planillaApoyo(){
-    var ventana = window.open("rpt/reembolso/PlanillaApoyo.html?id="+militarActivo.Persona.DatoBasico.cedula+"&pos="+posicionModificar, "_blank");
+    var ventana = window.open("rpt/apoyo/PlanillaApoyo.html?id="+militarActivo.Persona.DatoBasico.cedula+"&pos="+posicionModificar, "_blank");
+}
+function puntodecuenta(){
+    var ventana = window.open("rpt/apoyo/Puntodecuenta.html?id="+militarActivo.Persona.DatoBasico.cedula+"&pos="+posicionModificar, "_blank");
 }
 
 function actualizarApoyo(est) {
