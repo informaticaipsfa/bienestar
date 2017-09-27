@@ -326,7 +326,7 @@ function generarPlanilla() {
         var beneficiario = bene[1] + "-" + $("#cmbbeneficiario option:selected").text();
         concep.afiliado = beneficiario;
         concep.descripcion = $("#cmbconcepto option:selected").text();
-
+        concep.patologia = $("#patologia").val();
 
         conceptos.push(concep);
         apoyo.tipo = parseInt($("#cmbtipoayuda option:selected").val());

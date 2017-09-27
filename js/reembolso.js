@@ -465,3 +465,26 @@ function conviertEstatus(est) {
     }
     return estatus;
 }
+
+
+function ValidarFactura(){
+  var Factura = {
+    rif: $("#rif").val(),
+    numero: $("#nfactura").val()
+  };
+  var promesa = CargarAPI({
+      sURL: Conn.URL + "wfactura",
+      metodo: 'POST',
+      valores: Factura
+  });
+
+  promesa.then(function (xhRequest) {
+      res = JSON.parse(xhRequest.responseText);
+      if(res.tipo == 1){
+        $("#rif").val("");
+        $("#nfactura").val("");
+        $("#razonsocial").val("");
+        $.notify(res.msj, "warn");
+      }
+  });
+}
