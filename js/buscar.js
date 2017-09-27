@@ -585,3 +585,17 @@ function detalleVisibleCarta(pos) {
     $("#lstDetalleCarta").show();
     $("#tblTodos").hide();
 }
+
+function VerCambiarClave(){
+    $("#modCambiarClaveUsuario").modal("show");
+}
+
+function cambiarClave(){
+    var clave = new Clave();
+    //console.log(clave);
+    if (Util.ValidarFormulario("formcusuario") == false) {
+        Util.MensajeFormulario("formcusuario","msjcambio");
+    }else{
+        clave.Salvar();
+    }
+}
