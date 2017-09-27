@@ -1,3 +1,59 @@
+<style type="text/css">
+.ui-autocomplete {
+    position: absolute;
+    top: 676px;
+    left: 260px;
+    z-index: 10000;
+    float: left;
+    display: none;
+    min-width: 160px;
+    _width: 160px;
+    padding: 4px 0;
+    margin: 2px 0 0 0;
+    list-style: none;
+    background-color: #ffffff;
+    border-color: #ccc;
+    border-color: rgba(0, 0, 0, 0.2);
+    border-style: solid;
+    border-width: 1px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding;
+    background-clip: padding-box;
+    *border-right-width: 2px;
+    *border-bottom-width: 2px;
+
+.ui-menu-item > a.ui-corner-all {
+    display: block;
+    padding: 3px 15px;
+    clear: both;
+    font-weight: normal;
+    line-height: 18px;
+    color: #555555;
+    white-space: nowrap;
+
+&
+.ui-state-hover,
+
+&
+.ui-state-active {
+    color: #ffffff;
+    text-decoration: none;
+    background-color: #0088cc;
+    border-radius: 0px;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    background-image: none;
+}
+}
+}
+</style>
+
 <div class="body box">
     <div class="container-fluid">
         <!--<form id="frmtodoreembolso" action="#" method="post">-->
@@ -173,7 +229,7 @@
                                     </div>
                                     <div class="col-md-3 col-sm-12">
                                         <label>N° de Factura:</label>
-                                        <input type="text" class="form-control" id="nfactura" required>
+                                        <input type="text" class="form-control" id="nfactura" onblur="ValidarFactura()" required>
                                     </div>
                                     <div class="col-md-3 col-sm-12">
                                         <label>F.Factura:</label>
@@ -194,7 +250,7 @@
                                     <div class="col-md-3 col-sm-12">
                                         <label>Monto:</label>
                                         <div class="input-group date" style="z-index: 1030;">
-                                            <input class="form-control" id="monto" required>
+                                            <input class="form-control" id="monto"  onkeypress="return Util.SoloNumero(event,this,true)" required>
 
                                             <div class="input-group-addon">
                                                 <label>Bs.</label>

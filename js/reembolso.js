@@ -299,13 +299,12 @@ function cargarDatos() {
         var tele = new Telefono();
         tele.domiciliario = $("#txtmtelefono").val();
         tele.movil = $("#txtmcelular").val();
-        tele.emergencia = $("#texmtelefonoe").val();
+        tele.emergencia = $("#txtmtelefonoe").val();
+
         reembolso.Direccion = dir;
         reembolso.Telefono.domiciliario = tele.domiciliario;
         reembolso.Telefono.movil = tele.movil;
-        if ($("#telfcontacto").val() != "") {
-            reembolso.Telefono.movil = $("#telfcontacto").val();
-        }
+        reembolso.Telefono.emergencia = tele.emergencia;
         reembolso.Correo.principal = $("#txtmcorreo").val().toUpperCase();
 
         var conceptos = new Array();
@@ -314,7 +313,6 @@ function cargarDatos() {
                 conceptos.push(CargarConceptos(this));
             });
             reembolso.Concepto = conceptos;
-
             var wreembolso = new WReembolso();
             wreembolso.id = militar.Persona.DatoBasico.cedula;
             wreembolso.Reembolso = reembolso;
@@ -329,11 +327,10 @@ function cargarDatos() {
 
             promesa.then(function (xhRequest) {
                 respuesta = JSON.parse(xhRequest.responseText);
-                if (respuesta.msj == "") respuesta.msj = "Se proceso con exito....";
-                msjRespuesta(respuesta.msj);
+                msjRespuesta("Su solicitud se ha procesado con exito...");
                 $("#conceptoagregado").html("");
                 llenarReembolso();
-                var ventana = window.open("inc/reciboReembolso.html?id=" + militar.Persona.DatoBasico.cedula, "_blank");
+                var ventana = window.open(`rpt/reembolso/reciboReembolso.html?id=${militar.Persona.DatoBasico.cedula}&num=${respuesta.msj}`, "_blank");
             });
         }
     } else {
@@ -422,6 +419,7 @@ function habilitarDireccion(estatus) {
     } else {
         $("#btnhabdire").show();
         $("#btndhabdire").hide();
+        $("#btnhabdire").prop('disabled', false);
     }
 }
 
@@ -466,4 +464,27 @@ function conviertEstatus(est) {
             break;
     }
     return estatus;
+}
+
+
+function ValidarFactura(){
+  var Factura = {
+    rif: $("#rif").val(),
+    numero: $("#nfactura").val()
+  };
+  var promesa = CargarAPI({
+      sURL: Conn.URL + "wfactura",
+      metodo: 'POST',
+      valores: Factura
+  });
+
+  promesa.then(function (xhRequest) {
+      res = JSON.parse(xhRequest.responseText);
+      if(res.tipo == 1){
+        $("#rif").val("");
+        $("#nfactura").val("");
+        $("#razonsocial").val("");
+        $.notify(res.msj, "warn");
+      }
+  });
 }

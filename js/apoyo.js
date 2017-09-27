@@ -226,9 +226,11 @@ function cargarFamiliar(pos) {
             $("#txtmapto").val(DIR.apartamento);
         }
         $("#perfilFamiliar").hide();
+        $("#perfilMilitar").show();
         return true;
     }
     $("#perfilFamiliar").show();
+    $("#perfilMilitar").hide();
     var fami = militar.Familiar[pos];
     $("#lblcedulaf").text(fami.Persona.DatoBasico.cedula);
     var ncf = fami.Persona.DatoBasico.nombreprimero + " " + fami.Persona.DatoBasico.apellidoprimero;
@@ -324,7 +326,7 @@ function generarPlanilla() {
         var beneficiario = bene[1] + "-" + $("#cmbbeneficiario option:selected").text();
         concep.afiliado = beneficiario;
         concep.descripcion = $("#cmbconcepto option:selected").text();
-
+        concep.patologia = $("#patologia").val();
 
         conceptos.push(concep);
         apoyo.tipo = parseInt($("#cmbtipoayuda option:selected").val());
@@ -343,15 +345,14 @@ function generarPlanilla() {
 
         promesa.then(function (xhRequest) {
             respuesta = JSON.parse(xhRequest.responseText);
-            if (respuesta.msj == "") respuesta.msj = "Se proceso con exito....";
-            msjRespuesta(respuesta.msj);
+            msjRespuesta("Se proceso con exito....");
             llenarApoyo();
 
             $("#opciones").hide();
             $("#panelentrada").show();
             $("#panellista").hide();
             $("#panelregistro").hide();
-            var ventana = window.open("inc/reciboApoyo.html?id=" + militar.Persona.DatoBasico.cedula, "_blank");
+            var ventana = window.open("rpt/apoyo/reciboApoyo.html?id=" + militar.Persona.DatoBasico.cedula, "_blank");
         });
     } else {
         $.notify("Debe ingresar todos los datos para realizar el reembolso");
