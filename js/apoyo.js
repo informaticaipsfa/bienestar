@@ -345,8 +345,7 @@ function generarPlanilla() {
 
         promesa.then(function (xhRequest) {
             respuesta = JSON.parse(xhRequest.responseText);
-            if (respuesta.msj == "") respuesta.msj = "Se proceso con exito....";
-            msjRespuesta(respuesta.msj);
+            msjRespuesta("Se proceso con exito....");
             llenarApoyo();
 
             $("#opciones").hide();

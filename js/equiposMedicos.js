@@ -1,194 +1,52 @@
 $(function () {
-
-    $("#btnvolverlista").click(function(){
-        $("#tblcarta").slideDown();
-        $("#lstDetalle").slideUp();
-    });
+    console.log("Equipos de Movilidad Asistida");
+    console.log(militar);
 
     $("#concepto").select2();
 
     $(".mdl-requisitos").on("change",function () {
-        verificaCheckModal("requisitos","btnAgconcepto");
+        verificaCheckModal("requisitos","btnGenerar");
     });
 
-    $(".mdl-requisitos").on("change",function () {
-        verificaCheckModal("requisitosprotesis","btnAgconcepto");
-    });
-
-    $(".mdl-requisitos").on("change",function () {
-        verificaCheckModal("requisitosmastologia","btnAgconcepto");
-    });
-
-   /* llenarCarta();
-        $(".btnvolverentrada2").click(function(){
-        $("#opciones").hide();
-        $("#panelentrada").show();
-        $("#panellista").hide();
-        $("#panelregistro").hide();
-    });*/
-
-   /* llenarReembolso();
-    $(".btnvolverentradar").click(function () {
-        $("#mdldesea").modal("show");
-
+    $(".btnvolverentradaema").click(function () {
+        $("#mdldeseamac").modal("show");
         $("#btnsalir").click(function () {
             $("#opciones").hide();
             $("#panelentrada").show();
             $("#panellista").hide();
             $("#panelregistro").hide();
-            $('#mdldesea').modal('hide');
-            limpiarReembolso();
-            limpiarmdlempresa();
-            $("#rifnuevo").remove();
-            $("#sefue").remove();
-        })
+            $('#mdldeseamac').modal('hide');
+            limpiarEquipo();
+            $("#medicinaagregada").parents('tr').eq(0).remove();
+                $("#cajamedicina").slideUp();
+        });
     });
-    $(".btncancelare").click(function () {
-        limpiarmdlempresa();
-        $("#rifnuevo").remove();
-        $("#sefue").remove();
-    });*/
 
-    llenarCarta();
-    $(".btnvolverentradac").click(function () {
-        $("#mdldesea").modal("show");
+    llenarequipo();
 
-        $("#btnsalir").click(function () {
-            $("#opciones").hide();
-            $("#panelentrada").show();
-            $("#panellista").hide();
-            $("#panelregistro").hide();
-            $('#mdldesea').modal('hide');
-            limpiarCarta();
-            //limpiarmdlempresa();
-           // $("#rifnuevo").remove();
-           // $("#sefue").remove();
-        })
-    });
 });
 
-
-class Factura2{
+class Equipo {
     constructor() {
-        console.log("Creando objeto Factura2");
-        this.Beneficiario = new Beneficiario();
-    }
-}
-
-class ConceptoCarta{
-    constructor(){
-        this.motivo = "";
-        this.diagnostico = "";
-        this.descripcion = '';
-        this.DatoFactura = new Factura2();
+        console.log("Creando Tratamiento Alto Costo");
+        this.diagnostico = '';
+        this.equipo='';
+        this.fechainforme='';
+        this.serial='';
         this.afiliado = '';
-        this.requisito = new Array();
-    }
-}
-
-class Carta {
-    constructor() {
-        console.log("Creando objeto carta");
-        this.estatus = 0;
-        this.montosolicitado = 0.00;
-        this.cuentabancaria = new CuentaBancaria2();
-        this.Concepto = new Array();
-        this.montoaprobado = 0.00;
-        this.requisito = new Array();
-        //this.observaciones = "";
         this.Direccion = new Direccion();
         this.Telefono = new Telefono();
         this.Correo = new Correo();
-        this.Seguimiento = new Seguimiento();
-        this.fondo = "";
     }
 }
 
-class WCarta{
+class WEquipo{
     constructor(){
         this.id = "";
-        this.Carta = new Carta();
-        this.nombre = "";
+        this.Equipo = new Equipo();
     }
 }
-
-function salvarEmpresa(){
-    var rifn = $("#rifnuevo").val();
-    var rznuevo = $("#rsocialnuevo").val();
-    var tenuevo = $("#tipoenuevo").val();
-    var direc = $("#direcnueva").val();
-    var cuenta = $("#_txtmnrocuentanueva").val();
-    var banco = $("#_cmbmtipofinanciera").val();
-    var tipoc = $("#_cmbmtipocuentaranueva").val();
-    if(rifn == "" || rznuevo == "" || tenuevo == "S" || direc == "" || cuenta == "" || banco == "S" || tipoc == "S"){
-        $.notify("Debe ingresar todos los datos de la empresa a registrar");
-        return false;
-    }
-    $.notify("Proceso de registro pendiente");
-    $("#rif").val(rifn);
-    $("#razonsocial").val(rznuevo);
-    $("#mdlEmpresa").modal('hide');
-}
-
-function cargarFamiliar(pos){
-    console.log(pos);
-
-    if(pos == "T"){
-        if (militar.Persona.Telefono != undefined) {
-            $("#txtmtelefono").val(militar.Persona.Telefono.domiciliario);
-            $("#txtmcelular").val(militar.Persona.Telefono.movil);
-            $("#txtmcorreo").val(militar.Persona.Correo.principal);
-        }
-
-        if (militar.Persona.Direccion != undefined) {
-            var DIR = militar.Persona.Direccion[0];
-            Estados.ObtenerEstados();
-            $("#cmbmestado").val(DIR.estado);
-            $("#cmbmmunicipio").html('<option selected="selected" value="' + DIR.municipio + '">' + DIR.municipio + '</option>');
-            $("#cmbmparroquia").html('<option selected="selected" value="' + DIR.parroquia + '">' + DIR.parroquia + '</option>');
-            $("#cmbmciudad").html('<option selected="selected" value="' + DIR.ciudad + '">' + DIR.ciudad + '</option>');
-            $("#txtmcalle").val(DIR.calleavenida);
-            $("#txtmcasa").val(DIR.casa);
-            $("#txtmapto").val(DIR.apartamento);
-        }
-        $("#perfilFamiliar").hide();
-        return true;
-    }
-    $("#perfilMilitar").hide();
-
-    $("#perfilFamiliar").show();
-
-    var fami = militar.Familiar[pos];
-    console.log(fami);
-    $("#lblcedulaf").text(fami.Persona.DatoBasico.cedula);
-    var ncf = fami.Persona.DatoBasico.nombreprimero+" "+fami.Persona.DatoBasico.apellidoprimero;
-    $("#lblnombref").text(ncf);
-    var parente = Util.ConvertirParentesco(fami.parentesco,fami.Persona.DatoBasico.sexo)
-    $("#lblparentesco").text(parente);
-    var fnac = Util.ConvertirFechaHumana(fami.Persona.DatoBasico.fechanacimiento);
-    $("#lblfnac").text(fnac);
-
-    if (fami.Persona.Telefono != undefined) {
-        $("#txtmtelefono").val(fami.Persona.Telefono.domiciliario);
-        $("#txtmcelular").val(fami.Persona.Telefono.movil);
-        $("#txtmcorreo").val(fami.Persona.Correo.principal);
-    }
-    Estados.ObtenerEstados();
-    if (fami.Persona.Direccion != undefined) {
-        var DIR = fami.Persona.Direccion[0];
-
-        $("#cmbmestado").val(DIR.estado);
-        $("#cmbmmunicipio").html('<option selected="selected" value="' + DIR.municipio + '">' + DIR.municipio + '</option>');
-        $("#cmbmparroquia").html('<option selected="selected" value="' + DIR.parroquia + '">' + DIR.parroquia + '</option>');
-        $("#cmbmciudad").html('<option selected="selected" value="' + DIR.ciudad + '">' + DIR.ciudad + '</option>');
-        $("#txtmcalle").val(DIR.calleavenida);
-        $("#txtmcasa").val(DIR.casa);
-        $("#txtmapto").val(DIR.apartamento);
-    }
-}
-
-
-function llenarCarta(){
+function llenarequipo(){
     $("#cmbbeneficiario").html('<option selected="selected" value="S"></option>');
     $("#_cargando").hide();
     if(militar.Persona != undefined){
@@ -222,10 +80,16 @@ function llenarCarta(){
             $("#txtmcelular").val(militar.Persona.Telefono.movil);
             $("#txtmcorreo").val(militar.Persona.Correo.principal);
         }
-        Estados.ObtenerEstados();
+
+        if(militar.Persona.DatoFinanciero != undefined){
+            $("#txtmnrocuenta").val(militar.Persona.DatoFinanciero.cuenta);
+            $("#cmbminstfinanciera").val(militar.Persona.DatoFinanciero.institucion);
+            $("#cmbmtipofinanciera").val(militar.Persona.DatoFinanciero.tipo);
+        }
+
         if (militar.Persona.Direccion != undefined) {
             var DIR = militar.Persona.Direccion[0];
-
+            Estados.ObtenerEstados();
             $("#cmbmestado").val(DIR.estado);
             $("#cmbmmunicipio").html('<option selected="selected" value="' + DIR.municipio + '">' + DIR.municipio + '</option>');
             $("#cmbmparroquia").html('<option selected="selected" value="' + DIR.parroquia + '">' + DIR.parroquia + '</option>');
@@ -239,9 +103,7 @@ function llenarCarta(){
         alert("Cedula no se encuentra registrada como militar dentro del sistema");
         $("#paneldatos").hide();
     }
-
 }
-
 
 function crearLista(){
     $("#cmbbeneficiario").append(new Option(militar.Persona.DatoBasico.nombreprimero+"(MILITAR)", "T|"+militar.Persona.DatoBasico.cedula, true, true));
@@ -270,25 +132,83 @@ function crearLista(){
             $("#perfilFamiliar").show();
         }else{
             $("#perfilFamiliar").hide();
+            $("#perfilMilitar").show();
         }
     });
 
     $("#cmbbeneficiario").select2({
-        templateResult: formatoCombo
     });
+    historico();
 }
 
-function generarCarta(){
+function cargarFamiliar(pos){
+    console.log(pos);
 
-    var aval = new Carta();
-    aval.montosolicitado = parseFloat($("#montosolicitado").val())
-    var cuenta = new CuentaBancaria2();
-    cuenta.cuenta= $("#empcuenta").val();
-    cuenta.institucion = $("#empbanco").val();
-    cuenta.tipo = $("#emptipoc").val();
-    cuenta.cedula = $("#rifclinica").val();
-    //cuenta.titular =$("#cmbclinica option:selected").text();
-    aval.cuentabancaria = cuenta;
+    if(pos == "T"){
+        if (militar.Persona.Telefono != undefined) {
+            $("#txtmtelefono").val(militar.Persona.Telefono.domiciliario);
+            $("#txtmcelular").val(militar.Persona.Telefono.movil);
+            $("#txtmcorreo").val(militar.Persona.Correo.principal);
+            $("#ci").val(militar.Persona.DatoBasico.cedula);
+        }
+
+        if (militar.Persona.Direccion != undefined) {
+            var DIR = militar.Persona.Direccion[0];
+            Estados.ObtenerEstados();
+            $("#cmbmestado").val(DIR.estado);
+            $("#cmbmmunicipio").html('<option selected="selected" value="' + DIR.municipio + '">' + DIR.municipio + '</option>');
+            $("#cmbmparroquia").html('<option selected="selected" value="' + DIR.parroquia + '">' + DIR.parroquia + '</option>');
+            $("#cmbmciudad").html('<option selected="selected" value="' + DIR.ciudad + '">' + DIR.ciudad + '</option>');
+            $("#txtmcalle").val(DIR.calleavenida);
+            $("#txtmcasa").val(DIR.casa);
+            $("#txtmapto").val(DIR.apartamento);
+        }
+        $("#perfilFamiliar").hide();
+        return true;
+    }
+      $("#perfilMilitar").hide();
+      $("#perfilFamiliar").show();
+    var fami = militar.Familiar[pos];
+    console.log(fami);
+    $("#lblcedulaf").text(fami.Persona.DatoBasico.cedula);
+    $("#ci").val(fami.Persona.DatoBasico.cedula);
+    var ncf = fami.Persona.DatoBasico.nombreprimero+" "+fami.Persona.DatoBasico.apellidoprimero;
+    $("#lblnombref").text(ncf);
+    var parente = Util.ConvertirParentesco(fami.parentesco,fami.Persona.DatoBasico.sexo)
+    $("#lblparentesco").text(parente);
+    var fnac = Util.ConvertirFechaHumana(fami.Persona.DatoBasico.fechanacimiento);
+    $("#lblfnac").text(fnac);
+
+    if (fami.Persona.Telefono != undefined) {
+        $("#txtmtelefono").val(fami.Persona.Telefono.domiciliario);
+        $("#txtmcelular").val(fami.Persona.Telefono.movil);
+        $("#txtmcorreo").val(fami.Persona.Correo.principal);
+    }
+    Estados.ObtenerEstados();
+    if (fami.Persona.Direccion != undefined) {
+        var DIR = fami.Persona.Direccion[0];
+
+        $("#cmbmestado").val(DIR.estado);
+        $("#cmbmmunicipio").html('<option selected="selected" value="' + DIR.municipio + '">' + DIR.municipio + '</option>');
+        $("#cmbmparroquia").html('<option selected="selected" value="' + DIR.parroquia + '">' + DIR.parroquia + '</option>');
+        $("#cmbmciudad").html('<option selected="selected" value="' + DIR.ciudad + '">' + DIR.ciudad + '</option>');
+        $("#txtmcalle").val(DIR.calleavenida);
+        $("#txtmcasa").val(DIR.casa);
+        $("#txtmapto").val(DIR.apartamento);
+    }
+}
+
+function generarActa(){
+
+  if (Util.ValidarFormulario("frmequipo", "_btnSalvar")) {
+
+    var equipo = new Equipo();
+
+    equipo.diagnostico = $("#cmb option:selected").text();
+    equipo.equipo = $("#txtdiagnostico").val();
+    equipo.fechainforme = $("#txtdiagnostico").val();
+    equipo.serial = $("#txtdiagnostico").val();
+    equipo.afiliado = $("#txtdiagnostico").val();
 
     var dir = new Direccion();
     dir.tipo = 0;
@@ -304,149 +224,47 @@ function generarCarta(){
     tele.domiciliario = $("#txtmtelefono").val();
     tele.movil = $("#txtmcelular").val();
 
-    aval.Direccion = dir;
+    equipo.Direccion = dir;
 
-    aval.Telefono.domiciliario = tele.domiciliario;
-    aval.Telefono.movil = tele.movil;
+    equipo.Telefono.domiciliario = tele.domiciliario;
+    equipo.Telefono.movil = tele.movil;
 
-    aval.Correo.principal = $("#txtmcorreo").val().toUpperCase();
-
-    var conceptos = new Array();
-
-    var concep = new ConceptoCarta();
-    var facturaD = new Factura2();
-
-    /*var prov = new Beneficiario();
-    prov.rif = $("#rifclinica").val();
-    prov.razonsocial = $("#cmbclinica option:selected").text();
-    prov.tipoempresa = "J";
-    prov.direccion = "";*/
-
-    facturaD.Beneficiario = prov;
-    concep.DatoFactura = facturaD;
+    equipo.Correo.principal = $("#txtmcorreo").val().toUpperCase();
 
     var bene = $("#cmbbeneficiario option:selected").val().split('|');
     var beneficiario = bene[1]+"-"+$("#cmbbeneficiario option:selected").text();
-    concep.afiliado = beneficiario;
-    concep.descripcion = $("#cmbestudio option:selected").text();
-    concep.motivo = $("#cmbmotivo option:selected").text();
-    concep.diagnostico = $("#txtdiagnostico").val();
-    concep.montopresupuesto = parseFloat($("#montopresupuesto").val());
-    concep.montoseguro = parseFloat($("#montoacubrir").val());
-    concep.numeropresupuesto = $("#numeropresupuesto").val();
-    concep.fechapresupuesto = new Date(Util.ConvertirFechaUnix($("#txtfechapresupuesto").val())).toISOString();
-    concep.fechaseguro =new Date(Util.ConvertirFechaUnix($("#txtfechaseguro").val())).toISOString();
-    conceptos.push(concep);
+    equipo.afiliado = beneficiario;
 
-    aval.Concepto = conceptos;
+    var wequipo = new WEquipo();
 
-    var wcarta = new WCarta();
+    wequipo.id = militar.Persona.DatoBasico.cedula;
+    wequipo.Equipo = equipo;
+    wequipo.nombre = militar.Persona.DatoBasico.nombreprimero.trim()+' '+militar.Persona.DatoBasico.apellidoprimero.trim();
 
-    wcarta.id = militar.Persona.DatoBasico.cedula;
-    wcarta.Carta = aval;
-    wcarta.nombre = militar.Persona.DatoBasico.nombreprimero.trim()+' '+militar.Persona.DatoBasico.apellidoprimero.trim();
+console.log(wequipo);
 
-
-    console.log(JSON.stringify(wcarta));
-    var urlGuardar = Conn.URL + "wcarta";
+    var urlGuardar = Conn.URL + "wequipo";
     var request2 = CargarAPI({
         sURL: urlGuardar,
         metodo: 'POST',
-        valores: wcarta,
+        valores: wequipo,
     });
     request2.then(function(xhRequest) {
         res = JSON.parse(xhRequest.responseText);
+        if (res.msj != "") res.msj2 = "Se proceso con exito....";
+          msj2Respuesta(res.msj2);
         var idm = militar.Persona.DatoBasico.cedula;
-
+        var ventana = window.open("actaEquiposMedicos.html?id="+idm + "&nm=" +res.msj , "_blank");
     });
-
-    if (Util.ValidarFormulario("frmequipos", "_btnSalvar")) {
-        var aval = new Carta();
-        aval.montosolicitado = parseFloat($("#montosolicitado").val())
-        var cuenta = new CuentaBancaria2();
-        cuenta.cuenta= $("#empcuenta").val();
-        cuenta.institucion = $("#empbanco").val();
-        cuenta.tipo = $("#emptipoc").val();
-        cuenta.cedula = $("#rifclinica").val();
-        //cuenta.titular =$("#cmbclinica option:selected").text();
-        aval.cuentabancaria = cuenta;
-
-        var dir = new Direccion();
-        dir.tipo = 0;
-        dir.estado = $("#cmbmestado option:selected").val();
-        dir.municipio = $("#cmbmmunicipio option:selected").val();
-        dir.parroquia = $("#cmbmparroquia option:selected").val();
-        dir.ciudad = $("#cmbmciudad").val();
-        dir.calleavenida = $("#txtmcalle").val().toUpperCase();
-        dir.casa = $("#txtmcasa").val().toUpperCase();
-        dir.apartamento = $("#txtmapto").val().toUpperCase();
-
-        var tele = new Telefono();
-        tele.domiciliario = $("#txtmtelefono").val();
-        tele.movil = $("#txtmcelular").val();
-
-        aval.Direccion = dir;
-
-        aval.Telefono.domiciliario = tele.domiciliario;
-        aval.Telefono.movil = tele.movil;
-
-        aval.Correo.principal = $("#txtmcorreo").val().toUpperCase();
-
-        var conceptos = new Array();
-
-        var concep = new ConceptoCarta();
-        var facturaD = new Factura2();
-
-        /*var prov = new Beneficiario();
-        prov.rif = $("#rifclinica").val();
-        prov.razonsocial = $("#cmbclinica option:selected").text();
-        prov.tipoempresa = "J";
-        prov.direccion = "";*/
-
-        facturaD.Beneficiario = prov;
-        concep.DatoFactura = facturaD;
-
-        var bene = $("#cmbbeneficiario option:selected").val().split('|');
-        var beneficiario = bene[1]+"-"+$("#cmbbeneficiario option:selected").text();
-        concep.afiliado = beneficiario;
-        concep.descripcion = $("#cmbestudio option:selected").text();
-        concep.motivo = $("#cmbmotivo option:selected").text();
-        concep.diagnostico = $("#txtdiagnostico").text();
-
-        concep.montopresupuesto = parseFloat($("#montopresupuesto").val());
-        concep.montoseguro = parseFloat($("#montoacubrir").val());
-        concep.numeropresupuesto = $("#numeropresupuesto").val();
-        concep.fechapresupuesto = new Date(Util.ConvertirFechaUnix($("#txtfechapresupuesto").val())).toISOString();
-        concep.fechaseguro =new Date(Util.ConvertirFechaUnix($("#txtfechaseguro").val())).toISOString();
-        conceptos.push(concep);
-
-        aval.Concepto = conceptos;
-
-        var wcarta = new WCarta();
-
-        wcarta.id = militar.Persona.DatoBasico.cedula;
-        wcarta.Carta = aval;
-        wcarta.nombre = militar.Persona.DatoBasico.nombreprimero.trim()+' '+militar.Persona.DatoBasico.apellidoprimero.trim();
-
-        console.log(JSON.stringify(wcarta));
-        var urlGuardar = Conn.URL + "wcarta";
-        var request2 = CargarAPI({
-            sURL: urlGuardar,
-            metodo: 'POST',
-            valores: wcarta,
-        });
-        request2.then(function(xhRequest) {
-            res = JSON.parse(xhRequest.responseText);
-                if (res.msj != "") res.msj2 = "Carta Aval procesada con Exito";
-                msj2Respuesta(res.msj2);
-                llenarCarta();
-            var idm = militar.Persona.DatoBasico.cedula;
-            var ventana = window.open("cartaAval.html?id="+idm + "&nm=" +res.msj , "_blank");
-        });
-
-    } else {
-        $.notify("Debe ingresar todos los datos para realizar la Carta Aval");
+      }else {
+        $.notify("Debe ingresar todos los datos para realizar el Prestamo de Equipo");
     }
+}
+
+function limpiarEquipo(){
+    $('#frmequipos').each(function(){
+        this.reset();
+    });
 }
 
 function habilitarDireccion(estatus){
@@ -459,66 +277,4 @@ function habilitarDireccion(estatus){
         $("#btnhabdire").show();
         $("#btndhabdire").hide();
     }
-}
-
-function validaFechaFactura(n){
-    var f = new Date();
-    var fecha=(f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear());
-    var fecha1=moment(fecha,"DD-MM-YYYY");
-    var ff = $("#fechafactura").val();
-    var fecha2 = moment(ff,"DD-MM-YYYY");
-    var dif=fecha1.diff(fecha2, 'days');
-    if(dif>n) {
-        $("#alerta_fecha").text("Fecha fuera de rango");
-        $("#alert_fecha").show();
-    }else{
-        $("#alert_fecha").hide();
-    }
-}
-
-function obtenerEstudio(){
-    var motivo = $("#cmbmotivo option:selected").val();
-    $("#cmbestudio").val("S");
-    switch (motivo){
-        case "S":
-            $("#cmbestudio").attr("disabled",true);
-            $(".estudio").hide();
-            $(".diagnostico").hide();
-            break;
-        case "0":
-            $("#cmbestudio").attr("disabled",false);
-            $(".masto").attr("disabled",false);
-            $(".masto").show();
-            $(".diagnostico").hide();
-            $(".estudio").show();
-            break;
-        case "1":
-            $("#cmbestudio").attr("disabled",false);
-            $(".masto").attr("disabled",true);
-            $(".masto").hide();
-            $(".diagnostico").show();
-            $(".estudio").hide();
-            break;
-    }
-    var modal = $("#cmbmotivo option:selected").attr("desplegar");
-    inactivarCheck(modal);
-    $("#"+modal).modal("show");
-}
-
-
-function calcularSolicitado(){
-    var mntFactura = $("#montopresupuesto").val();
-    var mntAsegura = $("#montoacubrir").val();
-    var mntSolici = parseFloat(mntFactura)-parseFloat(mntAsegura);
-    if(isNaN(mntSolici)){
-        $("#montosolicitado").val("");
-    }else{$("#montosolicitado").val(mntSolici.toFixed(2));}
-
-}
-
-function limpiarCarta() {
-    $('#frmequipos').each(function () {
-        this.reset();
-        $("#cmbbeneficiario").select2("val", "");
-    });
 }
