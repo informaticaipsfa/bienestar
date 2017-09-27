@@ -226,9 +226,11 @@ function cargarFamiliar(pos) {
             $("#txtmapto").val(DIR.apartamento);
         }
         $("#perfilFamiliar").hide();
+        $("#perfilMilitar").show();
         return true;
     }
     $("#perfilFamiliar").show();
+    $("#perfilMilitar").hide();
     var fami = militar.Familiar[pos];
     $("#lblcedulaf").text(fami.Persona.DatoBasico.cedula);
     var ncf = fami.Persona.DatoBasico.nombreprimero + " " + fami.Persona.DatoBasico.apellidoprimero;
@@ -397,7 +399,6 @@ function habilitarDireccion(estatus) {
     } else {
         $("#btnhabdire").show();
         $("#btndhabdire").hide();
-        $("#btnhabdire").prop('disabled', false);
     }
 }
 
