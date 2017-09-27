@@ -1,14 +1,3 @@
-<style>
-    .diagnostico {
-        display: none;
-    }
-
-    .estudio {
-        display: none;
-    }
-</style>
-
-
 <div class="container-fluid">
     <div class="row">
         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -24,7 +13,7 @@
                 <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
                      aria-labelledby="headingOne">
                     <div class="panel-body">
-                        <form id="frmequipos" action="#" method="post">
+                        <form id="frmequipo" action="#" method="post">
                             <div class="row">
                                 <div class="col-md-6 col-sm-12">
                                     <label>Afiliado:</label>
@@ -33,6 +22,29 @@
                                         <option selected="selected" value="S"></option>
                                     </select>
                                 </div>
+                                <div class="col-md-6 col-sm-12">
+                                  <label> Diágnostico Médico:</label>
+                                  <input id="txtDiagnostico" class="form-control" type="text" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-3 col-sm-12">
+                                <label>Fecha informe médico:</label>
+                                <input id="txtFechaInf" class="form-control" type="text" required>
+                              </div>
+                              <div class="col-md-6 col-sm-12">
+                                <label>Equipo Médico:</label>
+                                <select class="form-control" style="width: 100%" id="cmbEquipo" required="required">
+                                    <option selected="selected" value="S"></option>
+                                    <option value="0">MULETAS</option>
+                                    <option value="1">BASTON 4 PUNTOS</option>
+                                </select>
+                              </div>
+                              <div class="col-md-3 col-sm-12">
+                                <label>Serial:</label>
+                                  <input id="txtSerial" class="form-control" type="text" >
+                                </select>
+                              </div>
                             </div>
                             </br>
                             <div class="panel panel-default">
@@ -155,14 +167,14 @@
                             </br>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <a class="btn btn-app btn-success btnvolverentradac pull-left" href="#panelentrada"
+                                    <a class="btn btn-app btn-success btnvolverentradaema pull-left" href="#panelentrada"
                                        style="background-color: #337ab7; color: white;">
                                         <i class="fa fa-4x fa-arrow-left"></i>Volver
                                     </a>
 
                                     <a class="btn btn-app btn-success pull-right"
                                        style="margin-right: 10px; background-color: #337ab7; color: white;"
-                                       onclick="generarCarta()" id="_btnSavlvar">
+                                       onclick="generarActa()" id="_btnSavlvar">
                                         <i class="fa fa-file"></i>&nbsp;&nbsp;Generar
                                     </a>
                                     <br><br>
@@ -175,5 +187,15 @@
         </div>
     </div>
 </div>
+
+<script>
+    $('#txtFechaInf').datepicker({
+      autoclose: true,
+      format: "dd/mm/yyyy",
+      language: 'es'
+    });
+
+    $('[data-mask]').inputmask();
+</script>
 
 <script src="js/equiposMedicos.js"></script>

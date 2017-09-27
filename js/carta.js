@@ -79,24 +79,6 @@ class WCarta{
     }
 }
 
-function salvarEmpresa(){
-    var rifn = $("#rifnuevo").val();
-    var rznuevo = $("#rsocialnuevo").val();
-    var tenuevo = $("#tipoenuevo").val();
-    var direc = $("#direcnueva").val();
-    var cuenta = $("#_txtmnrocuentanueva").val();
-    var banco = $("#_cmbmtipofinanciera").val();
-    var tipoc = $("#_cmbmtipocuentaranueva").val();
-    if(rifn == "" || rznuevo == "" || tenuevo == "S" || direc == "" || cuenta == "" || banco == "S" || tipoc == "S"){
-        $.notify("Debe ingresar todos los datos de la empresa a registrar");
-        return false;
-    }
-    $.notify("Proceso de registro pendiente");
-    $("#rif").val(rifn);
-    $("#razonsocial").val(rznuevo);
-    $("#mdlEmpresa").modal('hide');
-}
-
 function cargarFamiliar(pos){
 
 
@@ -455,4 +437,3 @@ function limpiarCarta() {
         $("#cmbbeneficiario").select2("val", "");
     });
 }
-
