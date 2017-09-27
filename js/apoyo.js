@@ -334,8 +334,10 @@ function generarPlanilla() {
         var wapoyo = new WApoyo();
         wapoyo.id = militar.Persona.DatoBasico.cedula;
         wapoyo.Apoyo = apoyo;
-        wapoyo.nombre = militar.Persona.DatoBasico.nombreprimero + " " + militar.Persona.DatoBasico.apellidoprimero;
+        wapoyo.nombre = militar.Persona.DatoBasico.nombreprimero.trim() + " " + militar.Persona.DatoBasico.apellidoprimero.trim();
         var urlGuardar = Conn.URL + "wapoyo";
+        // console.log(wapoyo);
+        // console.log(JSON.stringify(wapoyo));
 
         var promesa = CargarAPI({
             sURL: urlGuardar,
