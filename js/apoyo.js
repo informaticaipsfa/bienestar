@@ -393,6 +393,7 @@ function habilitarDireccion(estatus) {
     } else {
         $("#btnhabdire").show();
         $("#btndhabdire").hide();
+        $("#btnhabdire").prop('disabled', false);
     }
 }
 
