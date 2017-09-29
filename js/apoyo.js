@@ -1,5 +1,3 @@
-
-
 $(function () {
     $("#concepto").select2();
 
@@ -103,14 +101,10 @@ function llenarApoyo() {
         $("#txtnombre").val(militar.Persona.DatoBasico.nombreprimero);
         $("#txtapellido").val(militar.Persona.DatoBasico.apellidoprimero);
         $("#ttnombre").text(ncompleto);
-
-
         $("#cmbcomponente").val(militar.Componente.descripcion);
         $("#ttcomponente").text(militar.Componente.descripcion);
-
-        $("#cmbgrado").val(militar.Grado.descripcion)
+        $("#cmbgrado").val(militar.Grado.descripcion);
         $("#ttgrado").text(militar.Grado.descripcion);
-
         $("#txtcedula").val(militar.Persona.DatoBasico.cedula);
         $("#ttcedula").text(militar.Persona.DatoBasico.cedula);
 
@@ -137,9 +131,9 @@ function llenarApoyo() {
             listaCuentas();
         }
 
+        Estados.ObtenerEstados();
         if (militar.Persona.Direccion != undefined) {
             var DIR = militar.Persona.Direccion[0];
-            Estados.ObtenerEstados();
             $("#cmbmestado").val(DIR.estado);
             $("#cmbmmunicipio").html('<option selected="selected" value="' + DIR.municipio + '">' + DIR.municipio + '</option>');
             $("#cmbmparroquia").html('<option selected="selected" value="' + DIR.parroquia + '">' + DIR.parroquia + '</option>');
@@ -148,7 +142,6 @@ function llenarApoyo() {
             $("#txtmcasa").val(DIR.casa);
             $("#txtmapto").val(DIR.apartamento);
         }
-
     } else {
         alert("Cedula no se encuentra registrada como militar dentro del sistema");
         $("#paneldatos").hide();
@@ -400,6 +393,7 @@ function habilitarDireccion(estatus) {
     } else {
         $("#btnhabdire").show();
         $("#btndhabdire").hide();
+        $("#btnhabdire").prop('disabled', false);
     }
 }
 
