@@ -8,13 +8,6 @@ $(function () {
         verificaCheckModal("requisitos","btnGenerar");
     });
 
-  /*  $(".btnvolverentrada2").click(function(){
-        $("#opciones").hide();
-        $("#panelentrada").show();
-        $("#panellista").hide();
-        $("#panelregistro").hide();
-    });*/
-
     $(".btnvolverentradamac").click(function () {
         $("#mdldeseamac").modal("show");
         $("#btnsalir").click(function () {
@@ -41,15 +34,17 @@ class Medicina {
         this.dosis = "";
         this.cantidad="";
         this.fechainicio='';
-        this.fechavencimiento='';
-        this.afiliado = '';
+        this.fechavencimiento=''; 
     }
 }
 
-class Wmedicina{
+
+class WMedicina{
     constructor(){
         this.id = "";
-        this.Medicina = new Medicina();
+        this.idf = "";
+        this.Medicina = new Array();
+        this.afiliado = "";
     }
 }
 
@@ -95,7 +90,7 @@ function llenarmedicina(){
         $("#cmbcomponente").val(militar.Componente.descripcion);
         $("#ttcomponente").text(militar.Componente.descripcion);
 
-        $("#cmbgrado").val(militar.Grado.descripcion)
+        $("#cmbgrado").val(militar.Grado.descripcion);
         $("#ttgrado").text(militar.Grado.descripcion);
 
         $("#txtcedula").val(militar.Persona.DatoBasico.cedula);
@@ -231,66 +226,56 @@ function cargarFamiliar(pos){
     }
 }
 
-function generarMedicina(){
 
+function generarMedicina() {
+    if (Util.ValidarFormulario("frmmedicinat", "_btnSalvar")) {
+
+    	var bene = $("#cmbbeneficiario option:selected").val().split('|');
+    	var beneficiario = bene[1]+"-"+$("#cmbbeneficiario option:selected").text();
+
+        var lstmedicina = new Array();
+        if ($("#medicinaagregada tr").length > 0) {
+            $("#medicinaagregada tr").each(function () {
+                lstmedicina.push(CargarMedicina(this));
+            });
+ 
+            var wmedicina = new WMedicina();
+            wmedicina.id = militar.Persona.DatoBasico.cedula;
+            wmedicina.idf = bene[1];
+            wmedicina.Medicina = lstmedicina;
+            wmedicina.afiliado = beneficiario;
+
+			console.log(JSON.stringify(wmedicina));
+             var urlGuardar = Conn.URL + "wmedicina";
+             var promesa = CargarAPI({
+                 sURL: urlGuardar,
+                 metodo: 'POST',
+                 valores: wmedicina,
+             });
+
+             promesa.then(function (xhRequest) {
+                 respuesta = JSON.parse(xhRequest.responseText);
+                 msjRespuesta("Su solicitud se ha procesado con exito...");
+                 $("#medicinaagregada").html("");
+                 llenarmedicina();
+                 var ventana = window.open("medicinaAltoCosto.html?id="+militar.Persona.DatoBasico.cedula, "_blank");
+             });
+        }
+    } else {
+        $.notify("Debe ingresar todos los datos para realizar el reembolso");
+    }
+}
+
+function CargarMedicina(OMedicina){
     var medicina = new Medicina();
-
-    medicina.nombrecomercial = $("#txtNombreCom").val();
-    medicina.presentacion = $("#txtPresentacion").val();
-    medicina.dosis = $("#txtDosis").val();
-    medicina.cantidad = $("#txtCantidad").val();
-    medicina.fechainicio = $("#txtFechaInicio").val();
-    medicina.fechavencimiento = $("#txtFechaFin").val();
-    var bene = $("#cmbbeneficiario option:selected").val().split('|');
-    var beneficiario = bene[1]+"-"+$("#cmbbeneficiario option:selected").text();
-    medicina.afiliado = beneficiario;
-
-    if($("#medicinaagregada tr").length >0) {
-        $("#medicinaagregada tr").each(function () {
-            var medicinas = new Medicina();
-            medicinas.nombrecomercial=$(this).find("td").eq(0).html();
-            medicinas.presentacion=$(this).find("td").eq(1).html();
-            medicinas.dosis=$(this).find("td").eq(2).html();
-            medicinas.cantidad=$(this).find("td").eq(3).html();
-            medicinas.fechainicio=$(this).find("td").eq(4).html();
-            medicinas.fechavencimiento=$(this).find("td").eq(6).html();
-        });
-    }else{
-        $.notify("Debe ingresar todos los datos para realizar el informe médico");}
-
-    var datos = new Wmedicina();
-    datos.id = militar.Persona.DatoBasico.cedula;
-    datos.Medicina = medicina;
-
-    console.log(JSON.stringify(datos));
-
-    $("#medicinaagregada").html("");
-    llenarmedicina();
-
-    $("#opciones").hide();
-    $("#panelentrada").show();
-    $("#panellista").hide();
-    $("#panelregistro").hide();
-    var ventana = window.open("medicinaAltoCosto.html?id="+militar.Persona.DatoBasico.cedula, "_blank");
-    var urlGuardar = Conn.URL + "wmedicina";
-    var request2 = CargarAPI({
-        sURL: urlGuardar,
-        metodo: 'POST',
-        valores: datos,
-    });
-
-    request2.then(function (xhRequest) {
-        respuesta = JSON.parse(xhRequest.responseText);
-        if (respuesta.msj == "") respuesta.msj = "Se proceso con exito....";
-        msjRespuesta(respuesta.msj);
-        $("#medicinaagregada").html("");
-        llenarmedicina();
-
-        $("#opciones").hide();
-        $("#panelentrada").show();
-        $("#panellista").hide();
-        $("#panelregistro").hide();
-    });
+    
+    medicina.nombrecomercial = $(OMedicina).find("td").eq(0).html();
+    medicina.presentacion = $(OMedicina).find("td").eq(1).html();
+    medicina.dosis = $(OMedicina).find("td").eq(2).html();
+    medicina.cantidad = $(OMedicina).find("td").eq(3).html();
+    medicina.fechainicio = new Date(Util.ConvertirFechaUnix($(OMedicina).find("td").eq(4).html())).toISOString();
+    medicina.fechavencimiento = new Date(Util.ConvertirFechaUnix($(OMedicina).find("td").eq(5).html())).toISOString();
+    return medicina;
 }
 
 function limpiarMedicina(){
