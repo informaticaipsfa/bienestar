@@ -79,14 +79,14 @@ function ficha() {
         $("#lblgrado").text(militar.Grado.descripcion);
 
         $("#lblcedula").text(militar.Persona.DatoBasico.cedula);
-
-        $("#lblfnacimiento").val(Util.ConvertirFechaHumana(militar.Persona.DatoBasico.fechanacimiento));
+        
 
         var estcivil = Util.GenerarEstadoCivil(militar.Persona.DatoBasico.estadocivil, militar.Persona.DatoBasico.sexo);
 
-        $("#lblestcivil").text(estcivil);
-
+        $("#lblfnacimiento").html(Util.ConvertirFechaHumana(militar.Persona.DatoBasico.fechanacimiento));
+        $("#lblestcivil").text(estcivil)
         $("#lblsituacion").text(Util.ConvertirSitucacion(militar.situacion));
+
 
         $("#paneldatos").show();
         $("#panelperfil").show();
