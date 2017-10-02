@@ -496,3 +496,8 @@ function ValidarFactura(){
       }
   });
 }
+
+
+function SeleccionarCuenta(){
+  $("#numerocuenta").val($("#banco").val());
+}
