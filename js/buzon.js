@@ -186,7 +186,9 @@ function aprobarReembolso(num, est, id) {
         respuesta = JSON.parse(xhRequest.responseText);
         if(respuesta.msj == "") respuesta.msj = "Se proceso con exito....";
         $.notify(respuesta.msj, "success");
-        listaBuzon(est);
+        volverLista();
+        var ipos = parseInt(est) - 1;
+        listaBuzon( ipos );
     });
 }
 
@@ -215,7 +217,9 @@ function rechazarReembolso(num, est, id) {
         respuesta = JSON.parse(xhRequest.responseText);
         if(respuesta.msj == "") respuesta.msj = "Se proceso con exito....";
         $.notify(respuesta.msj);
-        listaBuzon(est);
+        volverLista();
+        var ipos = parseInt(est) - 1;
+        listaBuzon( ipos );
     });
 
 }
@@ -628,7 +632,7 @@ function verificarRechazoApoyo(num, esta, id) {
     $('#modMsj').modal('show');
 }
 
-function aprobarApoyo(num, est,id) {
+function aprobarApoyo(num, est, id) {
     var url = Conn.URL + "wapoyo/estatus";
     var datos = {
       id: id,
@@ -644,11 +648,13 @@ function aprobarApoyo(num, est,id) {
         respuesta = JSON.parse(xhRequest.responseText);
         if(respuesta.msj == "") respuesta.msj = "Se proceso con exito....";
         $.notify(respuesta.msj, "success");
-        listaBuzon(est);
+        volverLista();
+        var ipos = parseInt(est) - 1;
+        listaBuzon( ipos );
     });
 }
 
-function rechazarApoyo(num, est,id) {
+function rechazarApoyo(num, est, id) {
     var url = Conn.URL + "wapoyo/estatus";
     var datos = {
       ID: id,
@@ -663,8 +669,10 @@ function rechazarApoyo(num, est,id) {
     promesa.then(function (xhRequest) {
         respuesta = JSON.parse(xhRequest.responseText);
         if(respuesta.msj == "") respuesta.msj = "Se proceso con exito....";
+        volverLista();
         $.notify(respuesta.msj);
-        listaBuzon(est);
+        var ipos = parseInt(est) - 1;
+        listaBuzon( ipos );
     });
 
 }
