@@ -109,6 +109,13 @@ function cargarFamiliar(pos){
 
     var fami = militar.Familiar[pos];
     $("#lblcedulaf").text(fami.Persona.DatoBasico.cedula);
+    var rutaimg = Conn.URLIMG;
+    url = rutaimg + fami.Persona.DatoBasico.cedula + ".jpg";
+    if (fami.Persona.foto != undefined) {
+        rutaimg = Conn.URLTEMP;
+        url = rutaimg + $("#_cedula").val() + "/foto"  + fami.Persona.DatoBasico.cedula  + ".jpg";
+    }
+    $("#fotoperfilf").attr("src", url);
     var ncf = fami.Persona.DatoBasico.nombreprimero+" "+fami.Persona.DatoBasico.apellidoprimero;
     $("#lblnombref").text(ncf);
     var parente = Util.ConvertirParentesco(fami.parentesco,fami.Persona.DatoBasico.sexo)
