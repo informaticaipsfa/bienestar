@@ -454,10 +454,7 @@ function actualizarReembolso(est) {
     } else {
         $.notify("Debe poseer al menos un concpeto para editar o puede rechazar el reembolso");
     }
-    if (MontoAprobado == 0 ) {
-      $.notify("Debe establecer un monto aprobado.");
-      return false;
-    }
+    
     //
     CReembolso.montoaprobado = parseFloat($("#totalapro").html());
     CReembolso.montosolicitado = parseFloat($("#totalter").html());
