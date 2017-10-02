@@ -337,17 +337,9 @@
                                     <label>Cedula:</label>
                                     <input type="text" class="form-control" required id="cibancario" disabled="true">
                                 </div>
-                                <div class="col-md-4 col-sm-12" id="_txtmnrocuenta">
-                                    <label>Nro. de Cuenta:</label>
-                                    <input id="numerocuenta" class="form-control" required type="text" maxlength="23"
-                                           data-inputmask='"mask": "9999-9999-99-9999999999"' disabled="true"
-                                           data-mask>
-                                </div>
-
                                 <div class="col-md-4 col-sm-12" id="_cmbmtipofinanciera">
                                     <label>Banco:</label>
-                                    <select class="form-control" style="width: 100%"
-                                            id="banco" required disabled="true">
+                                    <select class="form-control" style="width: 100%" id="banco" required disabled="true" >
                                         <option selected="selected" value="S"></option>
                                         <option value="0156">100%BANCO</option>
                                         <option value="0196">ABN AMRO BANK</option>
@@ -385,6 +377,14 @@
                                         <option value="0137">SOFITASA</option>
                                     </select>
                                 </div>
+                                <div class="col-md-4 col-sm-12" id="_txtmnrocuenta">
+                                    <label>Nro. de Cuenta:</label>
+                                    <input id="numerocuenta" class="form-control" required type="text" maxlength="23"
+                                           data-inputmask='"mask": "9999-9999-99-9999999999"' disabled="true"
+                                           data-mask>
+                                </div>
+
+
                                 <div class="col-md-4 col-sm-12">
                                     <label>Tipo de Cuenta:</label>
                                     <select class="form-control" required style="width: 100%"
