@@ -267,8 +267,8 @@ function generarPlanillaFdV(){
             msjRespuesta(respuesta.msj);
             llenarfe();
             if($("#txtdireccionex").val()== ""){
-            var ventana = window.open("rpt.fe.FedeVidaSobre.html?id="+militar.Persona.DatoBasico.cedula+"&idf="+bene[1], "_blank");}
-            else{var ventana = window.open("rpt.fe.FedeVidaSobreex.html?id="+militar.Persona.DatoBasico.cedula+"&idf="+bene[1], "_blank");}
+            var ventana = window.open("rpt/fe/FedeVidaSobre.html?id="+militar.Persona.DatoBasico.cedula+"&idf="+bene[1], "_blank");}
+            else{var ventana = window.open("rpt/fe/FedeVidaSobreex.html?id="+militar.Persona.DatoBasico.cedula+"&idf="+bene[1], "_blank");}
         }
     });
 
