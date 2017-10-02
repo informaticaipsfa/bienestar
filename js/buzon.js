@@ -454,7 +454,7 @@ function actualizarReembolso(est) {
     } else {
         $.notify("Debe poseer al menos un concpeto para editar o puede rechazar el reembolso");
     }
-    
+
     //
     CReembolso.montoaprobado = parseFloat($("#totalapro").html());
     CReembolso.montosolicitado = parseFloat($("#totalter").html());
