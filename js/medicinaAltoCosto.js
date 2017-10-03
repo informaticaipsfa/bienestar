@@ -255,15 +255,29 @@ function generarMedicina() {
 
              promesa.then(function (xhRequest) {
                  respuesta = JSON.parse(xhRequest.responseText);
-                 msjRespuesta("Su solicitud se ha procesado con exito...");
+                 if (respuesta.msj != "") respuesta.msj2 = "Se proceso con exito....";
+                 msj2Respuesta(respuesta.msj2);
                  $("#medicinaagregada").html("");
                  llenarmedicina();
-                 var ventana = window.open("medicinaAltoCosto.html?id="+militar.Persona.DatoBasico.cedula, "_blank");
+                 var idm = militar.Persona.DatoBasico.cedula;
+                 //var ventana = window.open("medicinaAltoCosto.html?id="+idm + "&nm=" +respuesta.msj , "_blank");
+                 var ventana = window.open("medicinaAltoCosto.html?id="+idm , "_blank");
              });
         }
     } else {
         $.notify("Debe ingresar todos los datos para realizar el reembolso");
     }
+
+       /* request2.then(function(xhRequest) {
+        res = JSON.parse(xhRequest.responseText);
+        if (res.msj != "") res.msj2 = "Se proceso con exito....";
+          msj2Respuesta(res.msj2);
+        var idm = militar.Persona.DatoBasico.cedula;
+        var ventana = window.open("rpt/carta/cartaAval.html?id="+idm + "&nm=" +res.msj , "_blank");
+    });
+      }else {
+        $.notify("Debe ingresar todos los datos para realizar la Carta Aval");
+    }*/
 }
 
 function CargarMedicina(OMedicina){
