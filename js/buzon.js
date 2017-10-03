@@ -16,6 +16,7 @@ let posicionModificar = null;
 function listaBuzon(est) {
 
     //Reembolso
+    $("#lista").html('');
     var url = Conn.URL + "wreembolso/listar/" + est;
     var promesa = CargarAPI({
         sURL: url,
@@ -28,6 +29,7 @@ function listaBuzon(est) {
     });
 
     //Apoyo
+    $("#listaApoyo").html('');
     var url2 = Conn.URL + "wapoyo/listar/" + est;
     var promesaApoyo = CargarAPI({
         sURL: url2,
@@ -176,7 +178,6 @@ function aprobarReembolso(num, est, id) {
       numero: num,
       estatus: parseInt(est) + 1
     };
-
     var promesa = CargarAPI({
         sURL: url,
         metodo: 'PUT',
@@ -186,9 +187,8 @@ function aprobarReembolso(num, est, id) {
         respuesta = JSON.parse(xhRequest.responseText);
         if(respuesta.msj == "") respuesta.msj = "Se proceso con exito....";
         $.notify(respuesta.msj, "success");
+        listaBuzon(est);
         volverLista();
-        var ipos = parseInt(est) - 1;
-        listaBuzon( ipos );
     });
 }
 
@@ -217,9 +217,9 @@ function rechazarReembolso(num, est, id) {
         respuesta = JSON.parse(xhRequest.responseText);
         if(respuesta.msj == "") respuesta.msj = "Se proceso con exito....";
         $.notify(respuesta.msj);
+        listaBuzon(est);
         volverLista();
-        var ipos = parseInt(est) - 1;
-        listaBuzon( ipos );
+
     });
 
 }
@@ -254,6 +254,13 @@ function llenarBuzonReembolso(numero,est) {
     $('#lblgrado').text(militarActivo.Grado.descripcion);
     $('#lblsituacion').text(Util.ConvertirSitucacion(militarActivo.situacion));
     $('#lblnumero').text(numero);
+    militarActivo.CIS.ServicioMedico.Programa.Reembolso.forEach(v => {
+
+      if(v.numero == numero){
+        $("#lblfechasolicitud").html(Util.ConvertirFechaHumana(v.fechacreacion));
+      }
+    });
+
     $('#lblcomponente').text(militarActivo.Componente.descripcion);
 
     var rutaimg = Conn.URLIMG;
