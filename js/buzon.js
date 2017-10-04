@@ -301,6 +301,7 @@ function crearTablaConceptos(numero,est) {
         jj.push(v.afiliado);
         $("#cuerpoEditarConceptos").append(CargarDetalleConcepto(v, est));
     });
+    var mntformato = numeral(parseFloat(CReembolso.montosolicitado.toFixed(2))).format('0,0.00');
     $("#totalter").html(CReembolso.montosolicitado.toFixed(2));
     $("#totalapro").html(CReembolso.montoaprobado);
     $(".borrarconcepto").click(function () {
