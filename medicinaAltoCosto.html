@@ -84,12 +84,12 @@
     <table border="0">
         <tr>
             <td style="width: 38%"><img src="images/lg.png" style="float: left; width:15%;">
-                <left><p style="font-size: 12px; text-align: center"> REPUBLICA BOLIVARIANA DE VENEZUELA <br>
+                <center><p style="font-size: 12px; text-align: center"> REPUBLICA BOLIVARIANA DE VENEZUELA <br>
                     MINISTERIO DEL PODER
                     POPULAR PARA LA DEFENSA<br>VICEMINISTERIO DE SERVICIOS<br>DIRECCIÓN GENERAL DE EMPRESAS Y
                     SERVICIOS<br>
                     INSTITUTO DE PREVISIÓN SOCIAL DE LA FUERZA ARMADA<br>
-                    GERECIA DE BIENESTAR Y SEGURIDAD SOCIAL</p></left>
+                    GERECIA DE BIENESTAR Y SEGURIDAD SOCIAL</p></center>
             </td>
         </tr>
     </table>
@@ -103,12 +103,12 @@
             Caracas, <label id="lblfecha">(FECHA)</label>
         </td>
     </table>
-    <table width="70%">
+    <table width="60%">
         <tr>
             <td class="centrar"><h2>AUTORIZACIÓN</h2></td>
         </tr>
     </table>
-    <table width="70%" class="justificar" style="font-size: 25px">
+    <table width="70%" class="justificar" style="font-size: 13px">
         <td style="text-align: justify">
             <p class="justificar" id="fam" style="display: none;">
               Quien suscribe, CNEL. MARTINEZ SALAS EDUARDO JOSÉ titular de la cedula de identidad Nº 7.391.293, Gerente de Bienestar y Seguridad Social del IPSFA, por medio de la presente autorizo plenamente al BANCO DE DROGAS Y ANTINEOPLÁSICAS (BADAN), para que entregue a el(la) ciudadano(a) <label id="nombreafil"></label> titular de la cedula de identidad Nº <label id="cedulaafil"></label> quien es <label id="parentescoafil"></label> de el(la) <label id="lblgrado"></label> <label id="lblnombre"></label>, quien a su vez es miembro de la Fuerza Armada Nacional Bolivariana, el(los) medicamento(s) que se detallan a continuacion, avalado con el recipe médico correspondiente. El tratamiento a suministrar corresponde al periodo comprendido del <label id="fechainicio"></label> hasta el <label id="fechavenc"></label>.
@@ -221,7 +221,7 @@
                 $("#lblcedula2").text(militar.Persona.DatoBasico.cedula);
                 $("#lblcomponente2").text(militar.Componente.descripcion);
             	$("#lblgrado2").text(militar.Grado.descripcion);
-                var posicion =34;
+                var posicion =35;
                 if(pos == undefined){
                   militar.CIS.Gasto.MedicinaAltoCosto.forEach( v => {
                     if ( v.numero == numero ){

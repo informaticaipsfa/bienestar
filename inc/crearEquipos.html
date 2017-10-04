@@ -29,21 +29,70 @@
                             </div>
                             <div class="row">
                               <div class="col-md-3 col-sm-12">
-                                <label>Fecha informe médico:</label>
-                                <input id="txtFechaInf" class="form-control" type="text" required>
+                                <label>Fecha Informe:</label>
+                                <div class="input-group date" style="z-index: 1030;">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <div class="input-group input-group" style="width: 100%;">
+                                        <input type="text" class="form-control" id="txtFechaInfM"
+                                               required="required">
+                                    </div>
+                                </div>
                               </div>
-                              <div class="col-md-6 col-sm-12">
+                              <div class="col-md-3 col-sm-12">
                                 <label>Equipo Médico:</label>
                                 <select class="form-control" style="width: 100%" id="cmbEquipo" required="required">
                                     <option selected="selected" value="S"></option>
                                     <option value="0">MULETAS</option>
+                                    <option value="1">BASTON 1 PUNTO</option>
                                     <option value="1">BASTON 4 PUNTOS</option>
+                                    <option value="1">SILLA DE RUEDAS</option>
+                                    <option value="1">ANDADERAS</option>
                                 </select>
                               </div>
                               <div class="col-md-3 col-sm-12">
                                 <label>Serial:</label>
                                   <input id="txtSerial" class="form-control" type="text" >
                                 </select>
+                              </div>
+                              <div class="col-md-3 col-sm-12">
+                                <label>Inicio de Prestamo:</label>
+                                <div class="input-group date" style="z-index: 1030;">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <div class="input-group input-group" style="width: 100%;">
+                                        <input type="text" class="form-control" id="txtFechaIniP"
+                                               required="required">
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-3 col-sm-12">
+                                <label>Fin de Prestamo:</label>
+                                <div class="input-group date" style="z-index: 1030;">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <div class="input-group input-group" style="width: 100%;">
+                                        <input type="text" class="form-control" id="txtFechaFinP"
+                                               required="required" readonly onblur="calcularFechaFin()">
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="col-md-3 col-sm-12">
+                                <label>Fecha de Prorroga:</label>
+                                <div class="input-group date" style="z-index: 1030;">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <div class="input-group input-group" style="width: 100%;">
+                                        <input type="text" class="form-control" id="txtFechaProrrogaP"
+                                               required="required" readonly onblur="calcularFechaP()">
+                                    </div>
+                                </div>
                               </div>
                             </div>
                             </br>
@@ -174,7 +223,7 @@
 
                                     <a class="btn btn-app btn-success pull-right"
                                        style="margin-right: 10px; background-color: #337ab7; color: white;"
-                                       onclick="generarActa()" id="_btnSavlvar">
+                                       onclick="generarEquipo()" id="_btnSavlvar">
                                         <i class="fa fa-file"></i>&nbsp;&nbsp;Generar
                                     </a>
                                     <br><br>
@@ -188,13 +237,51 @@
     </div>
 </div>
 
-<script>
-    $('#txtFechaInf').datepicker({
-      autoclose: true,
-      format: "dd/mm/yyyy",
-      language: 'es'
+<script type="text/javascript">
+    $('#txtFechaInfM').datepicker({
+        autoclose: true,
+        format: "dd/mm/yyyy",
+        language: 'es',
+        endDate: "+0d",
+        //changeDate: function () {
+          //  validaFechaFactura(30)
+      //  }
+    //}).on("changeDate", function (e) {
+        //validaFechaFactura(60);
     });
-
+    $('#txtFechaIniP').datepicker({
+        autoclose: true,
+        format: "dd/mm/yyyy",
+        language: 'es',
+        endDate: "+0d",
+        //changeDate: function () {
+          //  validaFechaFactura(30)
+        //}
+    //}).on("changeDate", function (e) {
+        //validaFechaFactura(60);
+    });
+    $('#txtFechaFinP').datepicker({
+        autoclose: true,
+        format: "dd/mm/yyyy",
+        language: 'es',
+        //endDate: "+0d",
+        changeDate: function () {
+            calcularFechaFin(30)
+        }
+    }).on("changeDate", function (e) {
+        validaFechaFactura(30);
+    });
+    $('#txtFechaProrrogaP').datepicker({
+        autoclose: true,
+        format: "dd/mm/yyyy",
+        language: 'es',
+      //  endDate: "+0d",
+        //changeDate: function () {
+          //  validaFechaFactura(30)
+        //}
+    //}).on("changeDate", function (e) {
+        //validaFechaFactura(60);
+    });
     $('[data-mask]').inputmask();
 </script>
 
