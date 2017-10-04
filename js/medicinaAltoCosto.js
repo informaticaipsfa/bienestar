@@ -255,10 +255,12 @@ function generarMedicina() {
 
              promesa.then(function (xhRequest) {
                  respuesta = JSON.parse(xhRequest.responseText);
-                 msjRespuesta("Su solicitud se ha procesado con exito...");
+                 if (respuesta.msj != "") respuesta.msj2 = "Se proceso con exito....";
+                 msj2Respuesta(respuesta.msj2);
                  $("#medicinaagregada").html("");
                  llenarmedicina();
-                 var ventana = window.open("medicinaAltoCosto.html?id="+militar.Persona.DatoBasico.cedula, "_blank");
+                 var idm = militar.Persona.DatoBasico.cedula;
+                 var ventana = window.open("medicinaAltoCosto.html?id="+idm , "_blank");
              });
         }
     } else {
