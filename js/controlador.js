@@ -207,8 +207,42 @@ function IniciarSesion(){
 }
 
 
+
+
+
+
+let Usuario = {};
+class Menu {
+  constructor() {}
+  ValidarPrivilegio(Json){
+    var Menu = Json.perfil.privilegio;
+  }
+  //Crear Menu Dinamicamente
+  Crear(Json) {
+
+      var e = sessionStorage.getItem("ipsfaToken");
+      var s = e.split(".");
+      var MenuJS = JSON.parse(atob(s[1]));
+      var Menu = MenuJS.Usuario.Perfil.Menu;
+      var cadena = "<li class='header'>Menu</li>";
+      Menu.forEach(v => {
+        if(v.url != undefined){
+          cadena += `<li><a href="${v.url}"><i class="${v.icono}"></i><span>${v.nombre}</span></a></li>`;
+        }else{
+          cadena += `<li><a href="#" onclick="${v.accion}"><i class="${v.icono}"></i><span>${v.nombre}</span></a></li>`;
+        }
+      });
+			$('#_menu').html(cadena);
+        verificarPrivilegioUsuario();
+  }
+}
+
+
+
+
 var Conn = new Conexion();
 var Estados = new Estado();
+var Mnu = new Menu();
 $(function () {
 
 
@@ -250,8 +284,33 @@ $(function () {
   });
   numeral.locale('es-es');
   IniciarSesion();
-
+  Mnu.Crear("Cargar...");
 });
+
+
+function verificarPrivilegioUsuario(){
+    $.each(Usuario.Perfil.Privilegios,function (privilegio) {
+        switch (this.nombre){
+            case "afiliacion.salvar":
+                $(".prvsalvar").attr("disabled",false);
+                $(".prvsalvar").removeClass('hide');
+                break;
+            case "afiliacion.modificar":
+                $(".prvmodificar").attr("disabled",false);
+                $(".prvmodificar").removeClass('hide');
+                break;
+            case "afiliacion.carnet":
+                $(".prvcarnet").attr("disabled",false);
+                $(".prvcarnet").removeClass('hide');
+                break;
+            case "afiliacion.constancia":
+                $(".prvcontancia").attr("disabled",false);
+                $(".prvcontancia").removeClass('hide');
+                break;
+
+        }
+    })
+}
 
 function CiudadMunicipio(valor){
     if (valor == undefined){
