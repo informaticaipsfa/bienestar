@@ -207,7 +207,7 @@ function generarEquipo(){
     equipo.fechainforme = $("#txtFechaInfM").val();
     equipo.serial = $("#txtSerial").val();
 
-    equipos.afiliado = beneficiario;
+    equipo.afiliado = beneficiario;
     equipo.fechainicio = $("#txtFechaIniP").val();
     equipo.fechavencimiento = $("#txtFechaFinP").val();
     equipo.fechaprorroga = $("#txtFechaProrrogaP").val();
@@ -244,7 +244,7 @@ function generarEquipo(){
 
 console.log(wequipo);
 			console.log(JSON.stringify(wequipo));
-    var urlGuardar = Conn.URL + "wcarta";
+    var urlGuardar = Conn.URL + "wequipo";
     var request2 = CargarAPI({
         sURL: urlGuardar,
         metodo: 'POST',

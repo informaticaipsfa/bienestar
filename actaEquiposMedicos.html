@@ -275,12 +275,6 @@
         $("#lblmontot").text(numeral(parseFloat(carta.montosolicitado)).format('0,0.00'));
         $("#lblmontot2").text(numeral(parseFloat(carta.montosolicitado)).format('0,0.00'));
 
-        var txttotipsfa = numeroALetras(carta.montosolicitado);
-        $("#txtmontoipsfa").html(txttotipsfa);
-
-        var txttotipsfa2 = numeroALetras(carta.montosolicitado);
-        $("#txtmontoipsfa2").html(txttotipsfa2);
-
         var concep = militar.CIS.ServicioMedico.Programa.CartaAval[pos];
 
         $.each(concep.Concepto, function () {
@@ -321,21 +315,7 @@
             $("#lblporafi").text(numeral(parseFloat(this.porcentajeafi)).format('0,0.00'));
             $("#montoafi").text(numeral(parseFloat(this.montoafiliado)).format('0,0.00'));
 
-            var txttotpre2 = numeroALetras(presupuesto);
-            $("#txtmontopre2").html(txttotpre2);
 
-            var poripsfa = (numeral(100-(parseFloat(this.porcentajeafi))).format('0,0.00'));
-            $("#lblporipsfa").html(poripsfa);
-            //text(numeral(parseFloat(this.porcentajeafi)).format('0,0.00'));
-
-            var txttotpre = numeroALetras(this.montopresupuesto);
-            $("#txtmontopre").html(txttotpre);
-
-            var txttotseg = numeroALetras(this.montoseguro);
-            $("#txtmontoseg").html(txttotseg);
-
-            var txttotafi = numeroALetras(this.montoafiliado);
-            $("#txtmontoafi").html(txttotafi);
 
             $("#cedulaafil").html(cedulaa);
             $("#nombreafil").html(nombrea);
