@@ -10,15 +10,32 @@ $(function () {
         verificaCheckModal("requisitos", "btnAgconcepto");
     });
 
+    $(".mdl-requisitos0").on("change", function () {
+        verificaCheckModal("requisitostratamiento", "btnAgconcepto");
+    });
+
     $(".mdl-requisitos2").on("change", function () {
         verificaCheckModal("requisitosconsultas", "btnAgconcepto");
     });
     $(".mdl-requisitos3").on("change", function () {
-        verificaCheckModal("requisitoshosp", "btnAgconcepto");
+        verificaCheckModal("requisitosortopedia", "btnAgconcepto");
     });
     $(".mdl-requisitos4").on("change", function () {
+        verificaCheckModal("requisitosmedicos", "btnAgconcepto");
+    });
+    $(".mdl-requisitos5").on("change", function () {
         verificaCheckModal("requisitostratamiento", "btnAgconcepto");
     });
+    $(".mdl-requisitos6").on("change", function () {
+        verificaCheckModal("requisitosgeriatrico", "btnAgconcepto");
+    });
+    $(".mdl-requisitos7").on("change", function () {
+        verificaCheckModal("requisitoshosp", "btnAgconcepto");
+    });
+    $(".mdl-requisitos9").on("change", function () {
+        verificaCheckModal("requisitoslentes", "btnAgconcepto");
+    });
+
 
     llenarReembolso();
     $(".btnvolverentradar").click(function () {
@@ -326,7 +343,7 @@ function cargarDatos() {
             wreembolso.Reembolso = reembolso;
             wreembolso.nombre = militar.Persona.DatoBasico.nombreprimero.trim() + " " + militar.Persona.DatoBasico.apellidoprimero.trim();
             wreembolso.observaciones = $("#txtobservaciones").val().toUpperCase();
-            
+
             var urlGuardar = Conn.URL + "wreembolso";
             var promesa = CargarAPI({
                 sURL: urlGuardar,
