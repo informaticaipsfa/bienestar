@@ -2,6 +2,14 @@
 <html>
 <head>
     <meta charset="utf-8">
+
+
+    <script src="../../bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="../../bower_components/formato/numeral.js"></script>
+    <script src="../../js/utilidad.js"></script>
+    <script src="../../js/militar.js"></script>
+    <script src="../../js/config.js"></script>
+    <script src="../../js/controlador.js"></script>
     <style>
         .filaconcep{
             font-size: 12px;
@@ -70,7 +78,7 @@
 
         <table class="tcontenedor" border=0>
             <tr>
-                <td style="width: 38%"><img src="images/lg.png" style="float: left">
+                <td style="width: 38%"><img src="../../../images/lg.png" style="float: left">
                     <center><p style="font-size: 8px"> REPUBLICA BOLIVARIANA DE VENEZUELA <br> MINISTERIO DEL PODER
                         POPULAR PARA LA DEFENSA<br>VICEMINISTERIO DE SERVICIOS<br>DIRECCIÓN GENERAL DE EMPRESAS Y SERVICIOS<br>
                         INSTITUTO DE PREVINSIÓN SOCIAL DE LA FUERZA ARMADA<br>
@@ -307,23 +315,20 @@
 
     <div id="boton">
         <br>
-        <input type="button" value="Imprimir" onclick="imprimir()">
+        <input type="button" id="btnPrint" value="Imprimir" onclick="imprimir()">
     </div>
 </center>
 
 </body>
-<script src="../../bower_components/jquery/dist/jquery.min.js"></script>
-<script src="../../bower_components/formato/numeral.js"></script>
-<script src="../../js/utilidad.js"></script>
-<script src="../../js/militar.js"></script>
-<script src="../../js/config.js"></script>
-<script src="../../js/controlador.js"></script>
+
 <script>
     function imprimir() {
-        document.getElementById('btnPrint').style.display = 'none';
+        $('#btnPrint').hide();
         window.print();
         window.close();
-    }
+    };
+
+
     let pos='';
     $(function () {
         numeral.locale('es-es');
@@ -342,12 +347,10 @@
         };
         var id = $.obtener("id");
         pos = $.obtener("pos");
-        console.log(id);
         Buscar(id);
     });
 
     function Buscar(id) {
-        console.log(militar);
         if (id != undefined) {
             $("#_cedula").val(id);
         }
@@ -397,7 +400,6 @@
 
             $("#lblsituacion").text(Util.ConvertirSitucacion(militar.situacion));
             var defestados = JSON.parse(sessionStorage.getItem("ipsfaEstado"));
-            console.log(defestados);
             if (militar.Persona.Direccion != undefined) {
                 var DIR = militar.Persona.Direccion[0];
                 Estados.ObtenerEstados();
@@ -423,11 +425,8 @@
             pos=militar.CIS.ServicioMedico.Programa.Reembolso.length;
             pos--;
         }
-        console.log(pos);
 
         var reem = militar.CIS.ServicioMedico.Programa.Reembolso[pos];
-        console.log(reem);
-        console.log(reem.CuentaBancaria.institucion);
         $("#lblnsolicitud").text(reem.numero);
         $("#lblfecha").text(Util.ConvertirFechaHumana(reem.fechacreacion));
         $("#lblbanco").text(Util.ConvertirBanco(reem.CuentaBancaria.institucion));
