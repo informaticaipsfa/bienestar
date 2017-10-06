@@ -111,8 +111,9 @@ function salvarEmpresa() {
 }
 
 function llenarReembolso() {
-    $("#cmbbeneficiario").html('<option selected="selected" value="S"></option>');
+
     $("#datosbancarios").html('<option selected="selected" value="S"></option>');
+
     $("#_cargando").hide();
     if (militar.Persona != undefined) {
         var ncompleto = militar.Persona.DatoBasico.nombreprimero + " " + militar.Persona.DatoBasico.apellidoprimero;
@@ -179,27 +180,34 @@ function listaCuentas() {
 }
 
 function crearLista() {
-    $("#cmbbeneficiario").append(new Option(militar.Persona.DatoBasico.nombreprimero + "(MILITAR)", "T|" + militar.Persona.DatoBasico.cedula, true, true));
-    var ncompleto = militar.Persona.DatoBasico.nombreprimero + " " + militar.Persona.DatoBasico.apellidoprimero;
+    $("#cmbbeneficiario").append(new Option(militar.Persona.DatoBasico.nombreprimero.trim() + "(MILITAR)", "T|" + militar.Persona.DatoBasico.cedula, true, true));
+    var ncompleto = militar.Persona.DatoBasico.nombreprimero.trim() + " " + militar.Persona.DatoBasico.apellidoprimero.trim();
     $("#depositar").append(new Option(ncompleto, militar.Persona.DatoBasico.cedula, true, true));
     if (militar.Familiar.length > 0) {
-        $.each(militar.Familiar, function (v) {
-            var edad = Util.CalcularEdad(Util.ConvertirFechaHumana(this.Persona.DatoBasico.fechanacimiento));
-            var ncompleto2 = this.Persona.DatoBasico.nombreprimero + " " + this.Persona.DatoBasico.apellidoprimero;
-            if (edad > 18) {
+        var iposicion = 0;
+        militar.Familiar.forEach(v => {
 
-                $("#depositar").append(new Option(ncompleto2, this.Persona.DatoBasico.cedula, true, true));
+            var edad = Util.CalcularEdad(Util.ConvertirFechaHumana(v.Persona.DatoBasico.fechanacimiento));
+            var ncompleto2 = v.Persona.DatoBasico.nombreprimero.trim() + " " + v.Persona.DatoBasico.apellidoprimero.trim();
+            if (edad > 18) {
+                $("#depositar").append(new Option(ncompleto2, iposicion + "|" + v.Persona.DatoBasico.cedula, false, false));
             }
-            var parentes = Util.ConvertirParentesco(this.parentesco, this.Persona.DatoBasico.sexo);
-            $("#cmbbeneficiario").append(new Option(ncompleto2 + "(" + parentes + ")", v + "|" + this.Persona.DatoBasico.cedula, true, true));
+            var parentes = Util.ConvertirParentesco(v.parentesco, v.Persona.DatoBasico.sexo);
+            $("#cmbbeneficiario").append(new Option(ncompleto2 + "(" + parentes + ")", iposicion + "|" + v.Persona.DatoBasico.cedula, true, true));
+            iposicion++;
+            console.log(v.Persona.DatoBasico.cedula);
         });
     }
     $("#depositar").append(new Option("Seleccione", "", true, true));
 
+    $('#cmbbeneficiario').val("S").trigger('change');
+    $('#concepto').val("S").trigger('change')
+
     $("#cmbbeneficiario").on("change", function () {
         var opt = $("#cmbbeneficiario option:selected").val();
         var picado = $("#cmbbeneficiario option:selected").val().split("|");
-        if (opt != '|seleccione' && picado[0] != "T") {
+
+        if (opt != '|seleccione' && picado[0] != "T" && picado[0] != "S") {
             cargarFamiliar(picado[0]);
             $("#perfilFamiliar").show();
         } else {
@@ -210,6 +218,8 @@ function crearLista() {
     $("#cmbbeneficiario").select2({
         templateResult: formatoCombo
     });
+
+
 }
 
 function cedulaDepositar() {
@@ -271,6 +281,8 @@ function agregarConcepto() {
         calcularAcumulado();
         $.notify("Se ha agregado el concepto", "success");
         $("#cajaConceptos").slideDown("slow");
+        $('#cmbbeneficiario').val("S").trigger('change');
+        $('#concepto').val("S").trigger('change');
         limpiarReembolso();
     }
     return false;
@@ -413,7 +425,7 @@ function verificaBeneficiarioCuenta() {
 function limpiarReembolso() {
     $('#frmreembolso').each(function () {
         this.reset();
-        $("#cmbbeneficiario").select2("val", "");
+
     });
 }
 function limpiarReembolso2() {

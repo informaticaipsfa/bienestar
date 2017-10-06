@@ -527,6 +527,7 @@ function actualizarReembolso(est) {
         });
     }
     EnviarReembolso(CReembolso, observaciones);
+
 }
 
 
@@ -569,6 +570,7 @@ function EnviarReembolso(OReembolso, observaciones){
       if(respuesta.msj == "") respuesta.msj = "Se proceso con exito....";
       msjRespuesta(respuesta.msj);
       listaBuzon(OReembolso.estatus);
+      $('#txtObservacion').val("");
       volverLista();
   });
 }
