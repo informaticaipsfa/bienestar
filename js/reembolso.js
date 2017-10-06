@@ -325,7 +325,9 @@ function cargarDatos() {
             wreembolso.id = militar.Persona.DatoBasico.cedula;
             wreembolso.Reembolso = reembolso;
             wreembolso.nombre = militar.Persona.DatoBasico.nombreprimero.trim() + " " + militar.Persona.DatoBasico.apellidoprimero.trim();
+            wreembolso.observaciones = $("#txtobservaciones").val().toUpperCase();
 
+            //console.log(wreembolso);
             var urlGuardar = Conn.URL + "wreembolso";
             var promesa = CargarAPI({
                 sURL: urlGuardar,

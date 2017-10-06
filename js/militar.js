@@ -568,6 +568,7 @@ class WReembolso {
         this.id = "";
         this.Reembolso = new Reembolso();
         this.nombre = "";
+				this.observaciones = "";
     }
 }
 

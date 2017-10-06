@@ -365,7 +365,6 @@ function CargarDetalleConcepto(v, est){
   }else {
     $("#btnImprimirPlanilla").show();
   }
-  console.log(desabilitar);
 
   return `<tr>
             <td>${parent}</td>
