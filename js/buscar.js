@@ -79,7 +79,7 @@ function ficha() {
         $("#lblgrado").text(militar.Grado.descripcion);
 
         $("#lblcedula").text(militar.Persona.DatoBasico.cedula);
-        
+
 
         var estcivil = Util.GenerarEstadoCivil(militar.Persona.DatoBasico.estadocivil, militar.Persona.DatoBasico.sexo);
 
@@ -335,6 +335,7 @@ function detalleVisible(pos) {
 
     var re = militar.CIS.ServicioMedico.Programa.Reembolso[pos];
     $("#lbldetnumero").text(re.numero);
+    $("#lblfechasoli").text(Util.ConvertirFechaHumana(re.fechacreacion));
 
     var tconcepto = "";
     $.each(militar.CIS.ServicioMedico.Programa.Reembolso[pos].Concepto, function () {
