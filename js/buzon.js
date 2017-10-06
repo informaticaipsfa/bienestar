@@ -380,7 +380,7 @@ function crearTablaConceptos(numero,est) {
             var cestatus = conviertEstatus(CReembolso.estatus);
             var tipo = tipo[0];
             if(tipo[1] != undefined) {
-              $("#cuerpoOpiniones").append(`<tr><td>${tipo}</td><td>${cestatus}</td></tr>`);
+              $("#cuerpoOpiniones").append(`<tr><td>${tipo}</td><td style="width: 10%;text-align: right">${cestatus}</td></tr>`);
             }else {
               $("#cuerpoObservaciones").append(`<tr><td>${v.contenido}</td><td></td></tr>`);
             }
@@ -407,7 +407,8 @@ function CargarDetalleConcepto(v, est){
   }else {
     $("#btnImprimirPlanilla").show();
   }
-
+  var porcentaje = parseFloat(v.DatoFactura.porcentaje).toFixed(2);
+  var montosolic = parseFloat(v.DatoFactura.monto).toFixed(2);
   return `<tr>
             <td>${parent}</td>
             <td>${nombre}</td>
@@ -418,13 +419,13 @@ function CargarDetalleConcepto(v, est){
             <td style="display: none">${v.DatoFactura.Beneficiario.razonsocial}></td>
             <td><input type="text" class="ffactReembolso" value="${fecha}"></input></td>
             <td><input type="text" onblur="calcularPorcen(this,'r')" class="mntsoli"
-                onkeypress="return Util.SoloNumero(event,this,true)"
-                value="${v.DatoFactura.monto}"></td>
-            <td><input type="number" class="porcentajecalculo"
-                onkeypress="return Util.SoloNumero(event,this)"
-                value="${v.DatoFactura.porcentaje}" onblur="calcularPorcen(this,'r')" ${desabilitar}></td>
+                onkeypress="return Util.SoloNumero(event,this,true)" style="text-align: right; width:80px"
+                value="${montosolic}"></td>
+            <td><input type="number" class="porcentajecalculo" onblur="calcularPorcen(this,'r')" ${desabilitar}
+                onkeypress="return Util.SoloNumero(event,this)" style="text-align: right; width:55px"
+                value="${porcentaje}"></td>
            <td><input type="text" value="${mntApo}" class="mntAcumulado"
-                onkeypress="return Util.SoloNumero(event,this,true)"
+                onkeypress="return Util.SoloNumero(event,this,true)" style="text-align: right;  width:80px"
                 onblur="calcularAcumulado('r')" ${desabilitar}></td>
            <td style="width: 7%;">
                 <button type="button" class="btn btn-default btn-sm borrarconcepto"
@@ -634,11 +635,11 @@ function cambiarEstatusReembolso(tipo){
 
 function mostrarTextoObservacion(est){
     if(est > 1){
-        $(".lblobser").text(" OPINIÓN");
-        $("#cabObserbaciones").html("OPINIONES");
+        $(".lblobser").text(" Opinión");
+        $("#cabObserbaciones").html("Observaciones");
     }else{
-        $(".lblobser").text(" OBSERVACIÓN");
-        $("#cabObserbaciones").html("OBSERVACIONES");
+        $(".lblobser").text(" Observación");
+        $("#cabObserbaciones").html("Observaciones");
     }
 }
 
@@ -897,8 +898,8 @@ function crearTablaConceptosApoyo(numero,est){
         $("#cuerpoOpinionesApoyo").html('');
         $.each(lstObs, function () {
             var tipo = this.contenido.split("|||");
-            if(tipo[1] != undefined) $("#cuerpoOpinionesApoyo").append('<tr><td>' + tipo[0] + '</td><td>'+conviertEstatus(copia.estatus)+'</td></tr>');
-            else $("#cuerpoObservacionesApoyo").append('<tr><td>' + this.contenido + '</td><td></td></tr>');
+            if(tipo[1] != undefined) $("#cuerpoOpinionesApoyo").append('<tr><td>' + tipo[0] + '</td><td style="width: 10%;text-align: right">'+conviertEstatus(copia.estatus)+'</td></tr>');
+            else $("#cuerpoObservacionesApoyo").append('<tr><td>' + this.contenido + '</td><td style="width: 10%;text-align: right"></td></tr>');
         });
     }
     //activarCambioEstatus();
