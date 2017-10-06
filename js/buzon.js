@@ -7,6 +7,43 @@ let CReembolso = {};
 let copia = null;
 let posicionModificar = null;
 
+
+/**
+* Tipo de Buzón
+*
+* @param int
+* @return void
+*/
+function TipoBuzon(tipo ){
+  switch (tipo) {
+    case 0:
+      return "Recepción de Documentos";
+      break;
+    case 1:
+      return "Jefe de Sección";
+      break;
+    case 2:
+      return "Jefe de Departamento";
+      break;
+    case 3:
+      return "Gerente de Bienestar y Seguridad Social";
+      break;
+    case 4:
+      return "Aprobado";
+      break;
+    case 5:
+      return "Documentos Pendientes";
+      break;
+    case 0:
+      return "Reportes";
+      break;
+    default:
+      return "Recepción de Documentos";
+      break;
+  }
+}
+
+
 /**
 * Listar Buzones
 *
@@ -14,6 +51,8 @@ let posicionModificar = null;
 * @return void
 */
 function listaBuzon(est) {
+
+
 
     //Reembolso
     $("#lista").html('');
@@ -26,6 +65,7 @@ function listaBuzon(est) {
     promesa.then(function (xhRequest) {
         lstBuzon = JSON.parse(xhRequest.responseText);
         if(lstBuzon != null) crearBuzon(est);
+        $("#_htitulo").html(TipoBuzon(est));
     });
 
     //Apoyo
@@ -39,6 +79,7 @@ function listaBuzon(est) {
     promesaApoyo.then(function (xhRequest) {
         lstBuzonApoyo = JSON.parse(xhRequest.responseText);
         if(lstBuzonApoyo != null) crearBuzonApoyo(est);
+        $("#_htitulo").html(TipoBuzon(est));
     });
 
 
@@ -51,6 +92,7 @@ function listaBuzon(est) {
 * @return void
 */
 function crearBuzon(est) {
+
     $("#lista").html(`<li style="background-color:#CCCCCC">
                     <div class="row" >
                         <div class="col-sm-1" ><b>Reembolso</b></div>
