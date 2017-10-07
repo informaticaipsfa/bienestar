@@ -46,6 +46,82 @@ $(function () {
     });
 });
 
+
+
+function agregarConcepto() {
+    if (Util.ValidarFormulario("frmapoyoeconomico", "btnAgconcepto")) {
+      var bene = $("#cmbbeneficiario option:selected").val().split('|');
+      var beneficiario = bene[1] + "-" + $("#cmbbeneficiario option:selected").text();
+      var concepto = $("#cmbconcepto option:selected").text();
+      var patologia = $("#patologia").val();
+
+      var tipo = $("#cmbtipoayuda option:selected").text();
+      var rif = $("#rif").val();
+      var razon = $("#razonsocial").val();
+
+      var numerofactura = $("#numerofactura").val();
+      var fechafactura = $("#fechafactura").val();
+
+      var montofactura = $("#montofactura").val();
+      var montoacubrir = $("#montoacubrir").val();
+      var montootroaporte = $("#montootroaporte").val();
+      var montosolicitado = $("#montosolicitado").val();
+
+
+      var tabla = $("#conceptoagregado");
+      var btndelete = "<button class='btn btn-danger borrarconcepto'><i class='glyphicon glyphicon-remove'></i></button>";
+      var html = `<tr>
+          <td>${beneficiario}</td>
+          <td>${concepto}</td>
+          <td>${patologia}</td>
+          <td>${tipo}</td>
+          <td>${rif}</td>
+          <td>${razon}</td>
+          <td>${numerofactura}</td>
+          <td>${fechafactura}</td>
+          <td>${montofactura}</td>
+          <td>${montoacubrir}</td>
+          <td>${montootroaporte}</td>
+          <td>${montosolicitado}</td>
+          <td>${btndelete}</td>
+        </tr>`;
+      tabla.append(html);
+
+      $(".borrarconcepto").click(function () {
+          $(this).parents('tr').eq(0).remove();
+          if ($("#conceptoagregado tr").length == 0) {
+              $("#cajaConceptos").slideUp();
+          }
+
+      });
+
+      $.notify("Se ha agregado el concepto", "success");
+      $("#cajaConceptos").slideDown("slow");
+      limpiarApoyo();
+      console.log("Entrando....");
+  }
+  return false;
+}
+
+function limpiarApoyo() {
+  $('#frmapoyoeconomico').each(function () {
+    this.reset();
+  });
+  // $("#patologia").val("S");
+  // $("#cmbtipoayuda option:selected").val("S");
+  // $("#rif").val("");
+  // $("#razonsocial").val("");
+  //
+  // $("#numerofactura").val("");
+  // $("#fechafactura").val("");
+  //
+  // $("#montofactura").val("");
+  // $("#montoacubrir").val("");
+  // $("#montootroaporte").val("");
+  // $("#montosolicitado").val("0");
+  // $('#cmbbeneficiario').val("S").trigger('change');
+}
+
 function consultarRif() {
     var rif = $("#rif").val();
     var rz = '';
@@ -159,13 +235,13 @@ function listaCuentas() {
 }
 
 function crearLista() {
-    $("#cmbbeneficiario").append(new Option(militar.Persona.DatoBasico.nombreprimero + "(MILITAR)", "T|" + militar.Persona.DatoBasico.cedula, true, true));
-    var ncompleto = militar.Persona.DatoBasico.nombreprimero + " " + militar.Persona.DatoBasico.apellidoprimero;
+    $("#cmbbeneficiario").append(new Option(militar.Persona.DatoBasico.nombreprimero.trim() + "(MILITAR)", "T|" + militar.Persona.DatoBasico.cedula, true, true));
+    var ncompleto = militar.Persona.DatoBasico.nombreprimero.trim() + " " + militar.Persona.DatoBasico.apellidoprimero.trim();
     $("#depositar").append(new Option(ncompleto, militar.Persona.DatoBasico.cedula, true, true));
     if (militar.Familiar.length > 0) {
         $.each(militar.Familiar, function (v) {
             var edad = Util.CalcularEdad(Util.ConvertirFechaHumana(this.Persona.DatoBasico.fechanacimiento));
-            var ncompleto2 = this.Persona.DatoBasico.nombreprimero + " " + this.Persona.DatoBasico.apellidoprimero;
+            var ncompleto2 = this.Persona.DatoBasico.nombreprimero.trim() + " " + this.Persona.DatoBasico.apellidoprimero.trim();
             if (edad > 18) {
 
                 $("#depositar").append(new Option(ncompleto2, this.Persona.DatoBasico.cedula, true, true));

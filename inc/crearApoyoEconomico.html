@@ -170,7 +170,7 @@
 </style>
 <div class="body box">
     <div class="container-fluid">
-        <form id="frmtodoapoyo" action="#" method="post">
+
             <div class="row">
                 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                     <div class="panel panel-default">
@@ -190,14 +190,14 @@
                                         <div class="col-md-4 ">
                                             <label>Beneficiario:</label>
                                             <select class="form-control" style="width: 100%" id="cmbbeneficiario"
-                                                    required="required">
+                                                    required>
                                                 <option selected="selected" value="S"></option>
                                             </select>
                                         </div>
                                         <div class="col-md-4 ">
                                             <label>Conceptos:</label>
                                             <select class="form-control" style="width: 100%" id="cmbconcepto"
-                                                    onchange="requisitosConcepto()" required="required">
+                                                    onchange="requisitosConcepto()" required>
                                                 <option selected="selected" value="S"></option>
                                                 <option value="0">EXAMENES ESPECIALES</option>
                                                 <option value="1">TRATAMIENTO ODONTOLOGICO</option>
@@ -222,7 +222,7 @@
 
                                         <div class="col-md-4 ">
                                             <label>Patologia:</label>
-                                            <input class="form-control " id="patologia" required="required">
+                                            <input class="form-control " id="patologia" required>
                                         </div>
                                     </div>
 
@@ -231,7 +231,7 @@
                                             <label>Tipo de Ayuda:</label>
                                             <div>
                                                 <select class="form-control" id="cmbtipoayuda"
-                                                        required="required">
+                                                        required>
                                                     <option selected="selected" value="S"></option>
                                                     <option value="0">CASOS PARTICULARES</option>
                                                     <option value="1">CONVENIO SEGUROS HORIZONTES FONDO DE
@@ -245,14 +245,14 @@
                                             <div class="btn-group-justified" role="group" aria-label="...">
                                                 <div class="btn-group" style="width: 6%;" role="group">
                                                     <input class="form-control" id="rif" onblur="consultarRif()"
-                                                           required="required" placeholder="RIF">
+                                                           required placeholder="RIF">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-sm-12">
                                             <label>Nombre de la Empresa</label>
                                             <input class="form-control" id="razonsocial"
-                                                   required="required" disabled>
+                                                   required disabled>
                                             <input type="hidden" id="emptipo"/>
                                             <input type="hidden" id="empdirec"/>
                                             <input type="hidden" id="empbanco"/>
@@ -263,8 +263,7 @@
                                     <div class="row">
                                         <div class="col-md-4 col-sm-12">
                                             <label>N° de Presupuesto:</label>
-                                            <input class="form-control" id="numerofactura" required="required"
-                                                   onkeypress="return SoloNumero(event)">
+                                            <input class="form-control" id="numerofactura" required>
                                         </div>
                                         <div class="col-md-4 col-sm-12">
                                             <label>Fecha de Presupuesto:</label>
@@ -274,7 +273,7 @@
                                                 </div>
                                                 <div class="input-group input-group" style="width: 100%;">
                                                     <input type="text" class="form-control" id="fechafactura"
-                                                           required="required">
+                                                           required>
                                                 </div>
                                             </div>
                                         </div>
@@ -283,7 +282,7 @@
                                         <div class="col-md-6 col-sm-12">
                                             <label>Monto Total del Presupuesto:</label>
                                             <div class="input-group date" style="z-index: 1030;">
-                                                <input class="form-control " id="montofactura" required="required"
+                                                <input class="form-control " id="montofactura" required
                                                        onblur="calcularSolicitado()"
                                                        onkeypress="return Util.SoloNumero(event,this,true)">
                                                 <div class="input-group-addon">
@@ -295,7 +294,7 @@
 
                                             <label>Monto a Cubrir por la Aseguradora:</label>
                                             <div class="input-group date" style="z-index: 1030;">
-                                                <input class="form-control" id="montoacubrir" required="required"
+                                                <input class="form-control" id="montoacubrir" required
                                                        onblur="calcularSolicitado()"
                                                        onkeypress="return Util.SoloNumero(event,this,true)">
                                                 <div class="input-group-addon">
@@ -319,23 +318,81 @@
 
                                             </div>
                                         </div>
-                                        <div class="col-md-6 col-sm-12">
+                                        <div class="col-md-3 col-sm-12">
                                             <label>Monto a Cubrir por el IPSFA:</label>
                                             <div class="input-group date" style="z-index: 1030;">
                                                 <input class="form-control" id="montosolicitado"
-                                                       required="required" disabled>
+                                                       required disabled>
                                                 <div class="input-group-addon">
                                                     <label>Bs.</label>
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="col-md-3 col-sm-12">
+                                          <button class="btn btn-primary btn-success" type="button"
+                                                  onclick="agregarConcepto()"
+                                                  style="margin-top:23px; margin-bottom: 20px;" id="btnAgconcepto">
+                                              AGREGAR CONCEPTOS&nbsp<i
+                                                  class="glyphicon glyphicon-plus" disabled="disabled"></i></button>
+                                        </div>
                                     </div>
 
-                                </form>
+                                    </form>
+                                    <div class="row">
+                                      <div class="box box-primary" id="cajaConceptos" style="display: none">
+                                          <div class="box-header with-border">
+                                              <h3 class="box-title">Conceptos</h3>
+                                          </div>
+                                          <div class="box-body no-padding">
+                                              <div class="table-responsive mailbox-messages">
+                                                  <table class="table table-hover table-striped">
+                                                      <thead class="bg-blue">
+                                                      <tr>
+                                                          <th>Beneficiario</th>
+                                                          <th>Concepto</th>
+                                                          <th>Patologia</th>
+                                                          <th>Tipo</th>
+                                                          <th>Rif</th>
+                                                          <th>Razón Social</th>
+                                                          <th>N° de Presupuesto</th>
+                                                          <th>F. de Presupuesto</th>
+                                                          <th>M. Presupuesto</th>
+                                                          <th>M. A Cubrir</th>
+                                                          <th>Otros Aporte</th>
+                                                          <th>M. Cubrir IPSFA</th>
+                                                          <th>Eliminar</th>
+                                                      </tr>
+                                                      </thead>
+                                                      <tbody id="conceptoagregado">
+                                                      </tbody>
+                                                      <tfoot class="bg-light-blue">
+                                                      <!-- <tr>
+                                                          <th>TOTAL REEMBOLSO</th>
+                                                          <th></th>
+                                                          <th class="detfactconcep"></th>
+                                                          <th class="detfactconcep"></th>
+                                                          <th></th>
+                                                          <th id="mntAcumulado"></th>
+                                                          <th class="detfactconcep"></th>
+                                                          <th></th>
+                                                      </tr> -->
+                                                      </tfoot>
+                                                  </table>
+                                              </div>
+                                          </div>
+                                      </div>
+
+                                    </div> <!-- Fin de Tabla de Conceptos -->
+
+
+
+
+
+
                             </div>
                         </div>
                     </div>
-
+                  <form id="frmtodoapoyo" action="#" method="post">
                     <div class="panel panel-default">
                         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
                            href="#collapseTree" aria-expanded="false" aria-controls="collapseTree">
