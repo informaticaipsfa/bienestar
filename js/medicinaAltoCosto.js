@@ -1,6 +1,4 @@
 $(function () {
-    console.log("Medicina de Alto Costo");
-    console.log(militar);
 
     $("#concepto").select2();
 
@@ -28,13 +26,12 @@ $(function () {
 
 class Medicina {
     constructor() {
-        console.log("Creando Tratamiento Alto Costo");
         this.nombrecomercial = '';
         this.presentacion = '';
         this.dosis = "";
         this.cantidad="";
         this.fechainicio='';
-        this.fechavencimiento=''; 
+        this.fechavencimiento='';
     }
 }
 
@@ -137,19 +134,21 @@ function llenarmedicina(){
 }
 
 function crearLista(){
-    $("#cmbbeneficiario").append(new Option(militar.Persona.DatoBasico.nombreprimero+"(MILITAR)", "T|"+militar.Persona.DatoBasico.cedula, true, true));
-    var ncompleto = militar.Persona.DatoBasico.nombreprimero+ " " + militar.Persona.DatoBasico.apellidoprimero;
+    $("#cmbbeneficiario").append(new Option(militar.Persona.DatoBasico.nombreprimero.trim() + "(MILITAR)", "T|" + militar.Persona.DatoBasico.cedula, true, true));
+    var ncompleto = militar.Persona.DatoBasico.nombreprimero.trim() + " " + militar.Persona.DatoBasico.apellidoprimero.trim();
     $("#depositar").append(new Option(ncompleto,militar.Persona.DatoBasico.cedula , true, true));
     if(militar.Familiar.length > 0){
-        $.each(militar.Familiar,function(v){
-            var edad = Util.CalcularEdad(Util.ConvertirFechaHumana(this.Persona.DatoBasico.fechanacimiento));
-            var ncompleto2 = this.Persona.DatoBasico.nombreprimero+ " " + this.Persona.DatoBasico.apellidoprimero;
-            if(edad > 18){
+        var ipos = 0;
+        militar.Familiar.forEach(v => {
 
-                $("#depositar").append(new Option(ncompleto2, this.Persona.DatoBasico.cedula, true, true));
+            var edad = Util.CalcularEdad(Util.ConvertirFechaHumana(v.Persona.DatoBasico.fechanacimiento));
+            var ncompleto2 = v.Persona.DatoBasico.nombreprimero.trim()  + " " + v.Persona.DatoBasico.apellidoprimero.trim();
+            if(edad > 18){
+                $("#depositar").append(new Option(ncompleto2, v.Persona.DatoBasico.cedula, true, true));
             }
-            var parentes = Util.ConvertirParentesco(this.parentesco,this.Persona.DatoBasico.sexo);
-            $("#cmbbeneficiario").append(new Option(ncompleto2+"("+parentes+")", v+"|"+this.Persona.DatoBasico.cedula, true, true));
+            var parentes = Util.ConvertirParentesco(v.parentesco,v.Persona.DatoBasico.sexo);
+            $("#cmbbeneficiario").append(new Option(ncompleto2+"("+parentes+")", ipos + "|" + v.Persona.DatoBasico.cedula, true, true));
+            ipos++;
         });
     }
     $("#cmbbeneficiario").append(new Option("Seleccione","|seleccione", true, true));
@@ -171,8 +170,6 @@ function crearLista(){
 }
 
 function cargarFamiliar(pos){
-    console.log(pos);
-
     if(pos == "T"){
         if (militar.Persona.Telefono != undefined) {
             $("#txtmtelefono").val(militar.Persona.Telefono.domiciliario);
@@ -197,7 +194,6 @@ function cargarFamiliar(pos){
     }
     $("#perfilFamiliar").show();
     var fami = militar.Familiar[pos];
-    console.log(fami);
     $("#lblcedulaf").text(fami.Persona.DatoBasico.cedula);
     $("#ci").val(fami.Persona.DatoBasico.cedula);
     var ncf = fami.Persona.DatoBasico.nombreprimero+" "+fami.Persona.DatoBasico.apellidoprimero;
@@ -238,30 +234,29 @@ function generarMedicina() {
             $("#medicinaagregada tr").each(function () {
                 lstmedicina.push(CargarMedicina(this));
             });
- 
+
             var wmedicina = new WMedicina();
             wmedicina.id = militar.Persona.DatoBasico.cedula;
             wmedicina.idf = bene[1];
             wmedicina.Medicina = lstmedicina;
             wmedicina.afiliado = beneficiario;
+            console.log(JSON.stringify(wmedicina));
+           var urlGuardar = Conn.URL + "wmedicina";
+           var promesa = CargarAPI({
+               sURL: urlGuardar,
+               metodo: 'POST',
+               valores: wmedicina,
+           });
 
-			console.log(JSON.stringify(wmedicina));
-             var urlGuardar = Conn.URL + "wmedicina";
-             var promesa = CargarAPI({
-                 sURL: urlGuardar,
-                 metodo: 'POST',
-                 valores: wmedicina,
-             });
-
-             promesa.then(function (xhRequest) {
-                 respuesta = JSON.parse(xhRequest.responseText);
-                 if (respuesta.msj != "") respuesta.msj2 = "Se proceso con exito....";
-                 msj2Respuesta(respuesta.msj2);
-                 $("#medicinaagregada").html("");
-                 llenarmedicina();
-                 var idm = militar.Persona.DatoBasico.cedula;
-                 var ventana = window.open("medicinaAltoCosto.html?id="+idm , "_blank");
-             });
+           promesa.then(function (xhRequest) {
+               respuesta = JSON.parse(xhRequest.responseText);
+               if (respuesta.msj != "") respuesta.msj2 = "Se proceso con exito....";
+               msj2Respuesta(respuesta.msj2);
+               $("#medicinaagregada").html("");
+               llenarmedicina();
+               var idm = militar.Persona.DatoBasico.cedula;
+               var ventana = window.open("rpt/medicina/medicinaAltoCosto.html?id="+idm , "_blank");
+           });
         }
     } else {
         $.notify("Debe ingresar todos los datos para realizar el reembolso");
@@ -270,7 +265,7 @@ function generarMedicina() {
 
 function CargarMedicina(OMedicina){
     var medicina = new Medicina();
-    
+
     medicina.nombrecomercial = $(OMedicina).find("td").eq(0).html();
     medicina.presentacion = $(OMedicina).find("td").eq(1).html();
     medicina.dosis = $(OMedicina).find("td").eq(2).html();

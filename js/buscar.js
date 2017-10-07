@@ -655,8 +655,9 @@ function detalleVisibleBadan(pos) {
   badan.Medicina.forEach(v => {
     var fi = Util.ConvertirFechaHumana(v.fechainicio);
     var ff = Util.ConvertirFechaHumana(v.fechavencimiento);
+    var ncomercial = v.nombrecomercial.toUpperCase();
     tconcepto += `<tr>
-        <td>${v.nombrecomercial}</td>
+        <td>${ncomercial}</td>
         <td>${v.presentacion}</td>
         <td>${v.dosis}</td>
         <td>${v.cantidad}</td>

@@ -310,8 +310,6 @@
             pos = militar.CIS.ServicioMedico.Programa.Apoyo.length;
             pos--;
         }
-        console.log(pos);
-
         var apo = militar.CIS.ServicioMedico.Programa.Apoyo[pos];
         $("#lblnsolicitud").text(apo.numero);
         $("#fechacreacion").text(Util.ConvertirFechaHumana(apo.fechacreacion));
