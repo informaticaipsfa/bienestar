@@ -223,7 +223,7 @@ function imprimirrecibocarta(pos) {
         pos--;
     }
     var idm = militar.Persona.DatoBasico.cedula;
-    var ventana = window.open("cartaAval.html?id="+idm + "&pos=" +pos , "_blank");
+    var ventana = window.open("rpt/carta/cartaAval.html?id="+idm + "&pos=" +pos , "_blank");
 }
 
 
@@ -475,12 +475,16 @@ function detalleVisibleApoyo(pos) {
 }
 
 function historicoCarta() {
-    $("#historicoCartas").html('<thead>\n' +
-        '                        <tr class="bg-info"><td class="pbuscar">#Carta</td><td>F. Solicitud</td><td class="pbuscar">N° Presupuesto</td><td style="width: 20%">Monto a cubrir el IPSFA</td><td>Estado</td></tr>\n' +
-        '                        </thead>\n' +
-        '                        <tbody id="cuerpocartas">\n' +
-        '\n' +
-        '                        </tbody>');
+    $("#historicoCartas").html(`<thead>
+        <tr class="bg-info">
+          <td class="pbuscar">#Carta</td>
+          <td>F. Solicitud</td>
+          <td class="pbuscar">N° Presupuesto</td>
+          <td style="width: 20%">Monto a cubrir el IPSFA</td>
+          <td>Estado</td></tr>
+        </thead>
+        <tbody id="cuerpocartas">
+        </tbody>`);
 
     var t = $('#historicoCartas').DataTable({
         destroy: true,
@@ -545,7 +549,6 @@ function historicoCarta() {
                 "<b>" + fcrea + "</b>",
                 listaFact,
                 numeral(parseFloat(this.montosolicitado)).format('0,0[.]00 $'),
-                // numeral(parseFloat(this.montoaprobado)).format('0,0[.]00 $'),
                 est
             ]).draw(false);
             i++;
@@ -720,7 +723,6 @@ function historicoFeDeVida() {
 
         militar.CIS.Investigacion.FeDeVida.forEach(v => {
             var fcrea = Util.ConvertirFechaHumana(v.fechacreacion);
-            console.log(v.numero);
             t.row.add([
                 `<a href='#FeDeVida' onclick="detalleVisibleFeDeVida(${i})">${v.numero}</a>`,
                 v.DatoBasico.Cedula,
