@@ -358,6 +358,10 @@ function validaFechaFactura(n){
 function obtenerEstudio(){
     var motivo = $("#cmbmotivo option:selected").val();
     $("#cmbestudio").val("S");
+    $("#cmbclinica").val("S");
+    $("#cmbclinica").attr("disabled", false);
+    $("#txtfechaseguro").attr("disabled", true);
+
     switch (motivo){
         case "S":
             $("#cmbestudio").attr("disabled",true);
@@ -374,6 +378,9 @@ function obtenerEstudio(){
             $(".estudio").show();
             $(".seguro").hide();
             $(".afiliado").show();
+            $("#cmbclinica").attr("disabled",true);
+            $("#cmbclinica").val("1");
+            rifProveedor();
             break;
         case "1":
             $("#cmbestudio").attr("disabled",false);
