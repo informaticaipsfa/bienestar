@@ -195,7 +195,7 @@ function crearLista() {
             var parentes = Util.ConvertirParentesco(v.parentesco, v.Persona.DatoBasico.sexo);
             $("#cmbbeneficiario").append(new Option(ncompleto2 + "(" + parentes + ")", iposicion + "|" + v.Persona.DatoBasico.cedula, true, true));
             iposicion++;
-            console.log(v.Persona.DatoBasico.cedula);
+          
         });
     }
     $("#depositar").append(new Option("Seleccione", "", true, true));

@@ -99,6 +99,7 @@ function ficha() {
     historico();
     historicoApoyo();
     historicoCarta();
+    historicoBadan();
 }
 
 function cargaPrograma(tipo) {
@@ -324,7 +325,7 @@ function historico() {
             });
         });
     }
-    console.log("Hola mundo testing...");
+
 }
 
 function detalleVisible(pos) {
@@ -337,7 +338,7 @@ function detalleVisible(pos) {
     $("#lbldetnumero").text(re.numero);
     $("#lblfechasoli").text(Util.ConvertirFechaHumana(re.fechacreacion));
 
-    var tconcepto = "";
+    var tconcepto = ``;
     $.each(militar.CIS.ServicioMedico.Programa.Reembolso[pos].Concepto, function () {
         var ffact = Util.ConvertirFechaHumana(this.DatoFactura.fecha);
         tconcepto += "<tr><td>" + this.afiliado + "</td><td>" + this.descripcion + "</td><td>" + this.DatoFactura.Beneficiario.rif + "|" + this.DatoFactura.Beneficiario.razonsocial + "</td> " +
@@ -347,8 +348,8 @@ function detalleVisible(pos) {
     $("#cuerpoLstConceptos").html(tconcepto);
     $("#lstDetalle").show();
     $("#tblTodos").hide();
-
 }
+
 
 function historicoApoyo() {
     $("#historicoApoyos").html(`<thead>
@@ -456,7 +457,7 @@ function detalleVisibleApoyo(pos) {
 
     var apo = militar.CIS.ServicioMedico.Programa.Apoyo[pos];
     $("#lbldetnumeroApoyo").text(apo.numero);
-    var tconcepto = "";
+    var tconcepto = ``;
     $.each(militar.CIS.ServicioMedico.Programa.Apoyo[pos].Concepto, function () {
 
         var ffact = Util.ConvertirFechaHumana(this.DatoFactura.fecha);
@@ -574,7 +575,7 @@ function detalleVisibleCarta(pos) {
 
     var car = militar.CIS.ServicioMedico.Programa.CartaAval[pos];
     $("#lbldetnumeroCarta").text(car.numero);
-    var tconcepto = "";
+    var tconcepto = ``;
     $.each(militar.CIS.ServicioMedico.Programa.CartaAval[pos].Concepto, function () {
         var ffact = Util.ConvertirFechaHumana(this.fechapresupuesto);
         tconcepto += "<tr><td>" + this.afiliado + "</td><td>" + this.motivo + "</td><td>" + this.DatoFactura.Beneficiario.rif + "|" + this.DatoFactura.Beneficiario.razonsocial + "</td> " +
@@ -587,13 +588,96 @@ function detalleVisibleCarta(pos) {
     $("#tblTodos").hide();
 }
 
+
+function historicoBadan() {
+    $("#historicoBadan").html(`<thead>
+          <tr class="bg-info">
+            <td class="pbuscar">Fecha Solicitud</td>
+            <td class="pbuscar">Afiliado</td>
+          </tr>
+          </thead>
+          <tbody id="cuerpoBadan">
+          </tbody>`);
+
+    var t = $('#historicoBadan').DataTable({
+        destroy: true,
+        'paging': false,
+        'lengthChange': true,
+        'searching': true,
+        'ordering': true,
+        'info': false,
+        'autoWidth': false,
+        "aLengthMenu": [[10, 25, 5, -1], [10, 25, 5, "Todo"]],
+        "bStateSave": true,
+        "order": [[1, "desc"]],
+        "language": {
+            "lengthMenu": "Mostar _MENU_ filas por pagina",
+            "zeroRecords": "Nada que mostrar",
+            "info": "Mostrando _PAGE_ de _PAGES_",
+            "infoEmpty": "No se encontro nada",
+            "infoFiltered": "(filtered from _MAX_ total records)",
+            "search": "Buscar",
+            "paginate": {
+                "first": "Primero",
+                "last": "Ultimo",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            },
+        },
+    });
+    t.clear().draw();
+
+
+    if (militar.CIS.Gasto.MedicinaAltoCosto != undefined && militar.CIS.Gasto.MedicinaAltoCosto.length > 0) {
+        var i = 0;
+        militar.CIS.Gasto.MedicinaAltoCosto.forEach(v => {
+            var fcrea = Util.ConvertirFechaHumana(v.fecha);
+            t.row.add([
+                `<a href='#Badan' onclick="detalleVisibleBadan(${i})">${fcrea}</a>`,
+                v.afiliado
+            ]).draw(false);
+            i++;
+        });
+
+    }
+}
+
+
+function detalleVisibleBadan(pos) {
+  if (pos == null) {
+      pos = militar.CIS.Gasto.MedicinaAltoCosto.length;
+      pos--;
+  }
+  var badan = militar.CIS.Gasto.MedicinaAltoCosto[pos];
+  $("#lblfechasolibadan").text(Util.ConvertirFechaHumana(badan.fecha));
+
+  var tconcepto = ``;
+  badan.Medicina.forEach(v => {
+    var fi = Util.ConvertirFechaHumana(v.fechainicio);
+    var ff = Util.ConvertirFechaHumana(v.fechavencimiento);
+    tconcepto += `<tr>
+        <td>${v.nombrecomercial}</td>
+        <td>${v.presentacion}</td>
+        <td>${v.dosis}</td>
+        <td>${v.cantidad}</td>
+        <td>${fi}</td>
+        <td>${ff}</td></tr>`;
+  });
+
+  tconcepto += "</table>";
+  $("#cuerpoLstBadan").html(tconcepto);
+  $("#lstDetalleBadan").show();
+  $("#tblTodos").hide();
+}
+
+
+
 function VerCambiarClave(){
     $("#modCambiarClaveUsuario").modal("show");
 }
 
 function cambiarClave(){
     var clave = new Clave();
-    //console.log(clave);
     if (Util.ValidarFormulario("formcusuario") == false) {
         Util.MensajeFormulario("formcusuario","msjcambio");
     }else{

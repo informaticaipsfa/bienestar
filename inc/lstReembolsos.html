@@ -73,6 +73,32 @@
             </div>
         </div>
     </div>
+
+
+        <div class="row" id="tblbadan">
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border bg-light-blue">
+                        <h3 class="box-title">Historico de Medicina Alto Costo </h3>
+                        <button type="button" class="btn btn-default btn-sm pull-right" onclick="PanelOpciones()"><i class="fa fa-reply"></i></button>
+                        <!-- /.box-tools -->
+                    </div>
+                    <!-- /.box-header -->
+
+                    <div class="box-body no-padding">
+                        <div class="table-responsive mailbox-messages" style=" overflow-x: hidden;  ">
+                            <table class="table table-bordered" id="historicoBadan">
+
+                            </table>
+                            <!-- /.table -->
+                        </div>
+                        <!-- /.mail-box-messages -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     <div clas="row">
         <div class="col-md-12">
             <a class="btn btn-app btn-success pull-left" href="#!" onclick="PanelOpciones()"><i
@@ -96,9 +122,9 @@
                 <!-- /.mailbox-read-info -->
                 <div class="mailbox-controls with-border text-center">
                     <div class="btn-group">
-                        <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip"
-                                data-container="body" onclick="PanelListadoDetallado()"
-                                title="Reply">
+                        <button type="button" class="btn btn-default btn-sm"
+                                 onclick="PanelListadoDetallado()"
+                                title="Atrás">
                             <i class="fa fa-reply"></i></button>
                     </div>
                 </div>
@@ -118,6 +144,9 @@
                         </thead>
                         <tbody id="cuerpoLstConceptos"></tbody>
                     </table>
+                    <table class='table table-responsive table-bordered' id="cuerpoLstBada">
+                    </table>
+
                 </div>
                 <!-- /.mailbox-read-message -->
             </div>
@@ -136,9 +165,8 @@
                 <!-- /.mailbox-read-info -->
                 <div class="mailbox-controls with-border text-center">
                     <div class="btn-group">
-                        <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip"
-                                data-container="body" onclick="PanelListadoDetallado()"
-                                title="Reply">
+                        <button type="button" class="btn btn-default btn-sm" onclick="PanelListadoDetallado()"
+                                title="Atrás">
                             <i class="fa fa-reply"></i></button>
                     </div>
                 </div>
@@ -179,9 +207,8 @@
                 <!-- /.mailbox-read-info -->
                 <div class="mailbox-controls with-border text-center">
                     <div class="btn-group">
-                        <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip"
-                                data-container="body" onclick="PanelListadoDetallado()"
-                                title="Reply">
+                        <button type="button" class="btn btn-default btn-sm" onclick="PanelListadoDetallado()"
+                                title="Atrás">
                             <i class="fa fa-reply"></i></button>
                     </div>
                 </div>
@@ -203,6 +230,50 @@
                         </thead>
                         <tbody id="cuerpoLstConceptosCarta"></tbody>
                     </table>
+                </div>
+                <!-- /.mailbox-read-message -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="row" id="lstDetalleBadan" style="display: none;">
+    <div class="col-md-12">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+
+                <h3 class="box-title">Fecha de Solicitud: <label id="lblfechasolibadan"></label></h3>
+                <!-- /.box-tools -->
+            </div>
+            <div class="box-body no-padding">
+                <!-- /.mailbox-read-info -->
+                <div class="mailbox-controls with-border text-center">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-sm"
+                                 onclick="PanelListadoDetallado()"
+                                title="Atrás">
+                            <i class="fa fa-reply"></i></button>
+                    </div>
+                </div>
+                <!-- /.mailbox-controls -->
+                <div class="mailbox-read-message">
+                    <!-- Widget: user widget style 1 -->
+                    <table class='table table-responsive table-bordered' id="cuerpoLstBada">
+                        <thead>
+                        <tr class='success'>
+                          <td>NOMBRE COMERCIAL</td>
+                          <td>PRESENTACION</td>
+                          <td>DOSIS</td>
+                          <td>CANTIDAD</td>
+                          <td>FECHA DE INICIO</td>
+                          <td>FECHA DE VENCIMIENTO</td>
+                        </tr>
+                        </thead>
+                        <tbody id="cuerpoLstBadan"></tbody>
+                    </table>
+
                 </div>
                 <!-- /.mailbox-read-message -->
             </div>

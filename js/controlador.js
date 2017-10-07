@@ -371,8 +371,10 @@ function PanelListadoDetallado(){
   $("#tblreembolsos").slideDown();
   $("#tblapoyos").slideDown();
   $("#tblcartas").slideDown();
+  $("#tblbadan").slideDown();
   $("#lstDetalle").hide();
   $("#lstDetalleApoyo").hide();
+  $("#lstDetalleBadan").hide();
   $("#lstDetalleCarta").hide();
 }
 
