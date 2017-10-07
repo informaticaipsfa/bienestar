@@ -83,7 +83,7 @@
 
     <table border="0">
         <tr>
-            <td style="width: 38%"><img src="../../images/lg.png" style="float: left; width:15%;">
+            <td style="width: 38%"><img src="../../../images/lg.png" style="float: left; width:15%;">
                 <left><p style="font-size: 12px; text-align: center"> REPUBLICA BOLIVARIANA DE VENEZUELA <br>
                     MINISTERIO DEL PODER
                     POPULAR PARA LA DEFENSA<br>VICEMINISTERIO DE SERVICIOS<br>DIRECCIÓN GENERAL DE EMPRESAS Y
@@ -122,25 +122,25 @@
             <p class="sangria" id="fam" style="display: none;">
                 Por medio de la presente, hacemos constar que el (la) cuidadano(a): <b id="nombreafil"></b>, titular de
                 la cédula de identidad Nº <b id="cedulaafil"></b> se encuentra afiliado(a) al Intituto de Previsión
-                Social de la Fuerza Armada por ser <label id="lblparentezco"></label> del <label id="lblgrado"></label>
-                <label id="nombre"></label>, quien a su vez es miembro de la Fuerza Armada Nacional Bolivariana.</p>
+                Social de la Fuerza Armada por ser <b id="lblparentezco"></b> del <b id="lblgrado"></b>
+                <b id="nombre"></b>, quien a su vez es miembro de la Fuerza Armada Nacional Bolivariana.</p>
             <p class="sangria" id="tit" style="display: none;">
                 Por medio de la presente, hacemos constar que el (la) cuidadano(a): <b id="nombreafil2"></b>, titular de
                 la cédula de identidad Nº <b id="cedulaafil2"></b> se encuentra afiliado(a) al Intituto de Prevision
-                Social de la Fuerza Armada, por ser <label id="lblparentezco2"></label> miembro de la Fuerza Armada
+                Social de la Fuerza Armada, por ser <b id="lblparentezco2"></b> miembro de la Fuerza Armada
                 Nacional Bolivariana.</p>
             <p class="sangria" id="prote" style="display: none;">
                 Por lo antes expuesto, este Instituto se compromete a cancelar los gastos por concepto de <b
-                id="lbldiagnostico"></b><b id="lblconcepto"></b>, para el mencionado afiliado y cuyo monto es <label
-                id="txtmontopre"></label> (<label id="lblmontopresupuesto"></label> BS) según presupuesto Nº: <label
-                id="lblnropresupuesto"></label> de fecha <label id="lblfechapresupuesto"></label>, de lo cual la
-                empresa aseguradora cubre un monto de <label id="txtmontoseg"></label> (<label
-                id="lblmontoseguro"></label> BS) según constancia de fecha <label id="lblfechaseguro"></label>
+                id="lbldiagnostico"></b><b id="lblconcepto"></b>, para el mencionado afiliado y cuyo monto es <b
+                id="txtmontopre"></b> (<b id="lblmontopresupuesto"></b> BS) según presupuesto Nº: <b
+                id="lblnropresupuesto"></b> de fecha <b id="lblfechapresupuesto"></b>, de lo cual la
+                empresa aseguradora cubre un monto de <b id="txtmontoseg"></b> (<b
+                id="lblmontoseguro"></b> BS) según constancia de fecha <b id="lblfechaseguro"></b>
                 quedando una diferencia de <b id="txtmontoipsfa"></b> (<b id="lblmontot"></b> BS.) el cual este
                 instituto se compromete a cancelar en su totalidad. </p>
             <p class="sangria" id="masto" style="display: none;">
                 Por lo antes expuesto, este Instituto se compromete a cancelar los gastos por concepto de <b
-                id="motivoafil"></b>, la suma de <b id="txtmontoipsfa2"></b> (<b id="lblmontot2"></b> BS.) que representa un <label id="lblporipsfa"></label>% del costo total del examen y el (la) afiliado(a) cancelara el <label id="lblporafi"></label> % restante lo que representa (<b id="montoafi"></b> BS.)  para un total de <label id="txtmontopre2"></label> (<label id="lblmontopresupuesto2"></label> BS). </p>
+                id="motivoafil"></b>, la suma de <b id="txtmontoipsfa2"></b> (<b id="lblmontot2"></b> BS.) que representa un <b id="lblporipsfa"></b>% del costo total del examen y el (la) afiliado(a) cancelara el <b id="lblporafi"></b> % restante lo que representa (<b id="montoafi"></b> BS.)  para un total de <b id="txtmontopre2"></b> (<b id="lblmontopresupuesto2"></b> BS). </p>
             <p class="sangria">
                 Asi mismo le informamos que cualquier información requerida para la tramitación del presente caso, puede
                 ser comunicada a nuestros telefonos directos: (0212)-6931408 y (0212)-6092545, Departamento de Cuidado
@@ -257,23 +257,23 @@
             var ncompleto = militar.Persona.DatoBasico.nombreprimero + " " + militar.Persona.DatoBasico.apellidoprimero;
 
             $("#nombre").html(ncompleto);
-            $("#lblcomponente").text(militar.Componente.descripcion);
-            $("#lblgrado").text(militar.Grado.descripcion);
-            $("#lblcedula").text(militar.Persona.DatoBasico.cedula);
+            $("#lblcomponente").html(militar.Componente.descripcion);
+            $("#lblgrado").html(militar.Grado.descripcion);
+            $("#lblcedula").html(militar.Persona.DatoBasico.cedula);
 
             crearCarta();
 
             var estcivil = Util.GenerarEstadoCivil(militar.Persona.DatoBasico.estadocivil, militar.Persona.DatoBasico.sexo);
 
-            $("#lblestadocivil").text(estcivil);
-            $("#lblsituacion").text(Util.ConvertirSitucacion(militar.situacion));
+            $("#lblestadocivil").html(estcivil);
+            $("#lblsituacion").html(Util.ConvertirSitucacion(militar.situacion));
 
             if (militar.Persona.Direccion != undefined) {
                 var defestados = sessionStorage.getItem("ipsfaEstado");
                 var DIR = militar.Persona.Direccion[0];
                 Estados.ObtenerEstados();
                 var rirec = DIR.estado + ", " + DIR.ciudad + ", municipio " + DIR.municipio + ", parroquia " + DIR.parroquia + ", Av/Calle " + DIR.calleavenida + ", casa/apt " + DIR.casa + "|" + DIR.apartamento
-                $("#lbldireccion").text(rirec);
+                $("#lbldireccion").html(rirec);
             }
         } else {
             alert("Cedula no se encuentra registrada como militar dentro del sistema");
@@ -287,17 +287,17 @@
         }
         console.log(pos);
         var carta = militar.CIS.ServicioMedico.Programa.CartaAval[pos];
-        $("#lblnsolicitud").text(carta.numero);
-        $("#lblfecha").text(Util.ConvertirFechaHumana(carta.fechacreacion));
-        $("#lblbanco").text(carta.CuentaBancaria.institucion);
-        $("#lblcuenta").text(carta.CuentaBancaria.cuenta);
-        $("#lbltipoc").text(carta.CuentaBancaria.tipo);
-        $("#lblmontot").text(numeral(parseFloat(carta.montosolicitado)).format('0,0.00'));
-        $("#lblmontot2").text(numeral(parseFloat(carta.montosolicitado)).format('0,0.00'));
+        $("#lblnsolicitud").html(carta.numero);
+        $("#lblfecha").html(Util.ConvertirFechaHumana(carta.fechacreacion));
+        $("#lblbanco").html(carta.CuentaBancaria.institucion);
+        $("#lblcuenta").html(carta.CuentaBancaria.cuenta);
+        $("#lbltipoc").html(carta.CuentaBancaria.tipo);
+        $("#lblmontot").html(numeral(parseFloat(carta.montosolicitado)).format('0,0.00'));
+        $("#lblmontot2").html(numeral(parseFloat(carta.montosolicitado)).format('0,0.00'));
 
         var txttotipsfa = numeroALetras(carta.montosolicitado);
         $("#txtmontoipsfa").html(txttotipsfa);
-        
+
         var txttotipsfa2 = numeroALetras(carta.montosolicitado);
         $("#txtmontoipsfa2").html(txttotipsfa2);
 
@@ -327,19 +327,19 @@
             paren = nomafi[1];
             parentezco = paren.split(")");
 
-            $("#lblrifclinica").text(this.DatoFactura.Beneficiario.rif);
-            $("#lblnropresupuesto").text(this.numeropresupuesto);
-            $("#lblfechapresupuesto").text(Util.ConvertirFechaHumana(this.fechapresupuesto));
-            $("#lblmontopresupuesto").text(numeral(parseFloat(this.montopresupuesto)).format('0,0.00'));
-            $("#lblmontoseguro").text(numeral(parseFloat(this.montoseguro)).format('0,0.00'));
-            $("#lblfechaseguro").text(Util.ConvertirFechaHumana(this.fechaseguro));
-            $("#lblnombrec").text(this.DatoFactura.Beneficiario.razonsocial);
-            $("#motivoafil").text(this.descripcion);
-            $("#lblmotivo").text(this.motivo);
-            $("#lblconcepto").text(this.descripcion);
-            $("#lbldiagnostico").text(this.diagnostico);
-            $("#lblporafi").text(numeral(parseFloat(this.porcentajeafi)).format('0,0.00'));
-            $("#montoafi").text(numeral(parseFloat(this.montoafiliado)).format('0,0.00'));
+            $("#lblrifclinica").html(this.DatoFactura.Beneficiario.rif);
+            $("#lblnropresupuesto").html(this.numeropresupuesto);
+            $("#lblfechapresupuesto").html(Util.ConvertirFechaHumana(this.fechapresupuesto));
+            $("#lblmontopresupuesto").html(numeral(parseFloat(this.montopresupuesto)).format('0,0.00'));
+            $("#lblmontoseguro").html(numeral(parseFloat(this.montoseguro)).format('0,0.00'));
+            $("#lblfechaseguro").html(Util.ConvertirFechaHumana(this.fechaseguro));
+            $("#lblnombrec").html(this.DatoFactura.Beneficiario.razonsocial);
+            $("#motivoafil").html(this.descripcion);
+            $("#lblmotivo").html(this.motivo);
+            $("#lblconcepto").html(this.descripcion);
+            $("#lbldiagnostico").html(this.diagnostico);
+            $("#lblporafi").html(numeral(parseFloat(this.porcentajeafi)).format('0,0.00'));
+            $("#montoafi").html(numeral(parseFloat(this.montoafiliado)).format('0,0.00'));
 
             var txttotpre2 = numeroALetras(presupuesto);
             $("#txtmontopre2").html(txttotpre2);
@@ -366,7 +366,7 @@
             $("#lblparentezco").html(parentezco);
             $("#lblparentezco2").html(parentezco);
             $("#lblmontopresupuesto2").html(presupuesto);
-            if ($("#lblparentezco").text() == "MILITAR") {
+            if ($("#lblparentezco").html() == "MILITAR") {
                 $("#tit").css("display", "block");
             } else {$("#fam").css("display", "block");}
             if (razonc == "PROTESIS"){
