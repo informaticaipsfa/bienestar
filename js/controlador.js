@@ -66,9 +66,6 @@ class Reembolso {
     constructor() {
         this.estatus = 0;
         this.montosolicitado = 0.00;
-        //this.numero = '';
-        //this.fechacreacion = '';
-        //this.responsable = '';
         this.cuentabancaria = new CuentaBancaria2();
         this.Concepto = new Array();
         this.montoaprobado = 0.00;
@@ -134,6 +131,17 @@ class Estado{
             sessionStorage.setItem('ipsfaEstado', JSON.stringify(Json));
         }
     }
+    ObtenerCodigo(estados){
+      var cadena = "";
+      let estado = JSON.parse(sessionStorage.getItem('ipsfaEstado'));
+      estado.forEach(v => {
+          if (v.codigo == estados){
+             cadena = v.nombre;
+          }
+      });
+      return cadena;
+    }
+
     ObtenerEstados(){
         let estado = JSON.parse(sessionStorage.getItem('ipsfaEstado'));
 

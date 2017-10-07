@@ -2,6 +2,165 @@
 <html>
 <head>
     <meta charset="utf-8">
+
+    <script src="../../bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="../../bower_components/formato/numeral.js"></script>
+
+    <script src="../../js/utilidad.js"></script>
+    <script src="../../js/militar.js"></script>
+    <script src="../../js/config.js"></script>
+    <script src="../../js/controlador.js"></script>
+    <script>
+        let idf = '';
+        $(function () {
+            numeral.locale('es-es');
+            $.obtener = function (key) {
+                key = key.replace(/[\[]/, '\\[');
+                key = key.replace(/[\]]/, '\\]');
+                var pattern = "[\\?&]" + key + "=([^&#]*)";
+                var regex = new RegExp(pattern);
+                var url = unescape(window.location.href);
+                var results = regex.exec(url);
+                if (results === null) {
+                    return null;
+                } else {
+                    return results[1];
+                }
+            };
+            var id = $.obtener("id");
+            idf = $.obtener("idf");
+            pos = $.obtener("pos");
+
+            Buscar(id);
+        });
+
+
+        function imprimir() {
+            $('#boton').html('');
+            window.print();
+            window.close();
+        }
+
+        function Buscar(id) {
+            if (id != undefined) {
+                $("#_cedula").val(id);
+            }
+            if ($("#_cedula").val() == "") {
+                return false;
+            }
+
+            var url = Conn.URL + "militar/crud/" + id;
+            var request = CargarAPI({
+                sURL: url,
+                metodo: 'GET',
+                valores: '',
+                Objeto: militar
+            });
+
+            request.then(function (xhRequest) {
+
+                militar = JSON.parse(xhRequest.responseText);
+                llenar(id);
+
+            });
+
+        }
+
+
+        function llenar(formato) {
+            if (formato != undefined) {
+
+            }
+            if (militar.Persona != undefined) {
+                var ncompleto = militar.Persona.DatoBasico.nombreprimero + " " + militar.Persona.DatoBasico.apellidoprimero;
+                $("#nombre").html(ncompleto);
+                $("#nombre2").html(ncompleto);
+                $("#nombre3").html(ncompleto);
+                $("#nombreex").html(ncompleto);
+                $("#lblgrado").text(militar.Grado.descripcion);
+                $("#lblcedula").text(militar.Persona.DatoBasico.cedula);
+                $("#lblcedula3").text(militar.Persona.DatoBasico.cedula);
+                $("#lblcedula2").text(militar.Persona.DatoBasico.cedula);
+                $("#lblcedulaex").text(militar.Persona.DatoBasico.cedula);
+                $("#lblsituacion1").text(militar.situacion);
+                $("#lbltelefono").html(militar.Persona.Telefono.movil);
+                var edad2 = Util.CalcularEdad(Util.ConvertirFechaHumana(militar.Persona.DatoBasico.fechanacimiento));
+                $("#edad2").html(edad2);
+
+                var edad = Util.CalcularEdad(Util.ConvertirFechaHumana(militar.Persona.DatoBasico.fechanacimiento));
+                $("#edad").html(edad);
+
+                var edadex = Util.CalcularEdad(Util.ConvertirFechaHumana(militar.Persona.DatoBasico.fechanacimiento));
+                $("#edadex").html(edadex);
+                $("#lblsituacion").text(Util.ConvertirSitucacion(militar.situacion));
+
+            if (militar.situacion == "FCP") {
+                $("#sobre").css("display", "block");
+                $("#datosfallecido").css("display", "block");
+             }
+             else
+             {
+                $("#militar").css("display", "block");
+                $("#datosmilitar").css("display", "block");
+            }
+
+
+          }
+
+
+
+
+            militar.Familiar.forEach(v => {
+                if (v.Persona.DatoBasico.cedula == idf) {
+                    var ncompletoafi = v.Persona.DatoBasico.nombreprimero + " " + militar.Persona.DatoBasico.apellidoprimero;
+                    $("#nombreafil").html(ncompletoafi);
+                    $("#nombreafil2").html(ncompletoafi);
+                    $("#nombreafilex").html(ncompletoafi);
+                    $("#cedulaafi").html(v.Persona.DatoBasico.cedula);
+                    $("#cedulaafiex").html(v.Persona.DatoBasico.cedula);
+                    $("#cedulaafi2").html(v.Persona.DatoBasico.cedula);
+                    $("#lblparentesco").html(Util.ConvertirParentesco(v.parentesco, v.Persona.DatoBasico.sexo));
+                    $("#lblparentescoex").html(Util.ConvertirParentesco(v.parentesco, v.Persona.DatoBasico.sexo));
+                    $("#lbltelefonoafi").html(v.Persona.Telefono.movil);
+                    var edadafi = Util.CalcularEdad(Util.ConvertirFechaHumana(v.Persona.DatoBasico.fechanacimiento));
+                    $("#edadafi").html(edadafi);
+
+                    var edadafiex = Util.CalcularEdad(Util.ConvertirFechaHumana(v.Persona.DatoBasico.fechanacimiento));
+                    $("#edadafiex").html(edadafiex);
+                }
+            });
+
+
+            if (pos == null) {
+                pos = militar.CIS.Investigacion.FeDeVida.length;
+                pos--;
+            }
+            var fdv = militar.CIS.Investigacion.FeDeVida[pos];
+
+            $("#lblfechacreacion1").html(Util.ConvertirFechaHumana(fdv.fechacreacion));
+            $("#lblfechacreacion2").html(Util.ConvertirFechaHumana(fdv.fechacreacion));
+            $("#lblfechacreacion3").html(Util.ConvertirFechaHumana(fdv.fechacreacion));
+            $("#lblfechacreacion4").html(Util.ConvertirFechaHumana(fdv.fechacreacion));
+            $("#lblfechacreacion5").html(Util.ConvertirFechaHumana(fdv.fechacreacion));
+
+            $("#lblnumero").html(fdv.numero);
+            $("#lblnumero1").html(fdv.numero);
+
+            var DIR1 = fdv.DatoBasico.Direccion;
+
+            var rirec1 = Estados.ObtenerCodigo(DIR1.estado) + ", " + DIR1.ciudad + ", municipio " + DIR1.municipio + ", parroquia " + DIR1.parroquia + ", Av/Calle " + DIR1.calleavenida + ", casa/apt " + DIR1.casa + "|" + DIR1.apartamento
+            $("#lbldireccionafi").text(rirec1);
+
+            var DIR = fdv.DatoBasico.Direccion;
+            var rirec = Estados.ObtenerCodigo(DIR.estado) + ", " + DIR.ciudad + ", municipio " + DIR.municipio + ", parroquia " + DIR.parroquia + ", Av/Calle " + DIR.calleavenida + ", casa/apt " + DIR.casa + "|" + DIR.apartamento
+            $("#lbldireccion").text(rirec);
+
+        }
+
+
+    </script>
+
+
     <style>
         @media screen, print {
         }
@@ -93,7 +252,7 @@
             </h2>
             <table width="100%" class="bde biz bajo btop">
                 <tr>
-                    <td width="106" height="102"><img src="images/lg.png" width="106" height="100"></td>
+                    <td width="106" height="102"><img src="../../../images/lg.png" width="106" height="100"></td>
                     <td width="288" class="texto10">REPÚBLICA BOLIVARIANA DE VENEZUELA <br>
                         MINISTERIO DEL PODER POPULAR PARA LA DEFENSA<br>
                         VICEMINISTERIO DE SERVICIOS<br>
@@ -140,9 +299,9 @@
            <div id="sobre" class="sangria texto25" style="display: none">
                 Certifico y doy fe que hoy
                 <labe id="lblfechacreacion1"></labe>
-                se presentó, la (el) ciudadana(o) <b id="nombreafil"></b> C.I.N°
-                <b id="cedulaafi"></b>, Edad <b id="edadafi"></b> ,Residenciado(o) en: <b
-                    id="lbldireccionafi"></b>Telef.<b id="lbltelefonoafi"></b>, con la finalidad de cumplir con el
+                se presentó, la (el) ciudadana(o) <b id="nombreafil"></b> C.I. N°:
+                <b id="cedulaafi"></b>, Edad <b id="edadafi"></b>, Residenciado(o) en: <b
+                    id="lbldireccionafi"></b> Teléfono <b id="lbltelefonoafi"></b>, con la finalidad de cumplir con el
                 requisito exigido por el I.P.S.F.A, como beneficiario (a) de Pensión de Sobreviviente causada por ser <b
                     id="lblparentesco"></b> del Militar Fallecido.
 
@@ -151,9 +310,9 @@
             <div id="militar" class="sangria texto25" style="display: none">
                 Certifico y doy fe que hoy
                 <labe id="lblfechacreacion2"></labe>
-                se presentó, la (el) ciudadana(o) <b id="nombre"></b> C.I.N°
-                <b id="lblcedula"></b>, Edad <b id="edad"></b> ,Residenciado(o) en: <b
-                    id="lbldireccion"></b>Telef.<b id="lbltelefono"></b>, con la finalidad de cumplir con el
+                se presentó, la (el) ciudadana(o) <b id="nombre"></b> C.I. N°:
+                <b id="lblcedula"></b>, Edad <b id="edad"></b>, Residenciado(o) en: <b
+                    id="lbldireccion"></b> Teléfono <b id="lbltelefono"></b>, con la finalidad de cumplir con el
                 requisito exigido por el I.P.S.F.A,
 
             </div>
@@ -188,7 +347,7 @@
                                     <td class="texto12 bde biz btop bajo">&nbsp;</td>
                                     <td width="30%" rowspan="4" align="justify" valign="top" class="texto10 bde biz bajo btop">&nbsp;</td>
                                   </tr>
-                                  
+
                                   <tr>
                                     <td colspan="3" class="texto14 bde biz bajo btop">&nbsp;</td>
                                  </tr>
@@ -203,14 +362,14 @@
                                     <br>                                    </td>
                                     <td class="texto12 bde biz bajo btop">&nbsp;</td>
                     </tr>
-                  </table>  
+                  </table>
                   <br>
                   <br>
                   <br>
                   <table border="0" align="center" width="100%" class="bde biz bajo btop">
                     <tr class="bde biz bajo btop">
                         <td width="80" rowspan="3">
-                            <div id="col1"><img src="images/lg.png" width="74" height="62">
+                            <div id="col1"><img src="../../../images/lg.png" width="74" height="62">
                             </div>
                         </td>
                         <td width="208" rowspan="3">
@@ -225,7 +384,7 @@
                             </div>
                         </td>
                         <td width="486" rowspan="3">
-                            <div align="center"><strong>SOLICITUD FE DE VIDA </strong></div>
+                            <div align="center"><strong>CONSTANCIA DE CONSIGNACIÓN DE FE DE VIDA</strong></div>
                         </td>
                         <td colspan="3" class="texto14">1.Número:</td>
                     </tr>
@@ -264,7 +423,7 @@
                     </tr>
                 </table>
 
-                  </div>         
+                  </div>
 
 
 
@@ -306,7 +465,7 @@
                                 <br></td>
                             <td class="texto12 bde biz btop bajo">&nbsp;</td>
                             <td width="30%" rowspan="4" align="justify" valign="top" class="texto10 bde biz bajo btop">&nbsp;
-                                
+
                             </td>
                         </tr>
 
@@ -331,7 +490,7 @@
                     <table border="0" align="center" width="100%" class="bde biz bajo btop">
                     <tr class="bde biz bajo btop">
                         <td width="80" rowspan="3">
-                            <div id="col1"><img src="images/lg.png" width="74" height="62">
+                            <div id="col1"><img src="../../../images/lg.png" width="74" height="62">
                             </div>
                         </td>
                         <td width="208" rowspan="3">
@@ -346,7 +505,7 @@
                             </div>
                         </td>
                         <td width="486" rowspan="3">
-                            <div align="center"><strong>SOLICITUD FE DE VIDA </strong></div>
+                            <div align="center"><strong>CONSTANCIA DE CONSIGNACIÓN DE FE DE VIDA</strong></div>
                          </td>
                         <td colspan="3" class="texto12">1.Número:</td>
                    </tr>
@@ -394,7 +553,7 @@
                 <br>
                 <br>
 
-                
+
 
             </div>
         </div>
@@ -405,233 +564,7 @@
         </div>
 
 </body>
-<script src="../../bower_components/jquery/dist/jquery.min.js"></script>
-<script src="../../bower_components/formato/numeral.js"></script>
 
-<script src="../../js/utilidad.js"></script>
-<script src="../../js/militar.js"></script>
-<script src="../../js/config.js"></script>
-<script src="../../js/controlador.js"></script>
-<script>
-    /*
-    militar.Familiar.forEach( v => { 
-        if (v.Persona.DatoBasico.cedula == "13097317"){ 
-            $("#nombreafil").html(v.Persona.DatoBasico.nombreprimero); 
-        } 
-    });
-
-    militar.CIS.ServicioMedico.Programa.FeDeVida.forEach(v => { console.log(v.numero); });
-    */
-    let idf = '';
-
-    // let militar = null;
-
-    $(function () {
-        numeral.locale('es-es');
-        $.obtener = function (key) {
-            key = key.replace(/[\[]/, '\\[');
-            key = key.replace(/[\]]/, '\\]');
-            var pattern = "[\\?&]" + key + "=([^&#]*)";
-            var regex = new RegExp(pattern);
-            var url = unescape(window.location.href);
-            var results = regex.exec(url);
-            if (results === null) {
-                return null;
-            } else {
-                return results[1];
-            }
-        };
-        var id = $.obtener("id");
-        idf = $.obtener("idf");
-        pos = $.obtener("pos");
-
-        Buscar(id);
-    });
-
-
-    function imprimir() {
-        $('#boton').html('');
-        window.print();
-        window.close();
-    }
-
-    function Buscar(id) {
-        if (id != undefined) {
-            $("#_cedula").val(id);
-        }
-        if ($("#_cedula").val() == "") {
-            return false;
-        }
-
-        var url = Conn.URL + "militar/crud/" + id;
-        var request = CargarAPI({
-            sURL: url,
-            metodo: 'GET',
-            valores: '',
-            Objeto: militar
-        });
-
-        request.then(function (xhRequest) {
-
-            militar = JSON.parse(xhRequest.responseText);
-            llenar(id);
-
-        });
-
-    }
-
-
-    function llenar(formato) {
-        if (formato != undefined) {
-
-        }
-        if (militar.Persona != undefined) {
-            var ncompleto = militar.Persona.DatoBasico.nombreprimero + " " + militar.Persona.DatoBasico.apellidoprimero;
-            $("#nombre").html(ncompleto);
-            $("#nombre2").html(ncompleto);
-            $("#nombre3").html(ncompleto);
-            $("#nombreex").html(ncompleto);
-            // $("#lblcomponente").text(militar.Componente.descripcion);
-            $("#lblgrado").text(militar.Grado.descripcion);
-            $("#lblcedula").text(militar.Persona.DatoBasico.cedula);
-            $("#lblcedula3").text(militar.Persona.DatoBasico.cedula);
-            $("#lblcedula2").text(militar.Persona.DatoBasico.cedula);
-            $("#lblcedulaex").text(militar.Persona.DatoBasico.cedula);
-            $("#lblsituacion1").text(militar.situacion);
-            $("#lbltelefono").html(militar.Persona.Telefono.movil);
-            // var estcivil = Util.GenerarEstadoCivil(militar.Persona.DatoBasico.estadocivil, militar.Persona.DatoBasico.sexo);
-            var edad2 = Util.CalcularEdad(Util.ConvertirFechaHumana(militar.Persona.DatoBasico.fechanacimiento));
-            $("#edad2").html(edad2);
-            
-            var edad = Util.CalcularEdad(Util.ConvertirFechaHumana(militar.Persona.DatoBasico.fechanacimiento));
-            $("#edad").html(edad);
-
-            var edadex = Util.CalcularEdad(Util.ConvertirFechaHumana(militar.Persona.DatoBasico.fechanacimiento));
-            $("#edadex").html(edadex);
-            // $("#lblestadocivil").text(estcivil);
-            $("#lblsituacion").text(Util.ConvertirSitucacion(militar.situacion));
-     
-        if (militar.situacion == "FCP") {
-            $("#sobre").css("display", "block");
-            $("#datosfallecido").css("display", "block");
-         }
-         else 
-         {
-            $("#militar").css("display", "block");
-            $("#datosmilitar").css("display", "block");
-        }
-
-       
- /*      var DIR = militar.Persona.Direccion[0];
-        Estados.ObtenerEstados();
-        var rirec = DIR.estado + ", " + DIR.ciudad + ", municipio " + DIR.municipio + ", parroquia " + DIR.parroquia + ", Av/Calle " + DIR.calleavenida + ", casa/apt " + DIR.casa + "|" + DIR.apartamento
-        $("#lbldireccion").text(rirec);
-        console.log(DIR);*/
-
-        }
-
-        
-        
-                    
-
-       /* if (militar.situacion == "FCP") {
-            $("#sobre").css("display", "block");
-            $("#datosfallecido").css("display", "block");
-         }
-         else if(militar.CIS.Investigacion.FeFeVida.direccionex != "" )
-            {
-              //  alert("llega");
-                        $("#militarex").css("display", "block");
-                        $("#datosmilitar").css("display", "block");
-          }
-         else if((militar.situacion !="FCP")&&(militar.CIS.Investigacion.FeFeVida.direccionex == ""))
-         {
-            $("#militar").css("display", "block");
-            $("#datosmilitar").css("display", "block");
-        }
-        
-                     else{
-
-                        $("#sobreex").css("display", "block");
-                        $("#datosfallecido").css("display", "block");
-            }  */
-
-
-        militar.Familiar.forEach(v => {
-            if (v.Persona.DatoBasico.cedula == idf) {
-                var ncompletoafi = v.Persona.DatoBasico.nombreprimero + " " + militar.Persona.DatoBasico.apellidoprimero;
-                $("#nombreafil").html(ncompletoafi);
-                $("#nombreafil2").html(ncompletoafi);
-                $("#nombreafilex").html(ncompletoafi);
-                $("#cedulaafi").html(v.Persona.DatoBasico.cedula);
-                $("#cedulaafiex").html(v.Persona.DatoBasico.cedula);
-                $("#cedulaafi2").html(v.Persona.DatoBasico.cedula);
-                $("#lblparentesco").html(Util.ConvertirParentesco(v.parentesco, v.Persona.DatoBasico.sexo));
-                $("#lblparentescoex").html(Util.ConvertirParentesco(v.parentesco, v.Persona.DatoBasico.sexo));
-                $("#lbltelefonoafi").html(v.Persona.Telefono.movil);
-                var edadafi = Util.CalcularEdad(Util.ConvertirFechaHumana(v.Persona.DatoBasico.fechanacimiento));
-                $("#edadafi").html(edadafi);
-
-                var edadafiex = Util.CalcularEdad(Util.ConvertirFechaHumana(v.Persona.DatoBasico.fechanacimiento));
-                $("#edadafiex").html(edadafiex);
-
-                /*var DIR1 = v.Persona.Direccion[0];
-                Estados.ObtenerEstados();
-                var rirec1 = DIR1.estado + ", " + DIR1.ciudad + ", municipio " + DIR1.municipio + ", parroquia " + DIR1.parroquia + ", Av/Calle " + DIR1.calleavenida + ", casa/apt " + DIR1.casa + "|" + DIR1.apartamento
-                $("#lbldireccionafi").text(rirec1);*/
-
-
-
-            }
-
-
-        });
-
-
-        if (pos == null) {
-            pos = militar.CIS.Investigacion.FeDeVida.length;
-            pos--;
-        }
-        console.log(pos);
-        var fdv = militar.CIS.Investigacion.FeDeVida[pos];
-
-        $("#lblfechacreacion1").html(Util.ConvertirFechaHumana(fdv.fechacreacion));
-        $("#lblfechacreacion2").html(Util.ConvertirFechaHumana(fdv.fechacreacion));
-        $("#lblfechacreacion3").html(Util.ConvertirFechaHumana(fdv.fechacreacion));
-        $("#lblfechacreacion4").html(Util.ConvertirFechaHumana(fdv.fechacreacion));
-        $("#lblfechacreacion5").html(Util.ConvertirFechaHumana(fdv.fechacreacion));
-/*        $("#lblfechacreacionex").html(Util.ConvertirFechaHumana(fdv.fechacreacion));
-         $("#lblfechaemision").html(Util.ConvertirFechaHumana(fdv.fechaex));*/
-
-        $("#lblnumero").html(fdv.numero);
-        $("#lblnumero1").html(fdv.numero);
-       // console.log(fdv);
-
-                var DIR1 = fdv.DatoBasico.Direccion;
-                Estados.ObtenerEstados();
-                var rirec1 = DIR1.estado + ", " + DIR1.ciudad + ", municipio " + DIR1.municipio + ", parroquia " + DIR1.parroquia + ", Av/Calle " + DIR1.calleavenida + ", casa/apt " + DIR1.casa + "|" + DIR1.apartamento
-                $("#lbldireccionafi").text(rirec1);
-
-                 var DIR = fdv.DatoBasico.Direccion;
-                Estados.ObtenerEstados();
-                var rirec = DIR.estado + ", " + DIR.ciudad + ", municipio " + DIR.municipio + ", parroquia " + DIR.parroquia + ", Av/Calle " + DIR.calleavenida + ", casa/apt " + DIR.casa + "|" + DIR.apartamento
-                $("#lbldireccion").text(rirec);
-
-
-        
-
-
-
-//
-//                }
-//
-//
-//
-//        } );
-    }
-
-
-</script>
 
 
 </html>
