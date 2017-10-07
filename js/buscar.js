@@ -100,6 +100,7 @@ function ficha() {
     historicoApoyo();
     historicoCarta();
     historicoBadan();
+    historicoFeDeVida();
 }
 
 function cargaPrograma(tipo) {
@@ -670,6 +671,91 @@ function detalleVisibleBadan(pos) {
   $("#lstDetalleBadan").show();
   $("#tblTodos").hide();
 }
+
+
+
+function historicoFeDeVida() {
+    $("#historicoFeDeVida").html(`<thead>
+          <tr class="bg-info">
+            <td>#Fe De Vida</td>
+            <td>Cédula</td>
+            <td class="pbuscar">Afiliado</td>
+            <td>Fecha Creación</td>
+          </tr>
+          </thead>
+          <tbody id="cuerpoFe">
+          </tbody>`);
+
+    var t = $('#historicoFeDeVida').DataTable({
+        destroy: true,
+        'paging': false,
+        'lengthChange': true,
+        'searching': true,
+        'ordering': true,
+        'info': false,
+        'autoWidth': false,
+        "aLengthMenu": [[10, 25, 5, -1], [10, 25, 5, "Todo"]],
+        "bStateSave": true,
+        "order": [[1, "desc"]],
+        "language": {
+            "lengthMenu": "Mostar _MENU_ filas por pagina",
+            "zeroRecords": "Nada que mostrar",
+            "info": "Mostrando _PAGE_ de _PAGES_",
+            "infoEmpty": "No se encontro nada",
+            "infoFiltered": "(filtered from _MAX_ total records)",
+            "search": "Buscar",
+            "paginate": {
+                "first": "Primero",
+                "last": "Ultimo",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            },
+        },
+    });
+    t.clear().draw();
+
+
+    if (militar.CIS.Investigacion.FeDeVida != undefined && militar.CIS.Investigacion.FeDeVida.length > 0) {
+        var i = 0;
+
+        militar.CIS.Investigacion.FeDeVida.forEach(v => {
+            var fcrea = Util.ConvertirFechaHumana(v.fechacreacion);
+            console.log(v.numero);
+            t.row.add([
+                `<a href='#FeDeVida' onclick="detalleVisibleFeDeVida(${i})">${v.numero}</a>`,
+                v.DatoBasico.Cedula,
+                fcrea,
+                v.DatoBasico.NombreCompleto
+            ]).draw(false);
+            i++;
+        });
+
+    }
+}
+
+
+function detalleVisibleFeDeVida(pos) {
+  if (pos == null) {
+      pos = militar.CIS.Investigacion.FeDeVida.length;
+      pos--;
+  }
+  var fe = militar.CIS.Investigacion.FeDeVida[pos];
+  $("#lbldetnumerofe").text(fe.numero);
+  $("#lblfechasolife").text(Util.ConvertirFechaHumana(fe.fechacreacion));
+
+  var tconcepto = ``;
+
+  tconcepto += `<tr>
+      <td>${fe.DatoBasico.Cedula}</td>
+      <td>${fe.DatoBasico.NombreCompleto}</td>`;
+
+  tconcepto += "</table>";
+  $("#cuerpoLstFe").html(tconcepto);
+  $("#lstDetalleFe").show();
+  $("#tblTodos").hide();
+}
+
+
 
 
 
