@@ -9,6 +9,10 @@ $(function () {
         verificaCheckModal("requisitosodon", "btnGenerar");
     });
 
+    $(".mdl-requisitoshosp").on("change", function () {
+        verificaCheckModal("requisitoshosp", "btnGenerar");
+    });
+
     $(".mdl-requisitosmonto").on("change", function () {
         verificaCheckModal("requisitosmonto", "btnGenerar");
     });
