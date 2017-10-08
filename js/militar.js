@@ -577,6 +577,7 @@ class WApoyo {
         this.id = "";
         this.Apoyo = new Apoyo();
         this.nombre = "";
+				this.observaciones = "";
     }
 }
 
