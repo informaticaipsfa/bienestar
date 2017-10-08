@@ -87,6 +87,13 @@ function ficha() {
         $("#lblestcivil").text(estcivil)
         $("#lblsituacion").text(Util.ConvertirSitucacion(militar.situacion));
 
+        if (militar.CIS.Investigacion.FeDeVida != undefined){
+          var ffevida = "";
+          militar.CIS.Investigacion.FeDeVida.forEach(v => { ffevida = v.fechacreacion; });
+          if(ffevida != ""){
+            $("#lblfevida").html(Util.ConvertirFechaHumana(ffevida));
+          }
+        }
 
         $("#paneldatos").show();
         $("#panelperfil").show();
