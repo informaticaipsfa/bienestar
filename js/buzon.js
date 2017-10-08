@@ -822,11 +822,12 @@ function crearTablaConceptosApoyo(numero,est){
     });
     copia = lst[pos];
     $("#estSeguimiento").val(copia.Seguimiento.Estatus);
-    console.log(est);
+
     if(est > 2){
         activarCambioEstatus("apoyo");
     }
     $("#cuerpoEditarConceptosApoyo").html('');
+    
     copia.Concepto.forEach(v => {
         var mntApo = 0;
         if(v.DatoFactura.montoaprobado > 0) mntApo = v.DatoFactura.montoaprobado;
@@ -838,7 +839,7 @@ function crearTablaConceptosApoyo(numero,est){
         var nombre = picar[0];
         var cedula = picar2[0];
         var fecha = Util.ConvertirFechaHumana(v.DatoFactura.fecha);
-        $("#cuerpoEditarConceptosApoyo").append(fila);
+
         fila = `<tr>
                     <td>${parent}</td>
                     <td>${nombre}</td>

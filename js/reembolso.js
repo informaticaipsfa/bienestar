@@ -180,22 +180,20 @@ function listaCuentas() {
 }
 
 function crearLista() {
-    $("#cmbbeneficiario").append(new Option(militar.Persona.DatoBasico.nombreprimero.trim() + "(MILITAR)", "T|" + militar.Persona.DatoBasico.cedula, true, true));
+    $("#cmbbeneficiario").append(new Option(militar.Persona.DatoBasico.nombreprimero.trim() + " " + militar.Persona.DatoBasico.apellidoprimero.trim()  + " (MILITAR)", "T|" + militar.Persona.DatoBasico.cedula, true, true));
     var ncompleto = militar.Persona.DatoBasico.nombreprimero.trim() + " " + militar.Persona.DatoBasico.apellidoprimero.trim();
     $("#depositar").append(new Option(ncompleto, militar.Persona.DatoBasico.cedula, true, true));
     if (militar.Familiar.length > 0) {
         var iposicion = 0;
         militar.Familiar.forEach(v => {
-
-            var edad = Util.CalcularEdad(Util.ConvertirFechaHumana(v.Persona.DatoBasico.fechanacimiento));
-            var ncompleto2 = v.Persona.DatoBasico.nombreprimero.trim() + " " + v.Persona.DatoBasico.apellidoprimero.trim();
-            if (edad > 18) {
-                $("#depositar").append(new Option(ncompleto2, iposicion + "|" + v.Persona.DatoBasico.cedula, false, false));
-            }
-            var parentes = Util.ConvertirParentesco(v.parentesco, v.Persona.DatoBasico.sexo);
-            $("#cmbbeneficiario").append(new Option(ncompleto2 + "(" + parentes + ")", iposicion + "|" + v.Persona.DatoBasico.cedula, true, true));
-            iposicion++;
-
+          var edad = Util.CalcularEdad(Util.ConvertirFechaHumana(v.Persona.DatoBasico.fechanacimiento));
+          var ncompleto2 = v.Persona.DatoBasico.nombreprimero.trim() + " " + v.Persona.DatoBasico.apellidoprimero.trim();
+          if (edad > 18) {
+              $("#depositar").append(new Option(ncompleto2, iposicion + "|" + v.Persona.DatoBasico.cedula, false, false));
+          }
+          var parentes = Util.ConvertirParentesco(v.parentesco, v.Persona.DatoBasico.sexo);
+          $("#cmbbeneficiario").append(new Option(ncompleto2 + "(" + parentes + ")", iposicion + "|" + v.Persona.DatoBasico.cedula, true, true));
+          iposicion++;
         });
     }
     $("#depositar").append(new Option("Seleccione", "", true, true));

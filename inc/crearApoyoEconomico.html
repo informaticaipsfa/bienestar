@@ -1,5 +1,4 @@
 <style type="text/css">
-
     .ui-autocomplete {
         position: absolute;
         top: 336px;
@@ -108,8 +107,8 @@
         }
 
     }
-    }
-    }
+  }
+}
 
     @media only screen and (max-width: 1274px){
         .ui-autocomplete {
@@ -165,8 +164,8 @@
         }
 
     }
-    }
-    }
+  }
+}
 </style>
 <div class="body box">
     <div class="container-fluid">
@@ -189,29 +188,24 @@
                                     <div class="row">
                                         <div class="col-md-4 ">
                                             <label>Beneficiario:</label>
-                                            <select class="form-control" style="width: 100%" id="cmbbeneficiario"
-                                                    required>
+                                            <select class="form-control" style="width: 100%" id="cmbbeneficiario" required>
                                                 <option selected="selected" value="S"></option>
                                             </select>
                                         </div>
                                         <div class="col-md-4 ">
                                             <label>Conceptos:</label>
-                                            <select class="form-control" style="width: 100%" id="cmbconcepto"
-                                                    onchange="requisitosConcepto()" required>
+                                            <select class="form-control" style="width: 100%" id="cmbconcepto" onchange="requisitosConcepto()" required>
                                                 <option selected="selected" value="S"></option>
                                                 <option value="0">EXAMENES ESPECIALES</option>
                                                 <option value="1">TRATAMIENTO ODONTOLOGICO</option>
                                                 <option value="2">GERIATRICO</option>
                                                 <option value="3">LENTES</option>
                                                 <option value="4">FISIOTERAPIA</option>
-
                                                 <option value="5">MARCAPASO</option>
                                                 <option value="6">MATERIAL MEDICO</option>
-
                                                 <option value="7" desplegar="requisitosodon">ODONTOLOGICO</option>
                                                 <option value="8">QUIMIOTERAPIA</option>
                                                 <option value="9">RADIOTERAPIA</option>
-
                                                 <option value="10">HOSPITALIZACION</option>
                                                 <option value="11">HOSPITALIZACION DEUDA</option>
                                                 <option value="12">INTERVENCION QUIRURGICA</option>
@@ -230,13 +224,10 @@
                                         <div class="col-md-4 col-sm-12">
                                             <label>Tipo de Ayuda:</label>
                                             <div>
-                                                <select class="form-control" id="cmbtipoayuda"
-                                                        required>
+                                                <select class="form-control" id="cmbtipoayuda" required>
                                                     <option selected="selected" value="S"></option>
                                                     <option value="0">CASOS PARTICULARES</option>
-                                                    <option value="1">CONVENIO SEGUROS HORIZONTES FONDO DE
-                                                        CONTINGENCIA
-                                                    </option>
+                                                    <option value="1">CONVENIO SEGUROS HORIZONTES FONDO DE CONTINGENCIA</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -245,14 +236,13 @@
                                             <div class="btn-group-justified" role="group" aria-label="...">
                                                 <div class="btn-group" style="width: 6%;" role="group">
                                                     <input class="form-control" id="rif" onblur="consultarRif()"
-                                                           required placeholder="RIF">
+                                                            placeholder="RIF" required>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-sm-12">
                                             <label>Nombre de la Empresa</label>
-                                            <input class="form-control" id="razonsocial"
-                                                   required disabled>
+                                            <input class="form-control" id="razonsocial" required disabled>
                                             <input type="hidden" id="emptipo"/>
                                             <input type="hidden" id="empdirec"/>
                                             <input type="hidden" id="empbanco"/>
@@ -272,8 +262,7 @@
                                                     <i class="fa fa-calendar"></i>
                                                 </div>
                                                 <div class="input-group input-group" style="width: 100%;">
-                                                    <input type="text" class="form-control" id="fechafactura"
-                                                           required>
+                                                    <input type="text" class="form-control" id="fechafactura" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -282,9 +271,7 @@
                                         <div class="col-md-6 col-sm-12">
                                             <label>Monto Total del Presupuesto:</label>
                                             <div class="input-group date" style="z-index: 1030;">
-                                                <input class="form-control " id="montofactura" required
-                                                       onblur="calcularSolicitado()"
-                                                       onkeypress="return Util.SoloNumero(event,this,true)">
+                                                <input class="form-control " id="montofactura" required onblur="calcularSolicitado()" onkeypress="return Util.SoloNumero(event,this,true)">
                                                 <div class="input-group-addon">
                                                     <label>Bs.</label>
                                                 </div>
@@ -294,9 +281,7 @@
 
                                             <label>Monto a Cubrir por la Aseguradora:</label>
                                             <div class="input-group date" style="z-index: 1030;">
-                                                <input class="form-control" id="montoacubrir" required
-                                                       onblur="calcularSolicitado()"
-                                                       onkeypress="return Util.SoloNumero(event,this,true)">
+                                                <input class="form-control" id="montoacubrir" required onblur="calcularSolicitado()" onkeypress="return Util.SoloNumero(event,this,true)">
                                                 <div class="input-group-addon">
                                                     <label>Bs.</label>
                                                 </div>
@@ -308,10 +293,7 @@
                                         <div class="col-md-6 col-sm-12">
                                             <label>Otros Aportes:</label>
                                             <div class="input-group date" style="z-index: 1030;">
-                                                <input class="form-control" id="montootroaporte" value="0"
-                                                       onclick="limpiarcaja()"
-                                                       onblur="calcularSolicitado()"
-                                                       onkeypress="return Util.SoloNumero(event,this,true)">
+                                                <input class="form-control" id="montootroaporte" value="0" onclick="limpiarcaja()" onblur="calcularSolicitado()" onkeypress="return Util.SoloNumero(event,this,true)">
                                                 <div class="input-group-addon">
                                                     <label>Bs.</label>
                                                 </div>

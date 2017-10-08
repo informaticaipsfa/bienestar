@@ -129,6 +129,7 @@ class Utilidad {
                     respuesta = false;
                 }
             }
+            // console.log(valor);
         });
 
         $("#" + _frm + " select").each(function (i) {
@@ -141,8 +142,11 @@ class Utilidad {
                 }
             }
         });
-        if(respuesta) return respuesta;
-        else return this.MensajeFormulario(_frm,ele);
+        if(respuesta){
+          return respuesta;
+        } else {
+          return this.MensajeFormulario(_frm,ele);
+        }
     }
 
     MensajeFormulario(_frm,ele) {
