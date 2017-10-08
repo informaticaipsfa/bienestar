@@ -7,6 +7,71 @@ let CReembolso = {};
 let copia = null;
 let posicionModificar = null;
 
+let opciones = {
+    destroy: true,
+    'paging': true,
+    'lengthChange': true,
+    'searching': false,
+    'ordering': true,
+    'info': false,
+    'autoWidth': false,
+    "aLengthMenu": [[10, 25, 5, -1], [10, 25, 5, "Todo"]],
+    "bStateSave": true,
+    "order": [[3, "desc"]],
+    "language": {
+        "lengthMenu": "Mostar _MENU_ filas por pagina",
+        "zeroRecords": "Nada que mostrar",
+        "info": "Mostrando _PAGE_ de _PAGES_",
+        "infoEmpty": "No se encontro nada",
+        "infoFiltered": "(filtered from _MAX_ total records)",
+        "search": "Buscar",
+        "paginate": {
+            "first": "Primero",
+            "last": "Ultimo",
+            "next": "Siguiente",
+            "previous": "Anterior"
+        },
+    },
+};
+
+
+/**
+* Tipo de Sucursal
+*
+* @param int
+* @return void
+*/
+function Sucursal(codigo){
+  switch (codigo) {
+    case "ccs":
+      return "CARACAS";
+      break;
+    case "may":
+      return "MARACAY";
+      break;
+    case "sju":
+      return "SAN JUAN";
+      break;
+    case "san":
+      return "SAN CRISTOBAL";
+      break;
+    case "tuc":
+        return "****";
+        break;
+    case "apu":
+        return "APURE";
+        break;
+    case "mar":
+        return "MARACAIBO";
+        break;
+    case "mag":
+        return "****";
+        break;
+    default:
+      return "CARACAS";
+      break;
+  }
+}
 
 /**
 * Tipo de Buzón
@@ -52,8 +117,8 @@ function TipoBuzon(tipo ){
 */
 function listaBuzon(est) {
 
-
-
+    //$("#cmbsucursal").select2();
+    posicionModificar = est;
     //Reembolso
     $("#lista").html('');
     var url = Conn.URL + "wreembolso/listar/" + est;
@@ -85,28 +150,46 @@ function listaBuzon(est) {
 
 }
 
+function SeleccionarSucursal(){
+  crearBuzon(posicionModificar, $("#cmbsucursal option:selected").val());
+  crearBuzonApoyo(posicionModificar, $("#cmbsucursal option:selected").val());
+}
+
+
 /**
 * Crear Buzones del sistema
 *
 * @param int
 * @return void
 */
-function crearBuzon(est) {
+function crearBuzon(est, sucursal) {
 
-    $("#lista").html(`<li style="background-color:#CCCCCC">
-                    <div class="row" >
-                        <div class="col-sm-1" ><b>Reembolso</b></div>
-                        <div class="col-sm-1"><b>Cedula</b></div>
-                        <div class="col-sm-3"><b>Nombre y Apellido</b></div>
-                        <div class="col-sm-1"><b>F.Solicitud</b></div>
-                        <div class="col-sm-2"><b>M.Solicitud</b></div>
-                        <div class="col-sm-2"><b>M.Aprobado</b></div>
-                        <div class="col-sm-1"><b>Estatus</b></div>
-                   </div>
-                </li>`);
-    lstBuzon.forEach(v => {
-        $("#lista").append(CargarBuzonReembolso(v, est));
-    });
+    $("#lista").html(`<table id="lstReembolso" class="table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>Reembolso</th>
+                <th>Sucursal</th>
+                <th>Cedula</th>
+                <th>Nombre y Apellido</th>
+                <th>F. Solicitud</th>
+                <th>M. Solicitud</th>
+                <th>M. Aprobado</th>
+                <th>Estatus</th>
+                <th>Acciones</th>
+            </tr>
+        </thead></table>`);
+    var t = $('#lstReembolso').DataTable(opciones);
+    t.clear().draw();
+
+    if(lstBuzon != undefined){
+      lstBuzon.forEach(v => {
+        if(sucursal != undefined){
+          if(v.usuario == sucursal)t.row.add(CargarBuzonReembolso(v, est)).draw(false);
+        }else{
+          t.row.add(CargarBuzonReembolso(v, est)).draw(false);
+        }
+      });
+    }
 }
 
 /**
@@ -129,25 +212,22 @@ function CargarBuzonReembolso(v, est){
   var msolicitado = numeral(parseFloat(v.montosolicitado)).format('0,0[.]00 $');
   var maprobado = numeral(parseFloat(v.montoaprobado)).format('0,0[.]00 $');
   var con = conviertEstatus(v.estatus) + alertSegui;
-  return `<li>
-            <div class="row">
-              <div class="col-sm-1">
-                <span class="text"><a href="#" onclick="detalleBuzon('${v.id}','${v.numero}','${est}')">${v.numero }</a></span>
-              </div>
-              <div class="col-sm-1"><span class="text">${v.id}</span></div>
-              <div class="col-sm-3">${v.nombre}</div>
-              <div class="col-sm-1">${fcreacion}</div>
-              <div class="col-sm-2">${msolicitado}</div>
-              <div class="col-sm-2">${maprobado}</div>
-              <div class="col-sm-1">${con}</div>
-              <div class="tools" style="margin-right: 50px;">
-                  <i class="fa  fa-check" title="Aceptar" style="color: green; font-size: 18px"
-                    onclick="verificarAprobacion('${v.numero}','${v.estatus}','${v.id}')"></i>
-                  <i class="fa fa-trash" title="Rechazar" style="font-size: 18px"
-                    onclick="verificarRechazo('${v.numero}','${v.estatus}','${v.id}')"></i>
-              </div>
-            </div>
-          </li>`;
+  return [
+    `<span class="text"><a href="#" onclick="detalleBuzon('${v.id}','${v.numero}','${est}')">${v.numero }</a></span>`,
+    Sucursal(v.usuario.substr(0,3)),
+    v.id,
+    v.nombre,
+    fcreacion,
+    msolicitado,
+    maprobado,
+    con,
+    `<div class="tools" style="margin-right: 50px;">
+        <i class="fa  fa-check" title="Aceptar" style="color: green; font-size: 18px"
+          onclick="verificarAprobacion('${v.numero}','${v.estatus}','${v.id}')"></i>
+        <i class="fa fa-trash" title="Rechazar" style="font-size: 18px"
+          onclick="verificarRechazo('${v.numero}','${v.estatus}','${v.id}')"></i>
+    </div>`
+  ];
 }
 
 /**
@@ -184,7 +264,6 @@ function conviertEstatus(est){
   return estatus;
 }
 
-
 function verificarAprobacion(num, esta, id) {
     $("#_contenido").html("¿Está seguro que desea procesar el reembolso " + num + "?");
     var botones = `<button type="button" class="btn btn-success" data-dismiss="modal" id="_aceptar"
@@ -202,7 +281,6 @@ function verificarRechazo(num, esta, id) {
     $("#_botonesmsj").html(botones);
     $('#modMsj').modal('show');
 }
-
 
 /**
 * Aprobación del Buzon de los estados del Reembolso
@@ -484,7 +562,6 @@ function calcularAcumulado(tipo) {
     $("#"+idTotalSol).html(acumulado2);
 }
 
-
 function volverLista() {
     $("#listasProgramas").slideToggle();
     $('#detalle').hide();
@@ -529,7 +606,6 @@ function actualizarReembolso(est) {
     EnviarReembolso(CReembolso, observaciones);
 
 }
-
 
 function obtenerListadoReembolso(Concepto, i){
   var concep = new ConceptoReembolso();
@@ -728,22 +804,47 @@ function rechazarApoyo(num, est, id) {
     });
 
 }
-function crearBuzonApoyo(est){
-    $("#listaApoyo").html(`<li style="background-color:#CCCCCC">
-        <div class="row">
-            <div class="col-sm-1"><b>Apoyo</b></div>
-            <div class="col-sm-1"><b>Cedula</b></div>
-            <div class="col-sm-3"><b>Nombre y Apellido</b></div>
-            <div class="col-sm-1"><b>F.Solicitud</b></div>
-            <div class="col-sm-2"><b>M.Solicitud</b></div>
-            <div class="col-sm-2"><b>M.Aprobado</b></div>
-            <div class="col-sm-1"><b>Estatus</b></div>
-            </div>
-        </li>`);
-    lstBuzonApoyo.forEach(v => {
-        $("#listaApoyo").append(CargarBuzonApoyo(v, est));
-    });
 
+function crearBuzonApoyo(est, sucursal){
+    // $("#listaApoyo").html(`<li style="background-color:#CCCCCC">
+    //     <div class="row">
+    //         <div class="col-sm-1"><b>Apoyo</b></div>
+    //         <div class="col-sm-1"><b>Cedula</b></div>
+    //         <div class="col-sm-3"><b>Nombre y Apellido</b></div>
+    //         <div class="col-sm-1"><b>F.Solicitud</b></div>
+    //         <div class="col-sm-2"><b>M.Solicitud</b></div>
+    //         <div class="col-sm-2"><b>M.Aprobado</b></div>
+    //         <div class="col-sm-1"><b>Estatus</b></div>
+    //         </div>
+    //     </li>`);
+    // lstBuzonApoyo.forEach(v => {
+    //     $("#listaApoyo").append(CargarBuzonApoyo(v, est));
+    // });
+
+
+    $("#listaApoyo").html(`<table id="tblBuzonApoyo" class="table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>Apoyo</th>
+                <th>Sucursal</th>
+                <th>Cedula</th>
+                <th>Nombre y Apellido</th>
+                <th>F. Solicitud</th>
+                <th>M. Solicitud</th>
+                <th>M. Aprobado</th>
+                <th>Estatus</th>
+                <th>Acciones</th>
+            </tr>
+        </thead></table>`);
+    var t = $('#tblBuzonApoyo').DataTable(opciones);
+    t.clear().draw();
+    lstBuzonApoyo.forEach(v => {
+        if(sucursal != undefined){
+          if(v.usuario == sucursal)t.row.add(CargarBuzonApoyo(v, est)).draw(false);
+        }else{
+          t.row.add(CargarBuzonApoyo(v, est)).draw(false);
+        }
+    });
 }
 
 
@@ -761,25 +862,42 @@ function CargarBuzonApoyo(v, est){
   var montsol = numeral(parseFloat(v.montosolicitado)).format('0,0[.]00 $');
   var montapr = numeral(parseFloat(v.montoaprobado)).format('0,0[.]00 $');
   var estatus = conviertEstatus(v.estatus) + alertSegui;
-  return `<li>
-      <div class="row"><div class="col-sm-1"><span class="text">
-        <a href="#" onclick="detalleBuzon('${v.id}','${v.numero}',${est},'A')">${v.numero}</a></span></div>
-        <div class="col-sm-1"><span class="text">${v.id}</span></div>
-        <div class="col-sm-3">${v.nombre}</div>
-        <div class="col-sm-1">${fCrea}</div>
-        <div class="col-sm-2">${montsol}</div>
-        <div class="col-sm-2">${montapr}</div>
-        <div class="col-sm-1">${estatus}</div>
-        <div class="tools" style="margin-right: 50px;">
-            <i class="fa  fa-check" title="Aceptar" style="color: green; font-size: 18px"
-              onclick="verificarAprobacionApoyo('${v.numero}','${v.estatus}','${v.id}')"></i>
-            <i class="fa fa-trash" title="Rechazar" style="font-size: 18px"
-              onclick="verificarRechazoApoyo('${v.numero}','${v.estatus}','${v.id}')"></i>
-        </div>
+  // return `<li>
+  //     <div class="row"><div class="col-sm-1"><span class="text">
+  //       <a href="#" onclick="detalleBuzon('${v.id}','${v.numero}',${est},'A')">${v.numero}</a></span></div>
+  //       <div class="col-sm-1"><span class="text">${v.id}</span></div>
+  //       <div class="col-sm-3">${v.nombre}</div>
+  //       <div class="col-sm-1">${fCrea}</div>
+  //       <div class="col-sm-2">${montsol}</div>
+  //       <div class="col-sm-2">${montapr}</div>
+  //       <div class="col-sm-1">${estatus}</div>
+  //       <div class="tools" style="margin-right: 50px;">
+  //           <i class="fa  fa-check" title="Aceptar" style="color: green; font-size: 18px"
+  //             onclick="verificarAprobacionApoyo('${v.numero}','${v.estatus}','${v.id}')"></i>
+  //           <i class="fa fa-trash" title="Rechazar" style="font-size: 18px"
+  //             onclick="verificarRechazoApoyo('${v.numero}','${v.estatus}','${v.id}')"></i>
+  //       </div>
+  //
+  //
+  //     </div>
+  // </li>`;
 
-
-      </div>
-  </li>`;
+  return [
+    `<span class="text"><a href="#" onclick="detalleBuzon('${v.id}','${v.numero}',${est},'A')">${v.numero}</a></span>`,
+    Sucursal(v.usuario.substr(0,3)),
+    v.id,
+    v.nombre,
+    fCrea,
+    montsol,
+    montapr,
+    estatus,
+    `<div class="tools" style="margin-right: 50px;">
+        <i class="fa  fa-check" title="Aceptar" style="color: green; font-size: 18px"
+          onclick="verificarAprobacionApoyo('${v.numero}','${v.estatus}','${v.id}')"></i>
+        <i class="fa fa-trash" title="Rechazar" style="font-size: 18px"
+          onclick="verificarRechazoApoyo('${v.numero}','${v.estatus}','${v.id}')"></i>
+    </div`
+  ];
 
 }
 
@@ -827,7 +945,7 @@ function crearTablaConceptosApoyo(numero,est){
         activarCambioEstatus("apoyo");
     }
     $("#cuerpoEditarConceptosApoyo").html('');
-    
+
     copia.Concepto.forEach(v => {
         var mntApo = 0;
         if(v.DatoFactura.montoaprobado > 0) mntApo = v.DatoFactura.montoaprobado;
