@@ -162,10 +162,23 @@ function titulos(t) {
 }
 
 function verificarNuevo(val) {
+
+    if(militar.CIS.ServicioMedico.Programa.Apoyo != undefined){
+        apoyo = militar.CIS.ServicioMedico.Programa.Apoyo;
+        var icant = 0;
+        apoyo.forEach(v => {
+            if (apoyo.estatus != 8){
+              icant++;
+            }
+        });
+        if(icant > 0 ){
+          $.notify("Este afiliado tiene apoyos pendientes por culminar.", "error");
+        }
+    }
     if (val == false) {
-        crearPrograma();
+      crearPrograma();
     } else {
-        $("#requisitos").modal("show");
+      $("#requisitos").modal("show");
     }
 }
 
