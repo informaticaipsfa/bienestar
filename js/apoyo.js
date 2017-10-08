@@ -12,6 +12,13 @@ $(function () {
     $(".mdl-requisitoshosp").on("change", function () {
         verificaCheckModal("requisitoshosp", "btnGenerar");
     });
+    $(".mdl-requisitosquir").on("change", function () {
+        verificaCheckModal("requisitosquir", "btnGenerar");
+    });
+    $(".mdl-requisitosmedi").on("change", function () {
+        verificaCheckModal("requisitosmedi", "btnGenerar");
+    });
+
 
     $(".mdl-requisitosmonto").on("change", function () {
         verificaCheckModal("requisitosmonto", "btnGenerar");
