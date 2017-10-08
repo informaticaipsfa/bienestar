@@ -568,6 +568,7 @@ class WReembolso {
         this.id = "";
         this.Reembolso = new Reembolso();
         this.nombre = "";
+				this.posicion = 0;
 				this.observaciones = "";
     }
 }
@@ -577,6 +578,7 @@ class WApoyo {
         this.id = "";
         this.Apoyo = new Apoyo();
         this.nombre = "";
+				this.posicion = 0;
 				this.observaciones = "";
     }
 }

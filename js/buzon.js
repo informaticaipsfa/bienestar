@@ -221,13 +221,15 @@ function CargarBuzonReembolso(v, est){
     msolicitado,
     maprobado,
     con,
-    `<div class="tools" style="margin-right: 50px;">
-        <i class="fa  fa-check" title="Aceptar" style="color: green; font-size: 18px"
-          onclick="verificarAprobacion('${v.numero}','${v.estatus}','${v.id}')"></i>
-        <i class="fa fa-trash" title="Rechazar" style="font-size: 18px"
-          onclick="verificarRechazo('${v.numero}','${v.estatus}','${v.id}')"></i>
-    </div>`
+    ``
   ];
+
+  // <div class="tools" style="margin-right: 50px;">
+  //     <i class="fa  fa-check" title="Aceptar" style="color: green; font-size: 18px"
+  //       onclick="verificarAprobacion('${v.numero}','${v.estatus}','${v.id}')"></i>
+  //     <i class="fa fa-trash" title="Rechazar" style="font-size: 18px"
+  //       onclick="verificarRechazo('${v.numero}','${v.estatus}','${v.id}')"></i>
+  // </div>
 }
 
 /**
@@ -292,10 +294,12 @@ function verificarRechazo(num, esta, id) {
 */
 function aprobarReembolso(num, est, id) {
     var url = Conn.URL + "wreembolso/estatus";
-    //Object {object} Estatus
+
+
     var datos = {
       ID: id,
       numero: num,
+      posicion: obtenerPosicion(num),
       estatus: parseInt(est) + 1
     };
     var promesa = CargarAPI({
@@ -310,6 +314,20 @@ function aprobarReembolso(num, est, id) {
         listaBuzon(est);
         volverLista();
     });
+}
+
+function obtenerPosicion(num){
+  var pos = 0;
+  var ipos = 0;
+  militarActivo.CIS.ServicioMedico.Programa.Reembolso.forEach(v => {
+
+    if(v.numero == num){
+      pos = ipos;
+      return false;
+    }
+    ipos++;
+  });
+  return pos;
 }
 
 /**
@@ -635,6 +653,7 @@ function EnviarReembolso(OReembolso, observaciones){
   wreembolso.observaciones = observaciones;
   wreembolso.nombre = militarActivo.Persona.DatoBasico.nombreprimero + " " + militarActivo.Persona.DatoBasico.apellidoprimero;
   wreembolso.Reembolso = OReembolso;
+  wreembolso.posicion = obtenerPosicion($('#lblnumero').text());
   var urlGuardar = Conn.URL + "wreembolso";
   var promesa = CargarAPI({
       sURL: urlGuardar,
