@@ -128,7 +128,8 @@
 
             <div class="sangria" style="font-size: 25px">
 
-                Yo, <b>CNEL. EDUARDO JOSÉ MARTINEZ SALAS</b>, C.I. N° <b>7.391293</b>, Militar en Servicio Activo, con
+              Yo, <input type="text" id="nomrepre" style="width:360px;"><b id="representante"></b>, C.I. N°
+              <input type="text" id="cedrepre" style="width:120px;"> <b id="cedularepresentante"></b>, Militar en Servicio Activo, con
                 el cargo Gerente de Bienestar y Seguridad Social de la Dependencia o Unidad de nombre I.P.S.F.A, ubicada
                 en LOS PROCERES, DISTRITO CAPITAL Teléfono (0212) 6092307, 6092303, 6092304. De acuerdo a lo establecido
                 en el Reglamento de la Ley de Seguridad Social de la Fuerza Armada, en su Artículo N° 24, el cual reza:
@@ -143,7 +144,7 @@
                 Certifico y doy fe que hoy
                 <labe id="lblfechacreacion3"></labe>
                 se presentó, la (el) ciudadana(o) <b id="nombreafilex"></b> C.I.N°
-                <b id="cedulaafiex"></b>, Edad <b id="edadafiex"></b> ,Residenciado(o) en: <b id="paisexafi"></b><b 
+                <b id="cedulaafiex"></b>, Edad <b id="edadafiex"></b> ,Residenciado(o) en: <b id="paisexafi"></b><b
                     id="lbldireccionafiex"></b>, según apostilla anexada de fecha <b
                     id="lblfechaemisionafiex"></b>con la finalidad de cumplir con el
                 requisito exigido por el I.P.S.F.A, como beneficiaria de Pensión de Sobreviviente causada por ser <b
@@ -193,7 +194,7 @@
                                     <td class="texto12 bde biz btop bajo">&nbsp;</td>
                                     <td width="30%" rowspan="4" align="justify" valign="top" class="texto10 bde biz bajo btop">&nbsp;</td>
                                   </tr>
-                                  
+
                                   <tr>
                                     <td colspan="3" class="texto14 bde biz bajo btop">&nbsp;</td>
                                  </tr>
@@ -208,7 +209,7 @@
                                     <br>                                    </td>
                                     <td class="texto12 bde biz bajo btop">&nbsp;</td>
                     </tr>
-                  </table>  
+                  </table>
                   <br>
                   <br>
                   <br>
@@ -269,7 +270,7 @@
                     </tr>
                 </table>
 
-                  </div>         
+                  </div>
 
 
 
@@ -311,7 +312,7 @@
                                 <br></td>
                             <td class="texto12 bde biz btop bajo">&nbsp;</td>
                             <td width="30%" rowspan="4" align="justify" valign="top" class="texto10 bde biz bajo btop">&nbsp;
-                                
+
                             </td>
                         </tr>
 
@@ -399,7 +400,7 @@
                 <br>
                 <br>
 
-                
+
 
             </div>
         </div>
@@ -419,10 +420,10 @@
 <script src="../../js/controlador.js"></script>
 <script>
     /*
-    militar.Familiar.forEach( v => { 
-        if (v.Persona.DatoBasico.cedula == "13097317"){ 
-            $("#nombreafil").html(v.Persona.DatoBasico.nombreprimero); 
-        } 
+    militar.Familiar.forEach( v => {
+        if (v.Persona.DatoBasico.cedula == "13097317"){
+            $("#nombreafil").html(v.Persona.DatoBasico.nombreprimero);
+        }
     });
 
     militar.CIS.ServicioMedico.Programa.FeDeVida.forEach(v => { console.log(v.numero); });
@@ -507,7 +508,7 @@
             // var estcivil = Util.GenerarEstadoCivil(militar.Persona.DatoBasico.estadocivil, militar.Persona.DatoBasico.sexo);
             var edad2 = Util.CalcularEdad(Util.ConvertirFechaHumana(militar.Persona.DatoBasico.fechanacimiento));
             $("#edad2").html(edad2);
-            
+
             var edad = Util.CalcularEdad(Util.ConvertirFechaHumana(militar.Persona.DatoBasico.fechanacimiento));
             $("#edad").html(edad);
 
@@ -529,7 +530,7 @@
             $("#sobreex").css("display", "block");
             $("#datosfallecido").css("display", "block");
          }
-         else 
+         else
             {
                 //alert("llega");
                         $("#militarex").css("display", "block");
@@ -549,12 +550,12 @@
          else if((militar.situacion !="FCP")&&(militar.CIS.Investigacion.FeFeVida.direccionex == "")){
             $("#militar").css("display", "block");
             $("#datosmilitar").css("display", "block");}
-        
+
                      else{
 
                         $("#sobreex").css("display", "block");
                         $("#datosfallecido").css("display", "block");
-            }  
+            }
 */
 
         militar.Familiar.forEach(v => {
@@ -603,7 +604,7 @@
          $("#lblfechaemision").html(Util.ConvertirFechaHumana(fdv.fechaex));
          $("#lblfechaemisionafiex").html(Util.ConvertirFechaHumana(fdv.fechaex));
         console.log(fdv);
-     
+
 
         var DIREX = fdv.direccionex;
         $("#lbldireccionex1").html(DIREX);
@@ -615,7 +616,7 @@
         $("#lblnumero1").html(fdv.numero);
      //   alert(DIREX);
 
-        
+
 
 
 

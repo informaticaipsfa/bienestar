@@ -37,6 +37,10 @@
 
         function imprimir() {
             $('#boton').html('');
+            $("#nomrepre").hide();
+            $("#cedrepre").hide();
+            $("#representante").html($("#nomrepre").val().toUpperCase());
+            $("#cedularepresentante").html($("#cedrepre").val().toUpperCase());
             window.print();
             window.close();
         }
@@ -287,7 +291,8 @@
 
             <div class="sangria" style="font-size: 25px">
 
-                Yo, <b>CNEL. EDUARDO JOSÉ MARTINEZ SALAS</b>, C.I. N° <b>7.391.293</b>, Militar en Servicio Activo, con
+                Yo, <input type="text" id="nomrepre" style="width:360px;"><b id="representante"></b>, C.I. N°
+                <input type="text" id="cedrepre" style="width:120px;"> <b id="cedularepresentante"></b>, Militar en Servicio Activo, con
                 el cargo Gerente de Bienestar y Seguridad Social de la Dependencia o Unidad de nombre I.P.S.F.A, ubicada
                 en LOS PROCERES, DISTRITO CAPITAL Teléfono (0212) 6092307, 6092303, 6092304. De acuerdo a lo establecido
                 en el Reglamento de la Ley de Seguridad Social de la Fuerza Armada, en su Artículo N° 24, el cual reza:

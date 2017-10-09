@@ -46,8 +46,14 @@ function Sucursal(codigo){
     case "ccs":
       return "CARACAS";
       break;
+    case "car":
+      return "CARUPANO";
+      break;
     case "may":
       return "MARACAY";
+      break;
+    case "mar":
+      return "MARACAIBO";
       break;
     case "sju":
       return "SAN JUAN";
@@ -56,23 +62,43 @@ function Sucursal(codigo){
       return "SAN CRISTOBAL";
       break;
     case "tuc":
-        return "****";
-        break;
+      return "TUCUPITA";
+      break;
     case "apu":
-        return "APURE";
-        break;
+      return "APURE";
+      break;
     case "mar":
-        return "MARACAIBO";
-        break;
+      return "MARACAIBO";
+      break;
     case "mag":
-        return "****";
-        break;
+      return "MARGARITA";
+      break;
+    case "bqt":
+      return "BARQUISIMETO";
+      break;
+    case "bar":
+      return "BARINAS";
+      break;
+    case "bac":
+      return "BARCELONA";
+      break;
+    case "pto":
+      return "PUERTO AYACUCHO";
+      break;
+    case "pun":
+      return "PUNTO FIJO";
+      break;
+    case "bol":
+      return "CIUDAD BOLIVAR";
+      break;
+    case "mat":
+      return "MATURIN";
+      break;
     default:
       return "CARACAS";
       break;
   }
 }
-
 /**
 * Tipo de Buzón
 *
@@ -184,7 +210,7 @@ function crearBuzon(est, sucursal) {
     if(lstBuzon != undefined){
       lstBuzon.forEach(v => {
         if(sucursal != undefined){
-          if(v.usuario == sucursal)t.row.add(CargarBuzonReembolso(v, est)).draw(false);
+          if(v.usuario.substr(0,3) == sucursal)t.row.add(CargarBuzonReembolso(v, est)).draw(false);
         }else{
           t.row.add(CargarBuzonReembolso(v, est)).draw(false);
         }
@@ -859,7 +885,7 @@ function crearBuzonApoyo(est, sucursal){
     t.clear().draw();
     lstBuzonApoyo.forEach(v => {
         if(sucursal != undefined){
-          if(v.usuario == sucursal)t.row.add(CargarBuzonApoyo(v, est)).draw(false);
+          if(v.usuario.substr(0,3) == sucursal)t.row.add(CargarBuzonApoyo(v, est)).draw(false);
         }else{
           t.row.add(CargarBuzonApoyo(v, est)).draw(false);
         }
