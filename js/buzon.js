@@ -1063,9 +1063,16 @@ function crearTablaConceptosApoyo(numero,est){
         $("#cuerpoObservacionesApoyo").html('');
         $("#cuerpoOpinionesApoyo").html('');
         $.each(lstObs, function () {
-            var tipo = this.contenido.split("|||");
-            if(tipo[1] != undefined) $("#cuerpoOpinionesApoyo").append('<tr><td>' + tipo[0] + '</td><td style="width: 10%;text-align: right">'+conviertEstatus(copia.estatus)+'</td></tr>');
-            else $("#cuerpoObservacionesApoyo").append('<tr><td>' + this.contenido + '</td><td style="width: 10%;text-align: right"></td></tr>');
+
+
+            if( this.contenido != undefined){
+              tipo = this.contenido.split("|||");
+              if(tipo[1] != undefined) {
+                $("#cuerpoOpinionesApoyo").append('<tr><td>' + tipo[0] + '</td><td style="width: 10%;text-align: right">'+conviertEstatus(copia.estatus)+'</td></tr>');
+              }else{
+                $("#cuerpoObservacionesApoyo").append('<tr><td>' + this.contenido + '</td><td style="width: 10%;text-align: right"></td></tr>');
+              }
+            }
         });
     }
     //activarCambioEstatus();

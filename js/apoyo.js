@@ -385,10 +385,11 @@ function generarPlanilla() {
         $("#conceptoagregado tr").each(function () {
             conceptos.push(CargarConceptos(this));
             montoTotalSolicitado += parseFloat($(this).find("td").eq(8).html());
+            //console.log($(this).find("td").eq(8).html());
         });
 
         apoyo.tipo = 0;
-        apoyo.montosolicitado = parseFloat(montoTotalSolicitado).toFixed(2);
+        apoyo.montosolicitado = parseFloat(montoTotalSolicitado);
         apoyo.Concepto = conceptos;
         var wapoyo = new WApoyo();
         wapoyo.id = militar.Persona.DatoBasico.cedula;
@@ -396,6 +397,7 @@ function generarPlanilla() {
         wapoyo.nombre = militar.Persona.DatoBasico.nombreprimero.trim() + " " + militar.Persona.DatoBasico.apellidoprimero.trim();
         wapoyo.observaciones = $("#txtobservaciones").val().toUpperCase();
         var urlGuardar = Conn.URL + "wapoyo";
+        // console.log(JSON.stringify(wapoyo));
 
         var promesa = CargarAPI({
             sURL: urlGuardar,
@@ -430,6 +432,7 @@ function CargarConceptos(Concepto){
   concep.afiliado = $(Concepto).find("td").eq(0).html();
   concep.descripcion = $(Concepto).find("td").eq(1).html();
 
+  concep.montosolicitado = parseFloat($(Concepto).find("td").eq(8).html());
   concep.montoaseguradora = parseFloat($(Concepto).find("td").eq(9).html());
   concep.montoaportar = parseFloat($(Concepto).find("td").eq(10).html());
 

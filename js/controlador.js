@@ -49,6 +49,7 @@ class ConceptoApoyo {
         this.DatoFactura = new Factura();
         this.afiliado = '';
         this.patologia = "";
+        this.montosolicitado = 0.00;
         this.montoaseguradora = 0.00;
         this.montoaportar = 0.00;
         this.requisito = new Array();
@@ -82,7 +83,7 @@ class Reembolso {
 class Apoyo {
     constructor() {
         this.estatus = 0;
-        this.montosolicitado = 0.00;
+        this.montosolicitado = 0;
         this.cuentabancaria = new CuentaBancaria2();
         this.Concepto = new Array();
         this.montoaprobado = 0.00;
