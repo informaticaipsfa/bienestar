@@ -874,7 +874,7 @@ function crearBuzonApoyo(est, sucursal){
                 <th>Nombre y Apellido</th>
                 <th>F. Solicitud</th>
                 <th>M. Solicitud</th>
-                <th>M. Aprobado</th>
+                <th>M. IPSFA</th>
                 <th>Estatus</th>
                 <th>Acciones</th>
             </tr>
