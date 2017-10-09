@@ -24,6 +24,11 @@ $(function () {
         verificaCheckModal("requisitosmonto", "btnGenerar");
     });
 
+    $(".mdl-rseguroshori").on("change", function () {
+        verificaCheckModal("rseguroshori", "btnGenerar");
+    });
+
+
     llenarApoyo();
     $(".btnvolverentrada").click(function () {
         $("#mdldesea").modal("show");
@@ -470,6 +475,17 @@ function limpiarmdlempresa() {
 
 function requisitosConcepto() {
     var modal = $("#cmbconcepto option:selected").attr("desplegar");
+    if (modal != undefined) {
+        inactivarCheck(modal);
+        $("#btnGenerar").attr("disabled", true);
+        $("#" + modal).modal("show");
+    } else {
+        $("#btnGenerar").attr("disabled", false);
+    }
+}
+
+function requisitosAyudas() {
+    var modal = $("#cmbtipoayuda option:selected").attr("desplegar");
     if (modal != undefined) {
         inactivarCheck(modal);
         $("#btnGenerar").attr("disabled", true);
