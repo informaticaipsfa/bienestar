@@ -697,31 +697,29 @@ function EnviarReembolso(OReembolso, observaciones){
 }
 
 function agObservacion(tipo) {
-    if ( $("#txtObservacion").val() == "" ) return false;
     var idTexto = "";
     var idTabla = "";
     var idOpi = "";
+    var obj = {};
+
     switch (tipo){
         case "r":
           idOpi = "cuerpoOpiniones";
           idTexto = "txtObservacion";
           idTabla = "cuerpoObservaciones";
+          obj = CReembolso;
           break;
         case "a":
           idOpi = "cuerpoOpinionesApoyo";
           idTexto = "txtObservacionApoyo";
           idTabla = "cuerpoObservacionesApoyo";
-          break;
-        case "c":
-          idOpi = "cuerpoOpinionesCarta";
-          idTexto = "txtObservacionCarta";
-          idTabla = "cuerpoObservacionesCarta";
+          obj = copia;
           break;
     }
-
+    if ( $("#" + idTexto ).val() == "" ) return false;
     var texto = $("#" + idTexto).val();
     var tabla = $("#" + idTabla);
-    if(CReembolso.estatus > 1) tabla = $("#"+idOpi);
+    if(obj.estatus > 1) tabla = $("#"+idOpi);
     var rem = `<button type="button" onclick="remObse(this)" class="btn btn-default
                  btn-sm pull-right" data-toggle="tooltip" title="Borrar"><i style="color: red" class="fa fa-trash-o"></i>
                </button>`;
@@ -936,14 +934,15 @@ function CargarBuzonApoyo(v, est){
     montsol,
     montapr,
     estatus,
-    `<div class="tools" style="margin-right: 50px;">
-        <i class="fa  fa-check" title="Aceptar" style="color: green; font-size: 18px"
-          onclick="verificarAprobacionApoyo('${v.numero}','${v.estatus}','${v.id}')"></i>
-        <i class="fa fa-trash" title="Rechazar" style="font-size: 18px"
-          onclick="verificarRechazoApoyo('${v.numero}','${v.estatus}','${v.id}')"></i>
-    </div`
+    ``
   ];
 
+  // <div class="tools" style="margin-right: 50px;">
+  //     <i class="fa  fa-check" title="Aceptar" style="color: green; font-size: 18px"
+  //       onclick="verificarAprobacionApoyo('${v.numero}','${v.estatus}','${v.id}')"></i>
+  //     <i class="fa fa-trash" title="Rechazar" style="font-size: 18px"
+  //       onclick="verificarRechazoApoyo('${v.numero}','${v.estatus}','${v.id}')"></i>
+  // </div
 }
 
 function llenarBuzonApoyo(numero,est) {
@@ -1002,26 +1001,26 @@ function crearTablaConceptosApoyo(numero,est){
         var nombre = picar[0];
         var cedula = picar2[0];
         var fecha = Util.ConvertirFechaHumana(v.DatoFactura.fecha);
-
+        //<td>${v.DatoFactura.Beneficiario.razonsocial}</td>
+        var montoipsfa = parseFloat(v.montosolicitado) - (parseFloat(v.montoaseguradora) + parseFloat(v.montoaportar));
         fila = `<tr>
                     <td>${parent}</td>
                     <td>${nombre}</td>
                     <td>${cedula}</td>
                     <td>${v.descripcion}</td>
-                    <td><input type="text" style="width: 100%" value="${v.DatoFactura.numero}" class="numfact"></td>
-                    <td style="display: none">${v.DatoFactura.Beneficiario.rif}</td>
-                    <td style="display: none">${v.DatoFactura.Beneficiario.razonsocial}</td>
-                    <td><input type="text" style="width: 100%" class="ffactApoyo" value="${fecha}"></input></td>
+                    <td>${v.DatoFactura.Beneficiario.rif}</td>
+                    <td><input type="text" style="width: 80px" value="${v.DatoFactura.numero}" class="numfact"></td>
+                    <td><input type="text" style="width: 80px" class="ffactApoyo" value="${fecha}"></input></td>
                     <td><input type="text" onblur="CalcularMontoApoyo(this,'a')" class="mntsoli"
-                        onkeypress="return Util.SoloNumero(event,this,true)" value="${v.DatoFactura.monto}"/></td>
-                        <td><input type="text" onblur="CalcularMontoApoyo(this,'a')"  class="mntacubrir"
-                        onkeypress="return Util.SoloNumero(event,this,true)" style="width: 100%" value="${v.montoaseguradora}" /></td>
-                        <td><input type="text" style="width: 100%" onblur="CalcularMontoApoyo(this,'a')"  class="mntaseguradora"
+                        onkeypress="return Util.SoloNumero(event,this,true)" value="${v.DatoFactura.monto}" style="width:80px"/></td>
+                    <td><input type="text" onblur="CalcularMontoApoyo(this,'a')"  class="mntacubrir"
+                        onkeypress="return Util.SoloNumero(event,this,true)" style="width: 80px" value="${v.montoaseguradora}" /></td>
+                    <td><input type="text" style="width: 80px" onblur="CalcularMontoApoyo(this,'a')"  class="mntaseguradora"
                         onkeypress="return Util.SoloNumero(event,this,true)" value="${v.montoaportar}" ></td>
-                     <td><input type="text" value="${copia.montosolicitado}" class="mntAcumulado" disabled></td>
-                    <td style="width: 7%;">
-                    <button type="button" class="btn btn-default btn-sm borrarconcepto" title="Eliminar">
-                    <i class="fa fa-trash-o" style="color: red;"></i></button>
+                    <td style="width:50px"><input type="text" value="${montoipsfa}" class="mntAcumulado" style="width:80px" disabled></td>
+                    <td style="width: 40px;">
+                      <button type="button" class="btn btn-default btn-sm borrarconcepto" title="Eliminar">
+                      <i class="fa fa-trash-o" style="color: red;"></i></button>
                     </td>
                 </tr>`;
         $("#cuerpoEditarConceptosApoyo").append(fila);
@@ -1063,8 +1062,6 @@ function crearTablaConceptosApoyo(numero,est){
         $("#cuerpoObservacionesApoyo").html('');
         $("#cuerpoOpinionesApoyo").html('');
         $.each(lstObs, function () {
-
-
             if( this.contenido != undefined){
               tipo = this.contenido.split("|||");
               if(tipo[1] != undefined) {
@@ -1075,7 +1072,7 @@ function crearTablaConceptosApoyo(numero,est){
             }
         });
     }
-    //activarCambioEstatus();
+    calcularAcumuladoApoyo("a");
 }
 
 
@@ -1118,8 +1115,6 @@ function calcularAcumuladoApoyo(tipo) {
         var mnt = $(this).find("input.mntAcumulado").eq(0).val();
         var sol = $(this).find("input.mntsoli").eq(0).val();
         if(parseFloat(mnt) > parseFloat(sol)){
-            //mnt = sol;
-            //$(this).find("input.mntAcumulado").eq(0).val(mnt);
             $.notify("El  monto aprobado no debe ser mayor al solicitado");
         }
         acumulado2 = parseFloat(acumulado2)+parseFloat(sol);
@@ -1152,6 +1147,9 @@ function actualizarApoyo(est) {
     var conceptos = new Array();
     var datos = null;
     var i = 0;
+    var montosolicitado = 0;
+    calcularAcumuladoApoyo("a");
+
     if ($("#cuerpoEditarConceptosApoyo tr").length > 0) {
         $("#cuerpoEditarConceptosApoyo tr").each(function () {
             var concep = new ConceptoApoyo();
@@ -1167,12 +1165,15 @@ function actualizarApoyo(est) {
             facturaD.control = $(this).find("input.numfact").val();
 
             facturaD.Beneficiario = copia.Concepto[i].DatoFactura.Beneficiario;
-
             concep.DatoFactura = facturaD;
             concep.afiliado = copia.Concepto[i].afiliado;
             concep.descripcion = copia.Concepto[i].descripcion;
-            concep.montoaportar = parseFloat($("#totalterApoyo").html());
+            concep.montosolicitado = parseFloat($(this).find("input.mntsoli").val());
+            concep.montoaseguradora = parseFloat($(this).find("input.mntacubrir").val());
+            concep.montoaportar = parseFloat($(this).find("input.mntaseguradora").val());
+            montosolicitado += parseFloat($(this).find("input.mntsoli").val());
             i++;
+
             conceptos.push(concep);
         });
 
@@ -1181,8 +1182,9 @@ function actualizarApoyo(est) {
         $.notify("Debe poseer al menos un concpeto para editar. O puede rechazar el reembolso");
     }
 
-    copia.montoaprobado = parseFloat($("#totalaproApoyo").html());
-    copia.montosolicitado = parseFloat($("#totalterApoyo").html());
+    copia.montoaprobado = montosolicitado;
+    copia.montosolicitado = parseFloat($("#totalaproApoyo").html());
+
     var obseraciones = new Array();
     var tipoObser = "";
     if(copia.estatus > 1) tipoObser = "|||"+copia.estatus;
@@ -1198,7 +1200,15 @@ function actualizarApoyo(est) {
     }
     copia.Seguimiento.Estatus = parseInt($("#estSeguimientoApoyo").val());
 
-    datos = {id: militarActivo.Persona.DatoBasico.cedula, numero: copia.numero, Apoyo: copia,Posicion:posicionModificar,Observaciones:obseraciones};
+    datos = {
+      id: militarActivo.Persona.DatoBasico.cedula,
+      numero: copia.numero,
+      Apoyo: copia,
+      Posicion:posicionModificar,
+      Observaciones:obseraciones
+    };
+
+    // console.log(JSON.stringify(datos));
 
     var urlGuardar = Conn.URL + "wapoyo";
     var request2 = CargarAPI({
