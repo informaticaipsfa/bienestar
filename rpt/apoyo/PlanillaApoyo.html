@@ -309,7 +309,7 @@
 
     </div>
 
-    <div id="boton">
+    <div id="btnImprimir">
         <br>
         <input type="button" value="Imprimir" onclick="imprimir()">
     </div>
@@ -324,12 +324,14 @@
 <script src="../../js/config.js"></script>
 <script src="../../js/controlador.js"></script>
 <script>
+
     function imprimir() {
-        document.getElementById('btnPrint').style.display = 'none';
+        $('#btnImprimir').hide();
         window.print();
         window.close();
     }
-    let pos='';
+
+    let pos = '';
     $(function () {
         numeral.locale('es-es');
         $.obtener = function (key) {
@@ -347,12 +349,10 @@
         };
         var id = $.obtener("id");
         pos = $.obtener("pos");
-        console.log(id);
         Buscar(id);
     });
 
     function Buscar(id) {
-        console.log(militar);
         if (id != undefined) {
             $("#_cedula").val(id);
         }
@@ -371,7 +371,6 @@
         request.then(function (xhRequest) {
             militar = JSON.parse(xhRequest.responseText);
             llenar(id);
-            console.log(militar);
         });
 
 
@@ -403,7 +402,6 @@
 
             $("#lblsituacion").text(Util.ConvertirSitucacion(militar.situacion));
             var defestados = JSON.parse(sessionStorage.getItem("ipsfaEstado"));
-            console.log(defestados);
             if (militar.Persona.Direccion != undefined) {
                 var DIR = militar.Persona.Direccion[0];
                 Estados.ObtenerEstados();
@@ -429,11 +427,7 @@
             pos=militar.CIS.ServicioMedico.Programa.Apoyo.length;
             pos--;
         }
-        console.log(pos);
-
         var apo = militar.CIS.ServicioMedico.Programa.Apoyo[pos];
-        console.log(apo);
-        console.log(apo.CuentaBancaria.institucion);
         $("#lblnsolicitud").text(apo.numero);
         $("#lblfecha").text(Util.ConvertirFechaHumana(apo.fechacreacion));
         $("#lblbanco").text(Util.ConvertirBanco(apo.CuentaBancaria.institucion));
