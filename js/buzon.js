@@ -201,7 +201,7 @@ function crearBuzon(est, sucursal) {
                 <th>M. Solicitud</th>
                 <th>M. Aprobado</th>
                 <th>Estatus</th>
-                <th>Acciones</th>
+                <th>Detalles</th>
             </tr>
         </thead></table>`);
     var t = $('#lstReembolso').DataTable(opciones);
@@ -237,7 +237,7 @@ function CargarBuzonReembolso(v, est){
   var fcreacion = Util.ConvertirFechaHumana(v.fechacreacion);
   var msolicitado = numeral(parseFloat(v.montosolicitado)).format('0,0[.]00 $');
   var maprobado = numeral(parseFloat(v.montoaprobado)).format('0,0[.]00 $');
-  var con = conviertEstatus(v.estatus) + alertSegui;
+  var con = conviertEstatus(v.estatus);
   return [
     `<span class="text"><a href="#" onclick="detalleBuzon('${v.id}','${v.numero}','${est}')">${v.numero }</a></span>`,
     Sucursal(v.usuario.substr(0,3)),
@@ -247,7 +247,7 @@ function CargarBuzonReembolso(v, est){
     msolicitado,
     maprobado,
     con,
-    ``
+    alertSegui
   ];
 
   // <div class="tools" style="margin-right: 50px;">
@@ -876,7 +876,7 @@ function crearBuzonApoyo(est, sucursal){
                 <th>M. Solicitud</th>
                 <th>M. IPSFA</th>
                 <th>Estatus</th>
-                <th>Acciones</th>
+                <th>Detalles</th>
             </tr>
         </thead></table>`);
     var t = $('#tblBuzonApoyo').DataTable(opciones);
@@ -904,7 +904,7 @@ function CargarBuzonApoyo(v, est){
   var fCrea = Util.ConvertirFechaHumana(v.fechacreacion);
   var montsol = numeral(parseFloat(v.montosolicitado)).format('0,0[.]00 $');
   var montapr = numeral(parseFloat(v.montoaprobado)).format('0,0[.]00 $');
-  var estatus = conviertEstatus(v.estatus) + alertSegui;
+  var estatus = conviertEstatus(v.estatus);
   // return `<li>
   //     <div class="row"><div class="col-sm-1"><span class="text">
   //       <a href="#" onclick="detalleBuzon('${v.id}','${v.numero}',${est},'A')">${v.numero}</a></span></div>
@@ -934,7 +934,7 @@ function CargarBuzonApoyo(v, est){
     montsol,
     montapr,
     estatus,
-    ``
+    alertSegui
   ];
 
   // <div class="tools" style="margin-right: 50px;">
