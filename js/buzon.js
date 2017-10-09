@@ -293,7 +293,7 @@ function conviertEstatus(est){
 }
 
 function verificarAprobacion(num, esta, id) {
-    $("#_contenido").html("¿Está seguro que desea procesar el reembolso " + num + "?");
+    $("#_contenido").html("¿Está seguro que desea procesar el reembolso " + num + ". Imprimió la planilla de Solicitud?");
     var botones = `<button type="button" class="btn btn-success" data-dismiss="modal" id="_aceptar"
                       onClick="aprobarReembolso('${num}','${esta}','${id}')">Si</button>
                    <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>`;
@@ -786,7 +786,7 @@ function cambiarEstatusApoyo(tipo){
 }
 
 function verificarAprobacionApoyo(num, esta,id) {
-    $("#_contenido").html(`¿Está seguro que desea procesar el apoyo ${num}?`);
+    $("#_contenido").html(`¿Está seguro que desea procesar el apoyo ${num}. Imprimió la planilla de Solicitud?`);
     var botones = `<button type="button" class="btn btn-success" data-dismiss="modal" id="_aceptar"
                     onClick="aprobarApoyo('${num}','${esta}','${id}')">Si</button>
                    <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>`;
