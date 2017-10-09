@@ -508,14 +508,20 @@ color: white;" onclick="generarPlanilla()">
 </div>
 </div>
 
-
-<script>
+<script type="text/javascript">
     $('#fechafactura').datepicker({
         autoclose: true,
         format: "dd/mm/yyyy",
-        language: 'es'
+        language: 'es',
+        endDate: "+0d",
+        changeDate: function () {
+            validaFechaFactura(30)
+        }
+    }).on("changeDate", function (e) {
+        validaFechaFactura(60);
     });
     $('[data-mask]').inputmask();
 </script>
+
 <script src="js/apoyo.js"></script>
 <script src="js/proveedores2.js"></script>

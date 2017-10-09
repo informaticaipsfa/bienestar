@@ -498,7 +498,6 @@ function habilitarDireccion(estatus) {
         $("#btnhabdire").prop('disabled', false);
     }
 }
-
 function validaFechaFactura(n) {
     var f = new Date();
     var fecha = (f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear());
@@ -513,7 +512,6 @@ function validaFechaFactura(n) {
         $("#alert_fecha").hide();
     }
 }
-
 function limpiarcaja() {
     if (($("#montootroaporte").val()) == 0) {
         $("#montootroaporte").val("")
