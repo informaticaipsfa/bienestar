@@ -395,6 +395,8 @@ function generarPlanilla() {
 
         apoyo.tipo = 0;
         apoyo.montosolicitado = parseFloat(montoTotalSolicitado);
+        apoyo.grado = militar.Grado.descripcion;
+        apoyo.componente = militar.Componente.descripcion;
         apoyo.Concepto = conceptos;
         var wapoyo = new WApoyo();
         wapoyo.id = militar.Persona.DatoBasico.cedula;

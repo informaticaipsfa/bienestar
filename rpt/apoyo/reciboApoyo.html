@@ -92,13 +92,15 @@
         <table class="tcontenedor junta" border=0>
             <tbody>
             <tr class="texto12 simple" style="height: 30px;">
-                <td style="width:30%;" class="biz bde btop">
-                    CEDULA DE IDENTIDAD DEL AFILIADO:
-                    <br><h3><b id="lblcedula"></b></h3>
-                </td>
-                <td style="width:70%;" colspan="3" class="bde btop bajo">APELLIDOS Y NOMBRES DEL AFILIADO:
-                    <br><h3><b id="lblnombre"></b></h3>
-                </td>
+              <td style="width:30%;" class="biz bde btop">
+                  CEDULA DE IDENTIDAD DEL AFILIADO:<BR><br>
+                  <b id="lblcedula"></b>
+              </td>
+              <td style="width:70%;" colspan="3" class="biz bde bajo btop">
+                  GRADO: <b id="lblgrado"></b>, COMPONENTE: <b id="lblcomponente"></b><br><br>
+                  APELLIDOS Y NOMBRES: <b id="lblnombre"></b>
+
+              </td>
             </tr>
 
 
@@ -232,6 +234,8 @@
                         </tr>`;
         });
         $("#cuerpoconceptos").html(fila);
+        $("#lblgrado").html(militar.Grado.descripcion);
+        $("#lblcomponente").html(militar.Componente.descripcion);
     }
 </script>
 </html>

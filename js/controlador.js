@@ -73,6 +73,8 @@ class Reembolso {
         this.fechaaprobacion = '';
         this.requisito = new Array();
         this.observaciones = "";
+        this.componente = "";
+        this.grado = ""
         this.Direccion = new Direccion();
         this.Telefono = new Telefono();
         this.Correo = new Correo();
@@ -90,6 +92,8 @@ class Apoyo {
         this.fechaaprobacion = '';
         this.requisito = new Array();
         this.observaciones = "";
+        this.componente = "";
+        this.grado = "";
         this.Direccion = new Direccion();
         this.Telefono = new Telefono();
         this.Correo = new Correo();

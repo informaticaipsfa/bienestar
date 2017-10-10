@@ -348,6 +348,8 @@ function cargarDatos() {
                 conceptos.push(CargarConceptos(this));
             });
             reembolso.Concepto = conceptos;
+            reembolso.grado = militar.Grado.descripcion;
+            reembolso.componente = militar.Componente.descripcion;
             var wreembolso = new WReembolso();
             wreembolso.id = militar.Persona.DatoBasico.cedula;
             wreembolso.Reembolso = reembolso;
