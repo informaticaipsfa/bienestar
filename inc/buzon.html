@@ -193,15 +193,15 @@
                                 <i class="fa fa-check" style="color: green"></i>&nbsp Procesar
                             </button>
                             <div class="pull-right" id="cambioestatus" style="display: none">
-                                <select id="cmbcambioestatus">
-                                    <option value=""></option>
+                                <select id="cmbcambioestatus" class="form-control">
+                                    <option value="">Trasladar caso a:</option>
                                     <option value="0">Pendiente</option>
                                     <option value="1">Jefatura</option>
                                     <option value="2">Gerencia</option>
                                 </select>
                                 <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip"
                                         data-container="body" onclick="cambiarEstatusReembolso('e')" id="btncambioestatus">
-                                    <i class="fa fa-check" style="color: green"></i>&nbsp Cambio de Estatus
+                                    <i class="fa fa-check" style="color: green"></i>&nbsp Trasladar
                                 </button>
                             </div>
                         </div>
@@ -238,16 +238,44 @@
                                 </tr>
                                 </tfoot>
                             </table>
+
+                            <table class="table table-bordered" id="DistribucionReembolso" style="display:none" >
+                                <thead>
+                                  <tr class="bg-info">
+                                    <th><b>MONTO APROBADO PRESIDENCIA<b></th>
+                                    <th><b>FONDOS DE CUIDADO INTEGRAL</b></th>
+                                  </tr>
+                                </thead>
+                                <tbody >
+                                  <td>
+                                    <div class="input-group" style="z-index: 1030;">
+                                        <input class="form-control" value="0.00" id="txtPresidenciaReembolso"
+                                        onkeypress="return Util.SoloNumero(event,this,true)">
+                                        <div class="input-group-addon">
+                                            <label>Bs.</label>
+                                        </div>
+                                    </div>
+
+                                  </td>
+                                  <td>
+                                    <select id="cmbFondoReembolso" class="form-control">
+                                      <option value="4.07.01.01.99.04">CIS 4.07.01.01.99.04</option>
+                                      <option value="4.11.06.02.00.99">CAM 4.11.06.02.00.99</option>
+                                    </select>
+                                  </td>
+                                </tbody>
+
+                            </table>
+
                             <table class="table table-bordered">
                                 <thead>
                                 <tr class="bg-info">
                                     <td>OBSERVACIONES</td>
-                                    <td style="width: 15px">
-                                        <select id="estSeguimiento">
-                                            <option value="0" selected="selected">Seguimiento</option>
-                                            <option value="0">En orden</option>
+                                    <td style="width: 170px">
+                                        <select id="estSeguimiento"  class="form-control" style="width: 170px">
+                                            <option value="0" selected>En orden</option>
                                             <option value="1">Con pendientes</option>
-                                            <option value="2">Con Recomendaciones</option>
+                                            <option value="2">Con recomendaciones</option>
                                         </select></td>
                                 </tr>
                                 </thead>
@@ -377,8 +405,8 @@
                                 <i class="fa fa-check" style="color: green"></i>&nbsp Aceptar
                             </button>
                             <div class="pull-right" id="cambioestatusApoyo" style="display: none; ">
-                                <select id="cmbcambioestatusApoyo">
-                                    <option value=""></option>
+                                <select id="cmbcambioestatusApoyo" class="form-control">
+                                    <option value="">Trasladar caso a:</option>
                                     <option value="0">Pendiente</option>
                                     <option value="1">Jefatura</option>
                                     <option value="2">Gerencia</option>
@@ -386,7 +414,7 @@
                                 <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip"
                                         data-container="body" onclick="cambiarEstatusApoyo('e')"
                                         id="btncambioestatusApoyo">
-                                    <i class="fa fa-check" style="color: green"></i>&nbsp Cambio de Estatus
+                                    <i class="fa fa-check" style="color: green"></i>&nbsp Trasladar
                                 </button>
                             </div>
                         </div>
@@ -425,15 +453,48 @@
                                 </tr>
                                 </tfoot>
                             </table>
+
+                            <table class="table table-bordered" id="DistribucionApoyo" style="display:none">
+                                <thead>
+                                  <tr class="bg-info">
+                                    <th><b>MONTO APROBADO PRESIDENCIA<b></th>
+                                    <th><b>FONDOS DE CUIDADO INTEGRAL</b></th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <td>
+                                    <div class="input-group" style="z-index: 1030;">
+                                        <input class="form-control" value="0.00" id="txtPresidenciaApoyo"
+                                        onkeypress="return Util.SoloNumero(event,this,true)">
+                                        <div class="input-group-addon">
+                                            <label>Bs.</label>
+                                        </div>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <select id="cmbFondoApoyo" class="form-control">
+                                      <option value="4.07.01.01.99.04">CIS 4.07.01.01.99.04</option>
+                                      <option value="4.07.01.01.56.01">FAM 4.07.01.01.56.01</option>
+                                      <option value="4.11.06.02.00.99">CAM 4.11.06.02.00.99</option>
+                                    </select>
+                                  </td>
+                                </tbody>
+
+                            </table>
+
+
+
                             <table class="table table-bordered">
                                 <thead>
                                 <tr class="bg-info">
                                     <td>OBSERVACIONES</td>
-                                    <td style="width: 15px"><select id="estSeguimientoApoyo">
-                                        <option value="0">En orden</option>
+                                    <td  style="width: 170px">
+                                      <select id="estSeguimientoApoyo"  class="form-control"  style="width: 170px">
+                                        <option value="0" selected>En orden</option>
                                         <option value="1">Con pendientes</option>
-                                        <option value="2">Con Recomendaciones</option>
-                                    </select></td>
+                                        <option value="2">Con recomendaciones</option>
+                                      </select>
+                                    </td>
                                 </tr>
                                 </thead>
                                 <tbody id="cuerpoObservacionesApoyo">

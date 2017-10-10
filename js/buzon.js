@@ -144,6 +144,8 @@ function TipoBuzon(tipo ){
 function listaBuzon(est) {
 
     //$("#cmbsucursal").select2();
+    $("#DistribucionApoyo").hide();
+    $("#DistribucionReembolso").hide();
     posicionModificar = est;
     //Reembolso
     $("#lista").html('');
@@ -157,6 +159,7 @@ function listaBuzon(est) {
         lstBuzon = JSON.parse(xhRequest.responseText);
         if(lstBuzon != null) crearBuzon(est);
         $("#_htitulo").html(TipoBuzon(est));
+        if(est > 3)$("#DistribucionReembolso").show();
     });
 
     //Apoyo
@@ -171,6 +174,7 @@ function listaBuzon(est) {
         lstBuzonApoyo = JSON.parse(xhRequest.responseText);
         if(lstBuzonApoyo != null) crearBuzonApoyo(est);
         $("#_htitulo").html(TipoBuzon(est));
+        if(est > 3)$("#DistribucionApoyo").show();
     });
 
 
@@ -498,6 +502,8 @@ function crearTablaConceptos(numero,est) {
         $("#cuerpoObservaciones").html('');
         $("#cuerpoOpiniones").html('');
         lstObs.forEach( v => {
+
+          if( v.contenido != undefined){
             var tipo = v.contenido.split("|||");
             var cestatus = conviertEstatus(CReembolso.estatus);
             var tipo = tipo[0];
@@ -506,6 +512,9 @@ function crearTablaConceptos(numero,est) {
             }else {
               $("#cuerpoObservaciones").append(`<tr><td>${v.contenido}</td><td></td></tr>`);
             }
+          }
+
+
         });
     }
     validarDetalleReembolso(est);
@@ -1061,13 +1070,13 @@ function crearTablaConceptosApoyo(numero,est){
         var lstObs = copia.Seguimiento.Observaciones;
         $("#cuerpoObservacionesApoyo").html('');
         $("#cuerpoOpinionesApoyo").html('');
-        $.each(lstObs, function () {
-            if( this.contenido != undefined){
-              tipo = this.contenido.split("|||");
+        lstObs.forEach(v => {
+            if( v.contenido != undefined){
+              tipo = v.contenido.split("|||");
               if(tipo[1] != undefined) {
                 $("#cuerpoOpinionesApoyo").append('<tr><td>' + tipo[0] + '</td><td style="width: 10%;text-align: right">'+conviertEstatus(copia.estatus)+'</td></tr>');
               }else{
-                $("#cuerpoObservacionesApoyo").append('<tr><td>' + this.contenido + '</td><td style="width: 10%;text-align: right"></td></tr>');
+                $("#cuerpoObservacionesApoyo").append('<tr><td>' + v.contenido + '</td><td style="width: 10%;text-align: right"></td></tr>');
               }
             }
         });

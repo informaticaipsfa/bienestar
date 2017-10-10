@@ -18,6 +18,122 @@ function formatoCombo(state) {
     return $state;
 };
 
+/**
+* Rechazos del Buzon de los estados del Reembolso
+*
+* @param {int}
+* @param {int}
+* @param {string}
+* @return void
+*/
+
+function detalleBuzonApoyo(numero, tipo) {
+    console.log(numero);
+    switch (tipo){
+        case "A":
+          HCargarBuzonApoyo(numero);
+          break;
+        default:
+          break;
+    }
+
+}
+
+function HCargarBuzonApoyo(numero) {
+    $('#lblcedulaApoyo').text(militar.Persona.DatoBasico.cedula);
+    var ncompleto = militar.Persona.DatoBasico.nombreprimero.trim() + " " + militar.Persona.DatoBasico.apellidoprimero.trim();
+    $('#lblnombreApoyo').text(ncompleto);
+    $('#lblgradoApoyo').text(militar.Grado.descripcion);
+    $('#lblsituacionApoyo').text(Util.ConvertirSitucacion(militar.situacion));
+    $('#lblnumeroApoyo').text(numero);
+    $('#lblcomponenteApoyo').text(militar.Componente.descripcion);
+
+    var rutaimg = Conn.URLIMG;
+    url = rutaimg + militar.Persona.DatoBasico.cedula + ".jpg";
+    if (militar.Persona.foto != undefined) {
+        rutaimg = Conn.URLTEMP;
+        url = rutaimg + militar.Persona.DatoBasico.cedula + "/foto.jpg";
+    }
+    $("#fotoperfilApoyo").attr("src", url);
+
+    HCrearTablaConceptosApoyo(numero);
+    //
+    // mostrarTextoObservacion(est);
+
+    $("#lstDetalleApoyo").show();
+    $("#tblTodos").hide();
+    $("#panelperfil").hide();
+}
+
+
+
+function HCrearTablaConceptosApoyo(numero,est){
+    var fila = "";
+    var pos = 0;
+    var lst = militar.CIS.ServicioMedico.Programa.Apoyo;
+    var i = 0;
+    lst.forEach(v => {
+        if (v.numero == numero) {
+            pos = i;
+            posicionModificar = i;
+        }
+        i++;
+    });
+    copia = lst[pos];
+    $("#estSeguimiento").val(copia.Seguimiento.Estatus);
+
+    $("#cuerpoEditarConceptosApoyo").html('');
+    copia.Concepto.forEach(v => {
+        var mntApo = 0;
+        if(v.DatoFactura.montoaprobado > 0) mntApo = v.DatoFactura.montoaprobado;
+        var ffact = Util.ConvertirFechaHumana(v.DatoFactura.fecha);
+        var picar = v.afiliado.split("-");
+        var picar2 = picar[1].split("(");
+        var tam = picar2[1].length;
+        var parent = picar2[1].substr(0,tam-1);
+        var nombre = picar[0];
+        var cedula = picar2[0];
+        var fecha = Util.ConvertirFechaHumana(v.DatoFactura.fecha);
+        var montoipsfa = parseFloat(v.montosolicitado) - (parseFloat(v.montoaseguradora) + parseFloat(v.montoaportar));
+        fila = `<tr>
+                    <td>${parent}</td>
+                    <td>${nombre}</td>
+                    <td>${cedula}</td>
+                    <td>${v.descripcion}</td>
+                    <td>${v.DatoFactura.Beneficiario.rif}</td>
+                    <td>${v.DatoFactura.numero}</td>
+                    <td>${fecha}</td>
+                    <td>${v.DatoFactura.monto}</td>
+                    <td>${v.montoaseguradora}</td>
+                    <td>${v.montoaportar}</td>
+                    <td>${montoipsfa}</td>
+                </tr>`;
+        $("#cuerpoEditarConceptosApoyo").append(fila);
+    });
+   // $("#totalterApoyo").html(copia.montosolicitado.toFixed(2));
+    $("#totalaproApoyo").html(copia.montoaprobado);
+
+
+
+    /**
+     * Crear tabla de objservaciones
+     */
+    if (copia.Seguimiento.Observaciones != undefined) {
+        var lstObs = copia.Seguimiento.Observaciones;
+        $("#cuerpoObservacionesApoyo").html('');
+        $("#cuerpoOpinionesApoyo").html('');
+        lstObs.forEach(v => {
+            if( v.contenido != undefined){
+              tipo = v.contenido.split("|||");
+              if(tipo[1] != undefined) {
+                $("#cuerpoOpinionesApoyo").append('<tr><td>' + tipo[0] + '</td><td style="width: 10%;text-align: right">'+conviertEstatus(copia.estatus)+'</td></tr>');
+              }else{
+                $("#cuerpoObservacionesApoyo").append('<tr><td>' + v.contenido + '</td><td style="width: 10%;text-align: right"></td></tr>');
+              }
+            }
+        });
+    }
+}
 
 
 function ActivarBuscar() {
@@ -441,7 +557,7 @@ function historicoApoyo() {
                 listaFact = nfac;
             }
             t.row.add([
-                `<a href='#cuerpoLstConceptos' onclick="detalleVisibleApoyo(${i})">${this.numero}</a>
+                `<a href='#cuerpoLstConceptos' onclick="detalleBuzonApoyo('${this.numero}','A')">${this.numero}</a>
                   <button type='button' class='btn btn-default btn-sm pull-right'
                     onclick="imprimirreciboapo(${i})"><i class='fa fa-print'></i>
                   </button>`, //1

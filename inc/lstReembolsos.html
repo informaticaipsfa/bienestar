@@ -140,14 +140,12 @@
 
 <div class="row" id="lstDetalle" style="display: none;">
     <div class="col-md-12">
-        <div class="box box-primary">
+        <!-- <div class="box box-primary">
             <div class="box-header with-border">
                 <h3 class="box-title">Detalle De Reembolso n&uacute;mero: <label id="lbldetnumero"></label></h3><br>
                 <h3 class="box-title">Fecha de Solicitud: <label id="lblfechasoli"></label></h3>
-                <!-- /.box-tools -->
             </div>
             <div class="box-body no-padding">
-                <!-- /.mailbox-read-info -->
                 <div class="mailbox-controls with-border text-center">
                     <div class="btn-group">
                         <button type="button" class="btn btn-default btn-sm"
@@ -156,9 +154,7 @@
                             <i class="fa fa-reply"></i></button>
                     </div>
                 </div>
-                <!-- /.mailbox-controls -->
                 <div class="mailbox-read-message">
-                    <!-- Widget: user widget style 1 -->
                     <table class='table table-responsive table-bordered'>
                         <thead>
                         <tr class='success'>
@@ -174,23 +170,38 @@
                     </table>
                     <table class='table table-responsive table-bordered' id="cuerpoLstBada">
                     </table>
-
                 </div>
-                <!-- /.mailbox-read-message -->
             </div>
-        </div>
+        </div> -->
+
+
+
+
+
+
+
+
     </div>
 </div>
 
+
+
+
+<!-- *
+*  Inicio de los detalles del apoyo x historial
+*
+*
+*
+*
+* -->
+
 <div class="row" id="lstDetalleApoyo" style="display: none;">
-    <div class="col-md-12">
-        <div class="box box-primary">
+
+        <!-- <div class="box box-primary">
             <div class="box-header with-border">
                 <h3 class="box-title">Detalle De Apoyo numero <label id="lbldetnumeroApoyo"></label></h3>
-                <!-- /.box-tools -->
             </div>
             <div class="box-body no-padding">
-                <!-- /.mailbox-read-info -->
                 <div class="mailbox-controls with-border text-center">
                     <div class="btn-group">
                         <button type="button" class="btn btn-default btn-sm" onclick="PanelListadoDetallado()"
@@ -198,9 +209,7 @@
                             <i class="fa fa-reply"></i></button>
                     </div>
                 </div>
-                <!-- /.mailbox-controls -->
                 <div class="mailbox-read-message">
-                    <!-- Widget: user widget style 1 -->
                     <table class='table table-responsive table-bordered'>
                         <thead>
                         <tr class='success'>
@@ -218,11 +227,202 @@
                         <tbody id="cuerpoLstConceptosApoyo"></tbody>
                     </table>
                 </div>
-                <!-- /.mailbox-read-message -->
             </div>
-        </div>
-    </div>
-</div>
+        </div> -->
+
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header ">
+                            <h3 class="box-title">Datos de Apoyo Económico</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body no-padding">
+                            <div class="mailbox-read-info">
+                                <div class="row" style="margin-left: 50px;">
+                                    <div class="col-md-3" style="margin-top: 40px;">
+                                        <h4><b>CEDULA:</b> <label id="lblcedulaApoyo" style="font-weight: 500;"> </label>
+                                        </h4>
+                                        <h4><b>N° APOYO: </b> <label id="lblnumeroApoyo" style="font-weight: 500;"> </label></h4>
+                                        <h4><b>FECHA DE SOLICITUD: </b> <label id="lblfechasolicitudApoyo" style="font-weight: 500;"> </label></h4>
+                                    </div>
+                                    <div class="col-md-4" style="margin-top: 40px;">
+                                        <h4><b>NOMBRE:</b> <label id="lblnombreApoyo" style="font-weight: 500;"> </label>
+                                        </h4>
+                                        <h4><b>COMPONENTE:</b> <label id="lblcomponenteApoyo"
+                                                                      style="font-weight: 500;"> </label>
+                                        </h4>
+
+                                    </div>
+                                    <div class="col-md-3" style="margin-top: 40px;">
+                                        <h4><b>GRADO:</b> <label id="lblgradoApoyo" style="font-weight: 500;"> </label></h4>
+
+                                        <h4><b>SITUACIÓN:</b> <label id="lblsituacionApoyo"
+                                                                     style="font-weight: 500;"> </label>
+                                        </h4>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <img class="profile-user-img img-responsive" style="width: 130px;" src=""
+                                             onerror="this.src='images/ndisponible.jpg'"
+                                             alt="Foto de perfil" id="fotoperfilApoyo">
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="mailbox-controls with-border text-center">
+
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip"
+                                            onclick="PanelListadoDetallado()"
+                                            data-container="body">
+                                        <i class="fa fa-reply"></i>&nbsp Regresar
+                                    </button>
+                                </div>
+
+
+                            </div>
+
+                            <div class="box box-primary container-fluid">
+                                <div class="mailbox-read-message ">
+
+                                    <h4>Detalles del Apoyo Economico</h4>
+                                </div>
+                                <table class="table table-bordered">
+                                    <thead>
+                                      <tr class="bg-info">
+                                        <th><b>PARENT.<b></th>
+                                        <th><b>CEDULA</b></th>
+                                        <th><b>NOMBRE</b></th>
+                                        <th><b>CONCEPTO</b></th>
+                                        <th><b>RIF</b></th>
+                                        <th><b>NÚMERO</b></th>
+                                        <th><b>FECHA</b></th>
+                                        <th style="width:50px"><b>MONTO TOTAL</b></th>
+                                        <th style="width:50px"><b>MONTO ASEGURADORA</b></th>
+                                        <th style="width:50px"><b>OTROS APORTES</b></th>
+                                        <th style="width:50px"><b>MONTO IPSFA</b></th>
+                                      </tr>
+                                    </thead>
+                                    <tbody id="cuerpoEditarConceptosApoyo">
+
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <td colspan="9" style="text-align: right">TOTALES</td>
+                                        <!--<td id="totalterApoyo" style="text-align: right"></td>-->
+                                        <td></td>
+                                        <td id="totalaproApoyo" style="text-align: right"></td>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+
+                                <table class="table table-bordered" id="DistribucionApoyo">
+                                    <thead>
+                                      <tr class="bg-info">
+                                        <th><b>MONTO APROBADO PRESIDENCIA<b></th>
+                                        <th><b>FONDOS DE CUIDADO INTEGRAL</b></th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <td>
+                                        <div class="input-group" style="z-index: 1030;">
+                                            <input class="form-control" value="0.00" id="txtPresidenciaApoyo"
+                                            onkeypress="return Util.SoloNumero(event,this,true)" disabled>
+                                            <div class="input-group-addon">
+                                                <label>Bs.</label>
+                                            </div>
+                                        </div>
+                                      </td>
+                                      <td>
+                                        <select id="cmbFondoApoyo" class="form-control" disabled>
+                                          <option value=""></option>
+                                          <option value="4.07.01.01.99.04">CIS 4.07.01.01.99.04</option>
+                                          <option value="4.07.01.01.56.01">FAM 4.07.01.01.56.01</option>
+                                          <option value="4.11.06.02.00.99">CAM 4.11.06.02.00.99</option>
+                                        </select>
+                                      </td>
+                                    </tbody>
+
+                                </table>
+
+
+
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr class="bg-info">
+                                        <td>OBSERVACIONES</td>
+                                        <td  style="width: 170px">
+                                          <select id="estSeguimientoApoyo"  class="form-control"  style="width: 170px">
+                                            <option value="0" selected>En orden</option>
+                                            <option value="1">Con pendientes</option>
+                                            <option value="2">Con recomendaciones</option>
+                                          </select>
+                                        </td>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="cuerpoObservacionesApoyo">
+
+                                    </tbody>
+                                </table>
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr class="bg-info">
+                                        <td>OBSERVACIONES</td>
+                                        <td style="width: 10%">ESTADO</td>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="cuerpoOpinionesApoyo">
+
+                                    </tbody>
+                                </table>
+                                <div class="box box-primary">
+                                    <div class="row">
+
+                                        <div class="col-md-6">
+                                            <h4 class="lblobser">OBSERVACIÓN</h4>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <button type="button" class="btn btn-default btn-sm pull-right"
+                                                    data-toggle="tooltip"
+                                                    data-container="body" onclick="agObservacion('a')">
+                                                <i class="fa fa-plus" style="color: green"></i>&nbsp Agregar <label
+                                                    class="lblobser">&nbsp Observación</label>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <textarea textarea class="form-control" rows="3" placeholder="Observación..."
+                                          id="txtObservacionApoyo"></textarea>
+                            </div>
+                            <!-- /.mailbox-read-message -->
+                        </div>
+                        <!-- /.box-body -->
+                        <!-- /.box-footer -->
+                        <div class="box-footer">
+                            <div class="pull-right">
+                                <button type="button" onclick="actualizarApoyo()" class="btn btn-success"><i
+                                        class="fa fa-save "></i> Guardar cambios
+                                </button>
+
+                            </div>
+                            <button type="button" onclick="PanelListadoDetallado()" class="btn btn-default"><i
+                                    class="fa fa-reply"></i>
+                                Atras
+                            </button>
+
+                        </div>
+                        <!-- /.box-footer -->
+                    </div>
+                    <!-- /. box -->
+                </div>
+                <!-- /.col -->
+            </div>
+
+</div> <!-- Fin del apoyo -->
 
 <div class="row" id="lstDetalleCarta" style="display: none;">
     <div class="col-md-12">
