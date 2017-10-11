@@ -24,26 +24,6 @@ $(function () {
 
 });
 
-class Medicina {
-    constructor() {
-        this.nombrecomercial = '';
-        this.presentacion = '';
-        this.dosis = "";
-        this.cantidad="";
-        this.fechainicio='';
-        this.fechavencimiento='';
-    }
-}
-
-
-class WMedicina{
-    constructor(){
-        this.id = "";
-        this.idf = "";
-        this.Medicina = new Array();
-        this.afiliado = "";
-    }
-}
 
 function agregarMedicina(){
     if(Util.ValidarFormulario("frmmedicina","btnagregarmedicina")){
@@ -224,43 +204,58 @@ function cargarFamiliar(pos){
 
 
 function generarMedicina() {
-    if (Util.ValidarFormulario("frmmedicinat", "_btnSalvar")) {
+  if (Util.ValidarFormulario("frmmedicinat", "_btnSalvar")) {
 
-    	var bene = $("#cmbbeneficiario option:selected").val().split('|');
-    	var beneficiario = bene[1]+"-"+$("#cmbbeneficiario option:selected").text();
+  	var bene = $("#cmbbeneficiario option:selected").val().split('|');
+  	var beneficiario = bene[1]+"-"+$("#cmbbeneficiario option:selected").text();
+    var dir = new Direccion();
+    dir.tipo = 0;
+    dir.estado = $("#cmbmestado option:selected").val();
+    dir.municipio = $("#cmbmmunicipio option:selected").val();
+    dir.parroquia = $("#cmbmparroquia option:selected").val();
+    dir.ciudad = $("#cmbmciudad").val();
+    dir.calleavenida = $("#txtmcalle").val().toUpperCase();
+    dir.casa = $("#txtmcasa").val().toUpperCase();
+    dir.apartamento = $("#txtmapto").val().toUpperCase();
+    var tele = new Telefono();
+    tele.domiciliario = $("#txtmtelefono").val();
+    tele.movil = $("#txtmcelular").val();
+    tele.emergencia = $("#txtmtelefonoe").val();
 
-        var lstmedicina = new Array();
-        if ($("#medicinaagregada tr").length > 0) {
-            $("#medicinaagregada tr").each(function () {
-                lstmedicina.push(CargarMedicina(this));
-            });
+    var lstmedicina = new Array();
+    if ($("#medicinaagregada tr").length > 0) {
+      $("#medicinaagregada tr").each(function () {
+          lstmedicina.push(CargarMedicina(this));
+      });
 
-            var wmedicina = new WMedicina();
-            wmedicina.id = militar.Persona.DatoBasico.cedula;
-            wmedicina.idf = bene[1];
-            wmedicina.Medicina = lstmedicina;
-            wmedicina.afiliado = beneficiario;
-            console.log(JSON.stringify(wmedicina));
-           var urlGuardar = Conn.URL + "wmedicina";
-           var promesa = CargarAPI({
-               sURL: urlGuardar,
-               metodo: 'POST',
-               valores: wmedicina,
-           });
+      var wmedicina = new WMedicina();
+      wmedicina.id = militar.Persona.DatoBasico.cedula;
+      wmedicina.idf = bene[1];
+      wmedicina.Direccion = dir;
+      wmedicina.Telefono = tele;
+      wmedicina.Medicina = lstmedicina;
+      wmedicina.afiliado = beneficiario;
+      // console.log(JSON.stringify(wmedicina));
+     var urlGuardar = Conn.URL + "wmedicina";
+     var promesa = CargarAPI({
+         sURL: urlGuardar,
+         metodo: 'POST',
+         valores: wmedicina,
+     });
 
-           promesa.then(function (xhRequest) {
-               respuesta = JSON.parse(xhRequest.responseText);
-               if (respuesta.msj != "") respuesta.msj2 = "Se proceso con exito....";
-               msj2Respuesta(respuesta.msj2);
-               $("#medicinaagregada").html("");
-               llenarmedicina();
-               var idm = militar.Persona.DatoBasico.cedula;
-               var ventana = window.open("rpt/medicina/medicinaAltoCosto.html?id="+idm , "_blank");
-           });
-        }
-    } else {
-        $.notify("Debe ingresar todos los datos para realizar el reembolso");
-    }
+     promesa.then(function (xhRequest) {
+         respuesta = JSON.parse(xhRequest.responseText);
+         if (respuesta.msj != "") respuesta.msj2 = "Se proceso con exito....";
+         msj2Respuesta(respuesta.msj2);
+         $("#medicinaagregada").html("");
+         llenarmedicina();
+         var idm = militar.Persona.DatoBasico.cedula;
+         var ventana = window.open("rpt/medicina/medicinaAltoCosto.html?id="+idm , "_blank");
+     });
+   }
+  } else {
+      $.notify("Debe ingresar todos los datos para realizar el reembolso");
+  }
 }
 
 function CargarMedicina(OMedicina){

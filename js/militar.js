@@ -563,6 +563,77 @@ class Recibo{
     }
 }
 
+
+class Medicina {
+    constructor() {
+        this.nombrecomercial = '';
+        this.presentacion = '';
+        this.dosis = "";
+        this.cantidad="";
+        this.fechainicio='';
+        this.fechavencimiento='';
+    }
+}
+
+
+class WMedicina{
+    constructor(){
+        this.id = "";
+        this.idf = "";
+        this.Medicina = new Array();
+        this.afiliado = "";
+				this.Direccion = new Direccion();
+        this.Telefono = new Telefono();
+        this.Correo = new Correo();
+    }
+}
+
+
+
+class Factura2{
+    constructor() {
+        this.Beneficiario = new Beneficiario();
+    }
+}
+
+class ConceptoCarta{
+    constructor(){
+        this.motivo = "";
+        this.diagnostico = "";
+        this.descripcion = '';
+        this.DatoFactura = new Factura2();
+        this.afiliado = '';
+        this.requisito = new Array();
+        this.montoafiliado = 0.00;
+        this.porcentajeafi = 0.00;
+    }
+}
+
+class Carta {
+    constructor() {
+        this.estatus = 0;
+        this.montosolicitado = 0.00;
+        this.cuentabancaria = new CuentaBancaria2();
+        this.Concepto = new Array();
+        this.montoaprobado = 0.00;
+        this.requisito = new Array();
+        //this.observaciones = "";
+        this.Direccion = new Direccion();
+        this.Telefono = new Telefono();
+        this.Correo = new Correo();
+        this.Seguimiento = new Seguimiento();
+        this.fondo = "";
+    }
+}
+
+class WCarta{
+    constructor(){
+        this.id = "";
+        this.Carta = new Carta();
+        this.nombre = "";
+    }
+}
+
 class WReembolso {
     constructor() {
         this.id = "";
