@@ -40,6 +40,7 @@
 
     let id = null;
     let pos = null;
+    let num = null;
     $(function () {
         numeral.locale('es-es');
         $.obtener = function (key) {
@@ -55,7 +56,8 @@
                 return results[1];
             }
         };
-        var id = $.obtener("id");
+        id = $.obtener("id");
+        num = $.obtener("num");
         Buscar(id);
     });
 
@@ -64,10 +66,9 @@
         if (id != undefined) {
             $("#_cedula").val(id);
         }
-        if ($("#_cedula").val() == "") {
+        if ( $("#_cedula").val() == "" ) {
             return false;
         }
-
         var url = Conn.URL + "militar/crud/" + id;
         var request = CargarAPI({
             sURL: url,
@@ -103,53 +104,52 @@
           }
       }
 
-    function crearCarta() {
-        if (pos == null) {
-            pos = militar.CIS.Gasto.MedicinaAltoCosto.length;
-            pos--;
-        }
-
-        var carta = militar.CIS.Gasto.MedicinaAltoCosto[pos];
-
-        //$("#lblnsolicitud").text(numero);
-        $("#lblfecha").text(Util.ConvertirFechaHumana(carta.fecha));
-
-        var bene = carta.afiliado.split("-");
-            cedulaa = bene[0];
-            nombreparen = bene[1];
-            nomafi = nombreparen.split("(");
-            nombrea = nomafi[0];
-            paren = nomafi[1];
-            parentesco = paren.split(")");
-
-          $("#cedulaafil").html(cedulaa);
-          $("#nombreafil").html(nombrea);
-          $("#parentescoafil").html(parentesco);
-
-            var concep = militar.CIS.Gasto.MedicinaAltoCosto[pos];
-            var fila ="";
-            $.each(concep.Medicina,function () {
-
-            	var nomcom = this.nombrecomercial;
-            	var pres = this.presentacion;
-            	var cant= this.cantidad;
-            	var dosis = this.dosis;
-            	var fecini = Util.ConvertirFechaHumana(this.fechainicio);
-            	var fecvenc = Util.ConvertirFechaHumana(this.fechavencimiento);
-
-            	$("#fechainicio").html(fecini);
-            	$("#fechavenc").html(fecvenc);
-            	$("#fechainicio2").html(fecini);
-            	$("#fechavenc2").html(fecvenc);
-
-                fila+= "<tr class='filaconcep'><td class='bordeado'>"+nomcom+"</td><td class='bordeado'>"+cant+"</td>" +"<td class='bordeado'>"+pres+"</td></tr>";
-            });
-            $("#cuerpoconceptos").html(fila);
-
-            if ($("#parentescoafil").text() == "MILITAR") {
-                $("#tit").css("display", "block");
-            } else {$("#fam").css("display", "block");}
+function crearCarta() {
+  var posicion = 0;
+  militar.CIS.Gasto.MedicinaAltoCosto.forEach( v => {
+    if ( v.numero == num ){
+      pos = posicion;
+      return true;
     }
+    posicion++;
+  });
+  var carta = militar.CIS.Gasto.MedicinaAltoCosto[pos];
+  $("#lblfecha").text(Util.ConvertirFechaHumana(carta.fecha));
+  var bene = carta.afiliado.split("-");
+  cedulaa = bene[0];
+  nombreparen = bene[1];
+  nomafi = nombreparen.split("(");
+  nombrea = nomafi[0];
+  paren = nomafi[1];
+  parentesco = paren.split(")");
+
+  $("#cedulaafil").html(cedulaa);
+  $("#nombreafil").html(nombrea);
+  $("#parentescoafil").html(parentesco);
+  var concep = militar.CIS.Gasto.MedicinaAltoCosto[pos];
+  var fila ="";
+  concep.Medicina.forEach(v => {
+  	var nomcom = v.nombrecomercial;
+  	var pres = v.presentacion;
+  	var cant= v.cantidad;
+  	var dosis = v.dosis;
+  	var fecini = Util.ConvertirFechaHumana(v.fechainicio);
+  	var fecvenc = Util.ConvertirFechaHumana(v.fechavencimiento);
+  	$("#fechainicio").html(fecini);
+  	$("#fechavenc").html(fecvenc);
+  	$("#fechainicio2").html(fecini);
+  	$("#fechavenc2").html(fecvenc);
+    fila+= `<tr class='filaconcep'><td class='bordeado'>${nomcom}</td><td class='bordeado'>${cant}</td><td class='bordeado'>${pres}</td></tr>`;
+  });
+  $("#cuerpoconceptos").html(fila);
+  $("#lblNumero").html(num);
+
+  if ($("#parentescoafil").text() == "MILITAR") {
+      $("#tit").css("display", "block");
+  } else {
+    $("#fam").css("display", "block");
+  }
+}
 
 
   </script>
@@ -251,6 +251,7 @@
             </td>
         </tr-->
         <td class="derecha">
+            Número: <label id="lblNumero">(#)</label><br>
             Caracas, <label id="lblfecha">(FECHA)</label>
         </td>
     </table>

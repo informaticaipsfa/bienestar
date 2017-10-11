@@ -889,6 +889,7 @@ function detalleVisibleCarta(pos) {
 function historicoBadan() {
     $("#historicoBadan").html(`<thead>
           <tr class="bg-info">
+            <td class="pbuscar">#Solicitud</td>
             <td class="pbuscar">Fecha Solicitud</td>
             <td class="pbuscar">Afiliado</td>
           </tr>
@@ -923,13 +924,14 @@ function historicoBadan() {
         },
     });
     t.clear().draw();
-
-
     if (militar.CIS.Gasto.MedicinaAltoCosto != undefined && militar.CIS.Gasto.MedicinaAltoCosto.length > 0) {
         var i = 0;
         militar.CIS.Gasto.MedicinaAltoCosto.forEach(v => {
             var fcrea = Util.ConvertirFechaHumana(v.fecha);
             t.row.add([
+              `<a href='#FeDeVida' onclick="detalleVisibleBadan(${i})">${v.numero}</a>
+                <button type='button' class='btn btn-default btn-sm pull-right'
+                  onclick="ImprimirBadanFRM('${militar.id}','${v.idf}','${v.numero}')"><i class='fa fa-print'></i></button>`,
                 `<a href='#Badan' onclick="detalleVisibleBadan(${i})">${fcrea}</a>`,
                 v.afiliado
             ]).draw(false);
@@ -939,6 +941,10 @@ function historicoBadan() {
     }
 }
 
+
+function ImprimirBadanFRM(id, idf, num){
+  var ventana = window.open("rpt/medicina/medicinaAltoCosto.html?id=" + id + "&idf=" + idf + "&num=" + num, "_blank");
+}
 
 function detalleVisibleBadan(pos) {
   if (pos == null) {

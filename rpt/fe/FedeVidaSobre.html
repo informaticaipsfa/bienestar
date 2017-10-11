@@ -117,7 +117,7 @@
                 // $("#lblgrado").text(militar.Grado.descripcion);
                 $("#lblcedula").text(Persona.DatoBasico.cedula);
                 // $("#lblcedula3").text(militar.Persona.DatoBasico.cedula);
-                $("#lblcedula2").text(militar.Persona.DatoBasico.cedula);
+                $("#lblcedula2").text(Persona.DatoBasico.cedula);
                 // $("#lblcedulaex").text(militar.Persona.DatoBasico.cedula);
                 // $("#lblsituacion1").text(militar.situacion);
                 // $("#lbltelefono").html(militar.Persona.Telefono.movil);
@@ -185,11 +185,11 @@
             var DIR1 = fdv.DatoBasico.Direccion;
 
             var rirec1 = Estados.ObtenerCodigo(DIR1.estado) + ", " + DIR1.ciudad + ", municipio " + DIR1.municipio + ", parroquia " + DIR1.parroquia + ", Av/Calle " + DIR1.calleavenida + ", casa/apt " + DIR1.casa + "|" + DIR1.apartamento
-            $("#lbldireccionafi").text(rirec1);
+            $("#lbldireccionafi").text(rirec1.toUpperCase());
 
             var DIR = fdv.DatoBasico.Direccion;
             var rirec = Estados.ObtenerCodigo(DIR.estado) + ", " + DIR.ciudad + ", municipio " + DIR.municipio + ", parroquia " + DIR.parroquia + ", Av/Calle " + DIR.calleavenida + ", casa/apt " + DIR.casa + "|" + DIR.apartamento
-            $("#lbldireccion").text(rirec);
+            $("#lbldireccion").text(rirec.toUpperCase());
 
         }
 

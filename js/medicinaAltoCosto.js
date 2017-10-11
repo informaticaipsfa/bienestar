@@ -120,7 +120,6 @@ function crearLista(){
     if(militar.Familiar.length > 0){
         var ipos = 0;
         militar.Familiar.forEach(v => {
-
             var edad = Util.CalcularEdad(Util.ConvertirFechaHumana(v.Persona.DatoBasico.fechanacimiento));
             var ncompleto2 = v.Persona.DatoBasico.nombreprimero.trim()  + " " + v.Persona.DatoBasico.apellidoprimero.trim();
             if(edad > 18){
@@ -245,12 +244,11 @@ function generarMedicina() {
 
      promesa.then(function (xhRequest) {
          respuesta = JSON.parse(xhRequest.responseText);
-         if (respuesta.msj != "") respuesta.msj2 = "Se proceso con exito....";
-         msj2Respuesta(respuesta.msj2);
+         msj2Respuesta("Se proceso con exito....");
          $("#medicinaagregada").html("");
          llenarmedicina();
          var idm = militar.Persona.DatoBasico.cedula;
-         var ventana = window.open("rpt/medicina/medicinaAltoCosto.html?id="+idm , "_blank");
+         var ventana = window.open("rpt/medicina/medicinaAltoCosto.html?id="+idm+"&num="+respuesta.msj, "_blank");
      });
    }
   } else {
