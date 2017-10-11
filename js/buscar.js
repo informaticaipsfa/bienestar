@@ -27,11 +27,14 @@ function formatoCombo(state) {
 * @return void
 */
 
-function detalleBuzonApoyo(numero, tipo) {
-    console.log(numero);
+function HDetalleBuzon(numero, tipo) {
+
     switch (tipo){
         case "A":
           HCargarBuzonApoyo(numero);
+          break;
+        case "R":
+          HCargarBuzonReembolso(numero);
           break;
         default:
           break;
@@ -97,6 +100,12 @@ function HCrearTablaConceptosApoyo(numero,est){
         var fecha = Util.ConvertirFechaHumana(v.DatoFactura.fecha);
         var montoipsfa = parseFloat(v.montosolicitado) - (parseFloat(v.montoaseguradora) + parseFloat(v.montoaportar));
         mntIPSFA += montoipsfa;
+        var acciones = "";
+        if (copia.estatus > 3 ){
+          acciones = `<td style="width: 30px;">
+               <button type="button" class="btn btn-default btn-sm cerrarcaso"
+               title="Cerrar Caso"><i class="fa fa-check-square" style="color: red;"></i></button></td>`
+        }
         fila = `<tr>
                     <td>${parent}</td>
                     <td>${nombre}</td>
@@ -105,21 +114,31 @@ function HCrearTablaConceptosApoyo(numero,est){
                     <td>${v.DatoFactura.Beneficiario.rif}</td>
                     <td>${v.DatoFactura.numero}</td>
                     <td>${fecha}</td>
-                    <td>${v.DatoFactura.monto}</td>
-                    <td>${v.montoaseguradora}</td>
-                    <td>${v.montoaportar}</td>
-                    <td>${montoipsfa}</td>
+                    <td style="text-align:right">${v.DatoFactura.monto}</td>
+                    <td style="text-align:right">${v.montoaseguradora}</td>
+                    <td style="text-align:right">${v.montoaportar}</td>
+                    <td style="text-align:right">${montoipsfa}</td>
+                    ${acciones}
                 </tr>`;
         $("#cuerpoEditarConceptosApoyo").append(fila);
     });
-   // $("#totalterApoyo").html(copia.montosolicitado.toFixed(2));
-    //$("#totalaproApoyo").html(copia.montoaprobado);
-    if( copia.montoaprobado != mntIPSFA ){
-      $("#txtPresidenciaReembolso").val(copia.montoaprobado);
-    }else{
-      $("#txtPresidenciaReembolso").val("0.00");
-    }
 
+    $("#totalaproApoyo").html(mntIPSFA);
+    if( copia.montoaprobado != mntIPSFA ){
+      $("#txtPresidenciaApoyo").val(copia.montoaprobado);
+    }else{
+      $("#txtPresidenciaApoyo").val("0.00");
+    }
+    $("#cmbFondoApoyo").val(copia.responsable);
+
+    $(".cerrarcaso").click(function () {
+        // $(this).parents('tr').eq(0).remove();
+        $("#mdlcerrarcaso").modal("show");
+        if ($("#cuerpoEditarConceptos tr").length == 0) {
+
+        }
+        // calcularAcumulado("r");
+    });
 
 
     /**
@@ -142,6 +161,137 @@ function HCrearTablaConceptosApoyo(numero,est){
     }
 }
 
+
+function HCargarBuzonReembolso(numero, est){
+
+    $('#lblcedula').text(militar.Persona.DatoBasico.cedula);
+    var ncompleto = militar.Persona.DatoBasico.nombreprimero + " " + militar.Persona.DatoBasico.apellidoprimero;
+    $('#lblnombre').text(ncompleto);
+    $('#lblgrado').text(militar.Grado.descripcion);
+    $('#lblsituacion').text(Util.ConvertirSitucacion(militar.situacion));
+    $('#lblnumero').text(numero);
+    militar.CIS.ServicioMedico.Programa.Reembolso.forEach(v => {
+
+      if(v.numero == numero){
+        $("#lblfechasolicitud").html(Util.ConvertirFechaHumana(v.fechacreacion));
+      }
+    });
+
+    $('#lblcomponente').text(militar.Componente.descripcion);
+
+    var rutaimg = Conn.URLIMG;
+    url = rutaimg + militar.Persona.DatoBasico.cedula + ".jpg";
+    if (militar.Persona.foto != undefined) {
+        rutaimg = Conn.URLTEMP;
+        url = rutaimg + militar.Persona.DatoBasico.cedula + "/foto.jpg";
+    }
+    $("#fotoperfil").attr("src", url);
+    HCrearTablaConceptosReembolso(numero,est);
+    // mostrarTextoObservacion(est);
+
+    $("#lstDetalle").show();
+    $("#tblTodos").hide();
+    $("#panelperfil").hide();
+
+}
+
+
+function HCrearTablaConceptosReembolso(numero,est) {
+    var fila = "";
+    var pos = 0;
+    var lst = militar.CIS.ServicioMedico.Programa.Reembolso;
+    var i = 0;
+    lst.forEach( v => {
+        if (v.numero == numero) {
+            pos = i;
+            posicionModificar = i;
+        }
+        i++;
+    });
+    CReembolso = lst[pos]; //Cargar detalles del reembolso
+    if(CReembolso.Seguimiento.Estatus != undefined) $("#estSeguimiento").val(CReembolso.Seguimiento.Estatus);
+
+
+    if(est > 2){
+      activarCambioEstatus();
+    }
+    $("#cuerpoEditarConceptos").html('');
+    var mntIPSFA = 0;
+    CReembolso.Concepto.forEach( v => {
+        $("#cuerpoEditarConceptos").append(HCargarDetalleConcepto(v, est));
+        mntIPSFA +=  parseFloat(v.montosolicitado) - (parseFloat(v.montoaseguradora) + parseFloat(v.montoaportar));;
+    });
+
+
+    var mntformato = numeral(parseFloat(CReembolso.montosolicitado.toFixed(2))).format('0,0.00');
+    $("#totalter").html(CReembolso.montosolicitado.toFixed(2));
+    $("#totalapro").html(CReembolso.montoaprobado);
+
+    if( CReembolso.montoaprobado != mntIPSFA ){
+      $("#txtPresidenciaReembolso").val(CReembolso.montoaprobado);
+    }else{
+      $("#txtPresidenciaReembolso").val("0.00");
+    }
+    $("#cmbFondoReembolso").val(CReembolso.responsable);
+
+    //Crear tabla de objservaciones
+    if (CReembolso.Seguimiento.Observaciones != undefined) {
+        var lstObs = CReembolso.Seguimiento.Observaciones;
+        $("#cuerpoObservaciones").html('');
+        $("#cuerpoOpiniones").html('');
+        lstObs.forEach( v => {
+
+          if( v.contenido != undefined){
+            var tipo = v.contenido.split("|||");
+            var cestatus = conviertEstatus(CReembolso.estatus);
+            var tipo = tipo[0];
+            if(tipo[1] != undefined) {
+              $("#cuerpoOpiniones").append(`<tr><td>${tipo}</td><td style="width: 10%;text-align: right">${cestatus}</td></tr>`);
+            }else {
+              $("#cuerpoObservaciones").append(`<tr><td>${v.contenido}</td><td></td></tr>`);
+            }
+          }
+
+
+        });
+    }
+}
+
+function HCargarDetalleConcepto(v, est){
+  var mntApo = 0;
+  if(v.DatoFactura.montoaprobado > 0) mntApo = v.DatoFactura.montoaprobado;
+  var ffact = Util.ConvertirFechaHumana(v.DatoFactura.fecha);
+  var picar = v.afiliado.split("-");
+  var picar2 = picar[1].split("(");
+  var tam = picar2[1].length;
+  var parent = picar2[1].substr(0,tam-1);
+  var nombre = picar[0];
+  var cedula = picar2[0];
+  var fecha = Util.ConvertirFechaHumana(v.DatoFactura.fecha);
+  var desabilitar = "";
+  $("#btnImprimirPlanilla").hide();
+  if ( est == 0 ) {
+    desabilitar = "disabled";
+  }else {
+    $("#btnImprimirPlanilla").show();
+  }
+  var porcentaje = parseFloat(v.DatoFactura.porcentaje).toFixed(2);
+  var montosolic = parseFloat(v.DatoFactura.monto).toFixed(2);
+  return `<tr>
+            <td>${parent}</td>
+            <td>${nombre}</td>
+            <td>${cedula}</td>
+            <td>${v.descripcion}</td>
+            <td>${v.DatoFactura.numero}</td>
+            <td style="display: none">${v.DatoFactura.Beneficiario.rif}</td>
+            <td style="display: none">${v.DatoFactura.Beneficiario.razonsocial}></td>
+            <td>${fecha}</td>
+            <td style="text-align:right">${montosolic}</td>
+            <td>${porcentaje}</td>
+           <td style="text-align:right">${mntApo}</td>
+        </tr>`;
+
+}
 
 function ActivarBuscar() {
     $(location).attr('href','starter.html');
@@ -442,7 +592,7 @@ function historico() {
             }
 
             t.row.add([
-                `<a href='#cuerpoLstConceptos' onclick="detalleVisible(${i})">${v.numero}</a>
+                `<a href='#cuerpoLstConceptos' onclick="HDetalleBuzon('${v.numero}', 'R')">${v.numero}</a>
                   <button type='button' class='btn btn-default btn-sm pull-right'
                     onclick="imprimirrecibore(${i})"><i class='fa fa-print'></i></button>`,
                 `<b>${fcrea}</b>`,
@@ -564,7 +714,7 @@ function historicoApoyo() {
                 listaFact = nfac;
             }
             t.row.add([
-                `<a href='#cuerpoLstConceptos' onclick="detalleBuzonApoyo('${this.numero}','A')">${this.numero}</a>
+                `<a href='#cuerpoLstConceptos' onclick="HDetalleBuzon('${this.numero}','A')">${this.numero}</a>
                   <button type='button' class='btn btn-default btn-sm pull-right'
                     onclick="imprimirreciboapo(${i})"><i class='fa fa-print'></i>
                   </button>`, //1
