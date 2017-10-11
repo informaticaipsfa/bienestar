@@ -185,7 +185,7 @@ function HCargarBuzonReembolso(numero, est){
         rutaimg = Conn.URLTEMP;
         url = rutaimg + militar.Persona.DatoBasico.cedula + "/foto.jpg";
     }
-    $("#fotoperfil").attr("src", url);
+    $("#fotoperfilReembolso").attr("src", url);
     HCrearTablaConceptosReembolso(numero,est);
     // mostrarTextoObservacion(est);
 
@@ -345,8 +345,8 @@ function ficha() {
             rutaimg = Conn.URLTEMP;
             url = rutaimg + $("#_cedula").val() + "/foto.jpg";
         }
-        $("#fotoperfil").attr("src", url);
 
+        $("#fotoperfil").attr("src", url);
         $("#lblcomponente").text(militar.Componente.descripcion);
 
         $("#lblgrado").text(militar.Grado.descripcion);
