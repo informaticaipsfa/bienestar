@@ -131,14 +131,14 @@
                 Social de la Fuerza Armada, por ser <b id="lblparentezco2"></b> miembro de la Fuerza Armada
                 Nacional Bolivariana.</p>
             <p class="sangria" id="prote" style="display: none;">
-                Por lo antes expuesto, este Instituto se compromete a cancelar los gastos por concepto de <b
-                id="lbldiagnostico"></b><b id="lblconcepto"></b>, para el mencionado afiliado y cuyo monto es <b
-                id="txtmontopre"></b> (<b id="lblmontopresupuesto"></b> BS) según presupuesto Nº: <b
-                id="lblnropresupuesto"></b> de fecha <b id="lblfechapresupuesto"></b>, de lo cual la
-                empresa aseguradora cubre un monto de <b id="txtmontoseg"></b> (<b
+                Por lo antes expuesto, este Instituto se compromete a pagar los gastos por concepto de PRÓTESIS <b
+                id="lbldiagnostico"></b><b id="lblconcepto"></b>, para el precitado afiliado, cuyo costo es de <b
+                id="txtmontopre"></b> (<b id="lblmontopresupuesto"></b> BS) según se indica en el presupuesto Nº: <b
+                id="lblnropresupuesto"></b> de fecha <b id="lblfechapresupuesto"></b>, monto del cual la empresa aseguradora cubrirá:
+                <b id="txtmontoseg"></b> (<b
                 id="lblmontoseguro"></b> BS) según constancia de fecha <b id="lblfechaseguro"></b>
-                quedando una diferencia de <b id="txtmontoipsfa"></b> (<b id="lblmontot"></b> BS.) el cual este
-                instituto se compromete a cancelar en su totalidad. </p>
+                y la diferencia de <b id="txtmontoipsfa"></b> (<b id="lblmontot"></b> BS.) es el monto que este Instituto pagará en su totalidad.
+            </p>
             <p class="sangria" id="masto" style="display: none;">
                 Por lo antes expuesto, este Instituto se compromete a pagar por concepto de <b
                 id="motivoafil"></b>, la suma de <b id="txtmontoipsfa2"></b> (<b id="lblmontot2">
@@ -340,8 +340,8 @@
             $("#lblnombrec").html(this.DatoFactura.Beneficiario.razonsocial);
             $("#motivoafil").html(this.descripcion.trim());
             $("#lblmotivo").html(this.motivo);
-            $("#lblconcepto").html(this.descripcion);
-            $("#lbldiagnostico").html(this.diagnostico);
+            $("#lblconcepto").html(this.descripcion.toUpperCase());
+            $("#lbldiagnostico").html(this.diagnostico.toUpperCase());
             $("#lblporafi").html(numeral(parseFloat(this.porcentajeafi)).format('0,0.00'));
             $("#montoafi").html(numeral(parseFloat(this.montoafiliado)).format('0,0.00'));
 
@@ -366,7 +366,7 @@
             $("#lblnombrec").html(nombreclinica);
             $("#lblmotivo").html(razonc);
             $("#lblconcepto").html(conceptoc);
-            $("#lbldiagnostico").html(diagnosticoc);
+            $("#lbldiagnostico").html(diagnosticoc.toUpperCase());
             $("#lblparentezco").html(parentezco);
             $("#lblparentezco2").html(parentezco);
             $("#lblmontopresupuesto2").html(presupuesto);
