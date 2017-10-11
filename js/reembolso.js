@@ -173,7 +173,9 @@ function llenarReembolso() {
 function listaCuentas() {
     $("#datosbancarios").html("");
     $.each(militar.Persona.DatoFinanciero, function () {
-        $("#datosbancarios").append(new Option(this.cuenta, this.cuenta + "|" + this.institucion + "|" + this.tipo, true, true));
+        if(this.institucion != "0003"){
+          $("#datosbancarios").append(new Option(this.cuenta, this.cuenta + "|" + this.institucion + "|" + this.tipo, true, true));
+        }
     });
 
     if(militar.Fideicomiso.cuentabancaria != undefined && militar.Fideicomiso.cuentabancaria != ""){
