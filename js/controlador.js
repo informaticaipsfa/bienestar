@@ -74,7 +74,8 @@ class Reembolso {
         this.requisito = new Array();
         this.observaciones = "";
         this.componente = "";
-        this.grado = ""
+        this.grado = "";
+        this.responsable = "";
         this.Direccion = new Direccion();
         this.Telefono = new Telefono();
         this.Correo = new Correo();
@@ -94,6 +95,7 @@ class Apoyo {
         this.observaciones = "";
         this.componente = "";
         this.grado = "";
+        this.responsable = "";
         this.Direccion = new Direccion();
         this.Telefono = new Telefono();
         this.Correo = new Correo();

@@ -83,6 +83,7 @@ function HCrearTablaConceptosApoyo(numero,est){
     $("#estSeguimiento").val(copia.Seguimiento.Estatus);
 
     $("#cuerpoEditarConceptosApoyo").html('');
+    var mntIPSFA = 0;
     copia.Concepto.forEach(v => {
         var mntApo = 0;
         if(v.DatoFactura.montoaprobado > 0) mntApo = v.DatoFactura.montoaprobado;
@@ -95,6 +96,7 @@ function HCrearTablaConceptosApoyo(numero,est){
         var cedula = picar2[0];
         var fecha = Util.ConvertirFechaHumana(v.DatoFactura.fecha);
         var montoipsfa = parseFloat(v.montosolicitado) - (parseFloat(v.montoaseguradora) + parseFloat(v.montoaportar));
+        mntIPSFA += montoipsfa;
         fila = `<tr>
                     <td>${parent}</td>
                     <td>${nombre}</td>
@@ -111,7 +113,12 @@ function HCrearTablaConceptosApoyo(numero,est){
         $("#cuerpoEditarConceptosApoyo").append(fila);
     });
    // $("#totalterApoyo").html(copia.montosolicitado.toFixed(2));
-    $("#totalaproApoyo").html(copia.montoaprobado);
+    //$("#totalaproApoyo").html(copia.montoaprobado);
+    if( copia.montoaprobado != mntIPSFA ){
+      $("#txtPresidenciaReembolso").val(copia.montoaprobado);
+    }else{
+      $("#txtPresidenciaReembolso").val("0.00");
+    }
 
 
 

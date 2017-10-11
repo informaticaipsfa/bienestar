@@ -253,13 +253,6 @@ function CargarBuzonReembolso(v, est){
     con,
     alertSegui
   ];
-
-  // <div class="tools" style="margin-right: 50px;">
-  //     <i class="fa  fa-check" title="Aceptar" style="color: green; font-size: 18px"
-  //       onclick="verificarAprobacion('${v.numero}','${v.estatus}','${v.id}')"></i>
-  //     <i class="fa fa-trash" title="Rechazar" style="font-size: 18px"
-  //       onclick="verificarRechazo('${v.numero}','${v.estatus}','${v.id}')"></i>
-  // </div>
 }
 
 /**
@@ -464,14 +457,23 @@ function crearTablaConceptos(numero,est) {
       activarCambioEstatus();
     }
     $("#cuerpoEditarConceptos").html('');
-    var jj = new Array();
+    var mntIPSFA = 0;
     CReembolso.Concepto.forEach( v => {
-        jj.push(v.afiliado);
         $("#cuerpoEditarConceptos").append(CargarDetalleConcepto(v, est));
+        mntIPSFA +=  parseFloat(v.montosolicitado) - (parseFloat(v.montoaseguradora) + parseFloat(v.montoaportar));;
     });
+
+
     var mntformato = numeral(parseFloat(CReembolso.montosolicitado.toFixed(2))).format('0,0.00');
     $("#totalter").html(CReembolso.montosolicitado.toFixed(2));
     $("#totalapro").html(CReembolso.montoaprobado);
+
+    if( CReembolso.montoaprobado != mntIPSFA ){
+      $("#txtPresidenciaReembolso").val(CReembolso.montoaprobado);
+    }else{
+      $("#txtPresidenciaReembolso").val("0.00");
+    }
+
     $(".borrarconcepto").click(function () {
         $(this).parents('tr').eq(0).remove();
         if ($("#cuerpoEditarConceptos tr").length == 0) {
@@ -624,6 +626,7 @@ function volverLista() {
 
 function actualizarReembolso(est) {
     var MontoAprobado = 0;
+    var MontoSolicitado = 0;
     var conceptos = new Array();
     var datos = null;
     var i = 0;
@@ -631,6 +634,7 @@ function actualizarReembolso(est) {
     if ($("#cuerpoEditarConceptos tr").length > 0) {
         $("#cuerpoEditarConceptos tr").each(function () {
             MontoAprobado = parseFloat($(this).find("input.mntAcumulado").val());
+            MontoSolicitado = parseFloat($(this).find("input.mntAcumulado").val());
             conceptos.push(obtenerListadoReembolso(this, i));
             i++;
         });
@@ -640,8 +644,8 @@ function actualizarReembolso(est) {
     }
 
     //
-    CReembolso.montoaprobado = parseFloat($("#totalapro").html());
     CReembolso.montosolicitado = parseFloat($("#totalter").html());
+    CReembolso.montoaprobado = parseFloat($("#totalapro").html());
     var observaciones = new Array();
     var tipoObser = "";
 
@@ -687,6 +691,10 @@ function EnviarReembolso(OReembolso, observaciones){
   wreembolso.numero = $('#lblnumero').text();
   wreembolso.observaciones = observaciones;
   wreembolso.nombre = militarActivo.Persona.DatoBasico.nombreprimero + " " + militarActivo.Persona.DatoBasico.apellidoprimero;
+  OReembolso.responsable = $("#cmbFondoReembolso option:selected").val();
+  if(parseFloat($("#txtPresidenciaReembolso").val()) > 0 ){
+    OReembolso.montoaprobado = parseFloat($("#txtPresidenciaReembolso").val());
+  }
   wreembolso.Reembolso = OReembolso;
   wreembolso.posicion = obtenerPosicion($('#lblnumero').text());
   var urlGuardar = Conn.URL + "wreembolso";
@@ -858,22 +866,6 @@ function rechazarApoyo(num, est, id) {
 }
 
 function crearBuzonApoyo(est, sucursal){
-    // $("#listaApoyo").html(`<li style="background-color:#CCCCCC">
-    //     <div class="row">
-    //         <div class="col-sm-1"><b>Apoyo</b></div>
-    //         <div class="col-sm-1"><b>Cedula</b></div>
-    //         <div class="col-sm-3"><b>Nombre y Apellido</b></div>
-    //         <div class="col-sm-1"><b>F.Solicitud</b></div>
-    //         <div class="col-sm-2"><b>M.Solicitud</b></div>
-    //         <div class="col-sm-2"><b>M.Aprobado</b></div>
-    //         <div class="col-sm-1"><b>Estatus</b></div>
-    //         </div>
-    //     </li>`);
-    // lstBuzonApoyo.forEach(v => {
-    //     $("#listaApoyo").append(CargarBuzonApoyo(v, est));
-    // });
-
-
     $("#listaApoyo").html(`<table id="tblBuzonApoyo" class="table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
             <tr>
@@ -914,25 +906,6 @@ function CargarBuzonApoyo(v, est){
   var montsol = numeral(parseFloat(v.montosolicitado)).format('0,0[.]00 $');
   var montapr = numeral(parseFloat(v.montoaprobado)).format('0,0[.]00 $');
   var estatus = conviertEstatus(v.estatus);
-  // return `<li>
-  //     <div class="row"><div class="col-sm-1"><span class="text">
-  //       <a href="#" onclick="detalleBuzon('${v.id}','${v.numero}',${est},'A')">${v.numero}</a></span></div>
-  //       <div class="col-sm-1"><span class="text">${v.id}</span></div>
-  //       <div class="col-sm-3">${v.nombre}</div>
-  //       <div class="col-sm-1">${fCrea}</div>
-  //       <div class="col-sm-2">${montsol}</div>
-  //       <div class="col-sm-2">${montapr}</div>
-  //       <div class="col-sm-1">${estatus}</div>
-  //       <div class="tools" style="margin-right: 50px;">
-  //           <i class="fa  fa-check" title="Aceptar" style="color: green; font-size: 18px"
-  //             onclick="verificarAprobacionApoyo('${v.numero}','${v.estatus}','${v.id}')"></i>
-  //           <i class="fa fa-trash" title="Rechazar" style="font-size: 18px"
-  //             onclick="verificarRechazoApoyo('${v.numero}','${v.estatus}','${v.id}')"></i>
-  //       </div>
-  //
-  //
-  //     </div>
-  // </li>`;
 
   return [
     `<span class="text"><a href="#" onclick="detalleBuzon('${v.id}','${v.numero}',${est},'A')">${v.numero}</a></span>`,
@@ -945,13 +918,6 @@ function CargarBuzonApoyo(v, est){
     estatus,
     alertSegui
   ];
-
-  // <div class="tools" style="margin-right: 50px;">
-  //     <i class="fa  fa-check" title="Aceptar" style="color: green; font-size: 18px"
-  //       onclick="verificarAprobacionApoyo('${v.numero}','${v.estatus}','${v.id}')"></i>
-  //     <i class="fa fa-trash" title="Rechazar" style="font-size: 18px"
-  //       onclick="verificarRechazoApoyo('${v.numero}','${v.estatus}','${v.id}')"></i>
-  // </div
 }
 
 function llenarBuzonApoyo(numero,est) {
@@ -998,7 +964,7 @@ function crearTablaConceptosApoyo(numero,est){
         activarCambioEstatus("apoyo");
     }
     $("#cuerpoEditarConceptosApoyo").html('');
-
+    var mntIPSFA = 0;
     copia.Concepto.forEach(v => {
         var mntApo = 0;
         if(v.DatoFactura.montoaprobado > 0) mntApo = v.DatoFactura.montoaprobado;
@@ -1010,8 +976,8 @@ function crearTablaConceptosApoyo(numero,est){
         var nombre = picar[0];
         var cedula = picar2[0];
         var fecha = Util.ConvertirFechaHumana(v.DatoFactura.fecha);
-        //<td>${v.DatoFactura.Beneficiario.razonsocial}</td>
         var montoipsfa = parseFloat(v.montosolicitado) - (parseFloat(v.montoaseguradora) + parseFloat(v.montoaportar));
+        mntIPSFA += montoipsfa;
         fila = `<tr>
                     <td>${parent}</td>
                     <td>${nombre}</td>
@@ -1034,8 +1000,13 @@ function crearTablaConceptosApoyo(numero,est){
                 </tr>`;
         $("#cuerpoEditarConceptosApoyo").append(fila);
     });
-   // $("#totalterApoyo").html(copia.montosolicitado.toFixed(2));
-    $("#totalaproApoyo").html(copia.montoaprobado);
+
+    if( copia.montoaprobado != mntIPSFA ){
+      $("#txtPresidenciaApoyo").val(copia.montoaprobado);
+    }else{
+      $("#txtPresidenciaApoyo").val("0.00");
+    }
+
     $(".borrarconcepto").click(function () {
         $(this).parents('tr').eq(0).remove();
         if ($("#cuerpoEditarConceptosApoyo tr").length == 0) {
@@ -1157,6 +1128,7 @@ function actualizarApoyo(est) {
     var datos = null;
     var i = 0;
     var montosolicitado = 0;
+    var montoaprobado = 0;
     calcularAcumuladoApoyo("a");
 
     if ($("#cuerpoEditarConceptosApoyo tr").length > 0) {
@@ -1181,6 +1153,7 @@ function actualizarApoyo(est) {
             concep.montoaseguradora = parseFloat($(this).find("input.mntacubrir").val());
             concep.montoaportar = parseFloat($(this).find("input.mntaseguradora").val());
             montosolicitado += parseFloat($(this).find("input.mntsoli").val());
+            montoaprobado += parseFloat($(this).find("input.mntAcumulado").val());
             i++;
 
             conceptos.push(concep);
@@ -1191,8 +1164,8 @@ function actualizarApoyo(est) {
         $.notify("Debe poseer al menos un concpeto para editar. O puede rechazar el reembolso");
     }
 
-    copia.montoaprobado = montosolicitado;
-    copia.montosolicitado = parseFloat($("#totalaproApoyo").html());
+    copia.montoaprobado = montoaprobado;
+    copia.montosolicitado = montosolicitado;
 
     var obseraciones = new Array();
     var tipoObser = "";
@@ -1208,7 +1181,10 @@ function actualizarApoyo(est) {
         });
     }
     copia.Seguimiento.Estatus = parseInt($("#estSeguimientoApoyo").val());
-
+    copia.responsable = $("#cmbFondoApoyo option:selected").val();
+    if(parseFloat($("#txtPresidenciaApoyo").val()) > 0 ){
+      copia.montoaprobado = parseFloat($("#txtPresidenciaApoyo").val());
+    }
     datos = {
       id: militarActivo.Persona.DatoBasico.cedula,
       numero: copia.numero,
