@@ -39,8 +39,10 @@
             $('#boton').html('');
             $("#nomrepre").hide();
             $("#cedrepre").hide();
+            $("#nombcargo").hide();
             $("#representante").html($("#nomrepre").val().toUpperCase());
             $("#cedularepresentante").html($("#cedrepre").val().toUpperCase());
+            $("#cargogerente").html($("#nombcargo").val().toUpperCase());
             window.print();
             window.close();
         }
@@ -311,7 +313,8 @@
 
                 Yo, <input type="text" id="nomrepre" style="width:360px;"><b id="representante"></b>, C.I. N°
                 <input type="text" id="cedrepre" style="width:120px;"> <b id="cedularepresentante"></b>, Militar en Servicio Activo, con
-                el cargo Gerente de Bienestar y Seguridad Social de la Dependencia o Unidad de nombre I.P.S.F.A, ubicada
+                el cargo de <input type="text" id="nombcargo" style="width:360px;"><b id="cargogerente"></b> del I.P.S.F.A, cuya sede
+                principal se encuentra ubicada
                 en LOS PROCERES, DISTRITO CAPITAL Teléfono (0212) 6092307, 6092303, 6092304. De acuerdo a lo establecido
                 en el Reglamento de la Ley de Seguridad Social de la Fuerza Armada, en su Artículo N° 24, el cual reza:
                 "Los Comandos de Unidades y Jefaturas de dependencias de la Fuerza Armada Nacional, tienen la
