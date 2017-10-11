@@ -175,6 +175,18 @@ function listaCuentas() {
     $.each(militar.Persona.DatoFinanciero, function () {
         $("#datosbancarios").append(new Option(this.cuenta, this.cuenta + "|" + this.institucion + "|" + this.tipo, true, true));
     });
+
+    if(militar.Fideicomiso.cuentabancaria != undefined && militar.Fideicomiso.cuentabancaria != ""){
+      var descripcioncuenta = militar.Fideicomiso.cuentabancaria.substring(0, 4);
+      $("#datosbancarios").append(new Option(militar.Fideicomiso.cuentabancaria, militar.Fideicomiso.cuentabancaria + "|" + descripcioncuenta + "|CA", true, true));
+    }
+    if(militar.Pension.DatoFinanciero.cuenta != undefined && militar.Pension.DatoFinanciero.cuenta != ""){
+      var cuenta = militar.Pension.DatoFinanciero.cuenta;
+      var descripcioncuenta = cuenta.substring(0, 4);
+      var tipo = militar.Pension.DatoFinanciero.tipo;
+      $("#datosbancarios").append(new Option(cuenta, cuenta + "|" + descripcioncuenta + "|" + tipo, true, true));
+    }
+
     $("#datosbancarios").append(new Option("OTRA", "otra", true, true));
     $("#datosbancarios").append(new Option("Selecione", "", true, true));
 }

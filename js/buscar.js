@@ -164,7 +164,7 @@ function HCrearTablaConceptosApoyo(numero,est){
 
 function HCargarBuzonReembolso(numero, est){
 
-    $('#lblcedula').text(militar.Persona.DatoBasico.cedula);
+    $('#lblcedulaReembolso').text(militar.Persona.DatoBasico.cedula);
     var ncompleto = militar.Persona.DatoBasico.nombreprimero + " " + militar.Persona.DatoBasico.apellidoprimero;
     $('#lblnombre').text(ncompleto);
     $('#lblgrado').text(militar.Grado.descripcion);
