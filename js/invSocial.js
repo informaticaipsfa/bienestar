@@ -1,6 +1,4 @@
 $(function () {
-    console.log("aca apoyo");
-    console.log(militar);
 
     $("#btnvolverlista").click(function(){
         $("#tblreembolsos").slideDown();
@@ -21,7 +19,6 @@ function consultarRif(){
     var rif = $("#rif").val();
     var rz = '';
     var encontrado = 0;
-    console.log(lstProveedores);
     $.each(lstProveedores,function () {
         if(this.rif == rif){
             rz= this.razonsocial;

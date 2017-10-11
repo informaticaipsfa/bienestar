@@ -583,6 +583,23 @@ class WApoyo {
     }
 }
 
+class WFedeVida {
+    constructor () {
+        this.id = "";
+        this.nombre = "";
+        this.Direccion = new Direccion();
+        this.Telefono = new Telefono();
+        this.Correo = new Correo();
+        this.idf = "";
+        this.direccionex = "";
+        this.paisex = "";
+        this.residenciadoex = "";
+        this.fechaex = "";
+   }
+}
+
+
+
 class Militar{
 	constructor(){
 		this.id = "";

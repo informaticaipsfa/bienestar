@@ -1,18 +1,3 @@
-class WFedeVida {
-    constructor () {
-        this.id = "";
-        this.nombre = "";
-        this.Direccion = new Direccion();
-        this.Telefono = new Telefono();
-        this.Correo = new Correo();
-        this.idf = "";
-        this.direccionex = "";
-        this.paisex = "";
-        this.residenciadoex = "";
-        this.fechaex = "";
-   }
-}
-
 
 $(function () {
     llenarfe();
@@ -231,7 +216,6 @@ function generarPlanillaFdV(){
     wfedevida.idf = bene[1];
     wfedevida.afiliado = beneficiario;
 
-   console.log(JSON.stringify(wfedevida));
     var urlGuardar = Conn.URL + "wfedevida";
     var request2 = CargarAPI({
         sURL: urlGuardar,

@@ -1017,7 +1017,9 @@ function historicoFeDeVida() {
         militar.CIS.Investigacion.FeDeVida.forEach(v => {
             var fcrea = Util.ConvertirFechaHumana(v.fechacreacion);
             t.row.add([
-                `<a href='#FeDeVida' onclick="detalleVisibleFeDeVida(${i})">${v.numero}</a>`,
+              `<a href='#FeDeVida' onclick="detalleVisibleFeDeVida(${i})">${v.numero}</a>
+                <button type='button' class='btn btn-default btn-sm pull-right'
+                  onclick="ImprimirFeDeVidaFRM('${militar.id}','${v.idf}','${v.numero}')"><i class='fa fa-print'></i></button>`,
                 v.DatoBasico.Cedula,
                 fcrea,
                 v.DatoBasico.NombreCompleto
@@ -1026,6 +1028,7 @@ function historicoFeDeVida() {
         });
 
     }
+
 }
 
 
@@ -1050,6 +1053,9 @@ function detalleVisibleFeDeVida(pos) {
   $("#tblTodos").hide();
 }
 
+function ImprimirFeDeVidaFRM(id, idf, num){
+  var ventana = window.open("rpt/fe/FedeVidaSobre.html?id="+id+"&idf="+idf+"&num="+num, "_blank");
+}
 
 
 

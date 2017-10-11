@@ -11,7 +11,9 @@
     <script src="../../js/config.js"></script>
     <script src="../../js/controlador.js"></script>
     <script>
-        let idf = '';
+        let idf = null;
+        let num = null;
+        let pos = null;
         $(function () {
             numeral.locale('es-es');
             $.obtener = function (key) {
@@ -30,6 +32,7 @@
             var id = $.obtener("id");
             idf = $.obtener("idf");
             pos = $.obtener("pos");
+            num = $.obtener("num");
 
             Buscar(id);
         });
@@ -77,16 +80,34 @@
             if (formato != undefined) {
 
             }
+
             if (pos == null) {
-              pos = militar.CIS.Investigacion.FeDeVida.length;
-              pos--;
+              if (num != "" && num != undefined){
+                if(pos == undefined){
+                  var posicion = 0;
+                  militar.CIS.Investigacion.FeDeVida.forEach( v => {
+                    if ( v.numero == num ){
+                      pos = posicion;
+                      return true;
+                    }
+                    posicion++;
+                  });
+                }
+              }else{
+                  pos = militar.CIS.Investigacion.FeDeVida.length;
+                  pos--;
+              }
+            }else{
+                pos = militar.CIS.Investigacion.FeDeVida.length;
+                pos--;
             }
+
+
             var fdv = militar.CIS.Investigacion.FeDeVida[pos];
             Persona = militar.Persona;
             if(militar.id != fdv.idf){
                 Persona = ObtenerFamiliar(fdv.idf);
             }
-            console.log(Persona);
             if (Persona != undefined) {
                 var ncompleto = Persona.DatoBasico.nombreprimero + " " + Persona.DatoBasico.apellidoprimero;
                 $("#nombre").html(ncompleto);
