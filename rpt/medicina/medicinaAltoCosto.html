@@ -11,24 +11,36 @@
     <script src="../../js/config.js"></script>
     <script src="../../js/controlador.js"></script>
     <script>
-    function Gerente(){
-      $('#txtgerente').show();
-      $('#_gerente').html(`<input type="text" id="txtgerente" value="" style="width:300px"><br>
-      GERENTE DE BIENESTAR Y SEGURIDAD SOCIAL`);
-      $('#btnImprimir').show();
-    }
+
 
     function imprimir() {
-        $('#txtgerente').hide();
-        $('#_gerente').html(`<label  onclick="Gerente()">` + $('#txtgerente').val().toUpperCase() + `<br> GERENTE DE BIENESTAR Y SEGURIDAD SOCIAL </label>`);
-        $('#btnImprimir').hide();
-        window.print();
-        window.close();
+
+        $("#nomrepre").hide();
+        $("#cedrepre").hide();
+        $("#nombcargo").hide();
+        $("#nomrepret").hide();
+        $("#cedrepret").hide();
+        $("#nombcargot").hide();
+        $("#representante").html($("#nomrepre").val().toUpperCase());
+        $("#cedularepresentante").html($("#cedrepre").val().toUpperCase());
+        $("#cargogerente").html($("#nombcargo").val().toUpperCase());
+
+        $("#representantet").html($("#nomrepret").val().toUpperCase());
+        $("#cedularepresentantet").html($("#cedrepret").val().toUpperCase());
+        $("#cargogerentet").html($("#nombcargot").val().toUpperCase());
+        if ($("#nomrepre").val() == ""){
+            $('#_gerente').html($("#nomrepret").val().toUpperCase() + `<br>` + $("#nombcargot").val().toUpperCase());
+        }else{
+          $('#_gerente').html($("#nomrepre").val().toUpperCase() + `<br>` + $("#nombcargo").val().toUpperCase());
+        }
+
+        // window.print();
+        // window.close();
     }
+
     let id = null;
     let pos = null;
     $(function () {
-        Gerente();
         numeral.locale('es-es');
         $.obtener = function (key) {
             key = key.replace(/[\[]/, '\\[');
@@ -219,7 +231,7 @@
 </head>
 
 <div class="contenedor">
-
+<center>
     <table border="0">
         <tr>
             <td style="width: 38%"><img src="../../../images/lg.png" style="float: left; width:15%;">
@@ -242,7 +254,7 @@
             Caracas, <label id="lblfecha">(FECHA)</label>
         </td>
     </table>
-    <table width="60%">
+    <table width="70%">
         <tr>
             <td class="centrar"><h2>AUTORIZACIÓN</h2></td>
         </tr>
@@ -250,10 +262,26 @@
     <table width="70%" class="justificar" style="font-size: 13px">
         <td style="text-align: justify">
             <p class="justificar" id="fam" style="display: none;">
-              Quien suscribe, CNEL. MARTINEZ SALAS EDUARDO JOSÉ titular de la cedula de identidad Nº 7.391.293, Gerente de Bienestar y Seguridad Social del IPSFA, por medio de la presente autorizo plenamente al BANCO DE DROGAS Y ANTINEOPLÁSICAS (BADAN), para que entregue a el(la) ciudadano(a) <label id="nombreafil"></label> titular de la cedula de identidad Nº <label id="cedulaafil"></label> quien es <label id="parentescoafil"></label> de el(la) <label id="lblgrado"></label> <label id="lblnombre"></label>, quien a su vez es miembro de la Fuerza Armada Nacional Bolivariana, el(los) medicamento(s) que se detallan a continuacion, avalado con el recipe médico correspondiente. El tratamiento a suministrar corresponde al periodo comprendido del <label id="fechainicio"></label> hasta el <label id="fechavenc"></label>.
+              Quien suscribe, <input type="text" id="nomrepre" style="width:360px;"><b id="representante"></b>, C.I. N°
+              <input type="text" id="cedrepre" style="width:120px;"> <b id="cedularepresentante"></b>, Militar en Servicio Activo, con
+              el cargo de <input type="text" id="nombcargo" style="width:360px;"><b id="cargogerente"></b> del I.P.S.F.A,
+              por medio de la presente autorizo plenamente al BANCO DE DROGAS Y ANTINEOPLÁSICAS (BADAN), para que entregue a el(la) ciudadano(a)
+              <label id="nombreafil"></label> titular de la cedula de identidad Nº
+              <label id="cedulaafil"></label> quien es <label id="parentescoafil"></label> de el(la)
+              <label id="lblgrado"></label> <label id="lblnombre"></label>, quien a su vez es miembro de la
+              Fuerza Armada Nacional Bolivariana, el(los) medicamento(s) que se detallan a continuacion, avalado con el
+              recipe médico correspondiente. El tratamiento a suministrar corresponde al periodo comprendido del <label id="fechainicio"></label>
+              hasta el <label id="fechavenc"></label>.
             </p>
             <p class="justificar" id="tit" style="display: none;">
-              Quien suscribe, CNEL. MARTINEZ SALAS EDUARDO JOSÉ titular de la cedula de identidad Nº 7.391.293, Gerente de Bienestar y Seguridad Social del IPSFA, por medio de la presente autorizo plenamente al BANCO DE DROGAS Y ANTINEOPLÁSICAS (BADAN), para que entregue a el(la) <label id="lblgrado2"></label> <label id="lblnombre2"></label> titular de la cedula de identidad Nº <label id="lblcedula2"></label> quien es miembro de la Fuerza Armada Nacional, el(los) medicamento(s) que se detallan a continuacion, avalado con el recipe médico correspondiente. El tratamiento a suministrar corresponde al periodo comprendido del <label id="fechainicio2"></label> hasta el <label id="fechavenc2"></label>.
+              Quien suscribe, <input type="text" id="nomrepret" style="width:360px;"><b id="representantet"></b>, C.I. N°
+              <input type="text" id="cedrepret" style="width:120px;"> <b id="cedularepresentantet"></b>, Militar en Servicio Activo, con
+              el cargo de <input type="text" id="nombcargot" style="width:360px;"><b id="cargogerentet"></b> del I.P.S.F.A,
+              por medio de la presente autorizo plenamente al BANCO DE DROGAS Y ANTINEOPLÁSICAS (BADAN),
+              para que entregue a el(la) <label id="lblgrado2"></label> <label id="lblnombre2"></label> titular de la cedula de
+              identidad Nº <label id="lblcedula2"></label> quien es miembro de la Fuerza Armada Nacional, el(los) medicamento(s) que se
+              detallan a continuacion, avalado con el recipe médico correspondiente. El tratamiento a suministrar corresponde al periodo
+              comprendido del <label id="fechainicio2"></label> hasta el <label id="fechavenc2"></label>.
             </p>
             <p>
                 <table style="width: 100%" class="junta" border=1>
@@ -269,12 +297,18 @@
               <h3 id="_gerente" ></h3>
             </td>
     </table>
+    <table width="70%">
+        <tr>
+            <td>
+              <p style="font-size: 11px; text-align: left">NOTA: La autoriación caduca a los 30días a partir de la fecha de emisión.</p>
+              <div id="boton"><br>
+                  <input type="button" style="margin-left: 500px;" id="btnImprimir" value="Imprimir" onclick="imprimir()">
+              </div>
+            </td>
+        </tr>
+    </table>
 
-    <p style="font-size: 11px; text-align: left">NOTA: La autoriación caduca a los 30días a partir de la fecha de emisión.</p>
-    <div id="boton"><br>
-        <input type="button" style="margin-left: 500px;" id="btnImprimir" value="Imprimir" onclick="imprimir()">
-    </div>
-
+</center>
 </div>
 
 </body>
