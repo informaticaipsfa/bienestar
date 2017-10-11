@@ -316,7 +316,7 @@ function obtenerEstudio(){
     $("#cmbestudio").val("S");
     $("#cmbclinica").val("S");
     $("#cmbclinica").attr("disabled", false);
-    $("#txtfechaseguro").attr("disabled", true);
+    $("#txtfechaseguro").attr("disabled", false);
 
     switch (motivo){
         case "S":

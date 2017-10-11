@@ -155,8 +155,7 @@
                                             <i class="fa fa-calendar"></i>
                                         </div>
                                         <div class="input-group input-group" style="width: 100%;">
-                                            <input type="text" class="form-control" id="txtfechaseguro"
-                                                    onblur="calcularSolicitado()">
+                                            <input type="text" class="form-control" id="txtfechaseguro">
                                         </div>
                                     </div>
                                 </div>
@@ -335,20 +334,31 @@
 
 
 <script>
-    $('#txtfechapresupuesto').datepicker({
-        autoclose: true,
-        format: "dd/mm/yyyy",
-        language: 'es'
-    });
-    $('[data-mask]').inputmask();
+  $('#txtfechapresupuesto').datepicker({
+      autoclose: true,
+      format: "dd/mm/yyyy",
+      language: 'es',
+      endDate: "+0d",
+      changeDate: function () {
+          validaFechaFactura(30)
+      }
+  }).on("changeDate", function (e) {
+      validaFechaFactura(60);
+  });
 
-    $('#txtfechaseguro').datepicker({
-        autoclose: true,
-        format: "dd/mm/yyyy",
-        language: 'es'
-    }).datepicker("setDate", new Date());
+  $('#txtfechaseguro').datepicker({
+      autoclose: true,
+      format: "dd/mm/yyyy",
+      language: 'es',
+      endDate: "+0d",
+      changeDate: function () {
+          validaFechaFactura(30)
+      }
+  }).on("changeDate", function (e) {
+      validaFechaFactura(60);
+  });
+  $('[data-mask]').inputmask();
 
-    $('[data-mask]').inputmask();
 
 
 
