@@ -122,9 +122,9 @@
         <td style="text-align: justify">
             <p class="sangria" id="fam" style="display: none;">
                 Por medio de la presente, hacemos constar que el (la) cuidadano(a): <b id="nombreafil"></b>, titular de
-                la cédula de identidad Nº <b id="cedulaafil"></b> se encuentra afiliado(a) al Intituto de Previsión
-                Social de la Fuerza Armada por ser <b id="lblparentezco"></b> del <b id="lblgrado"></b>
-                <b id="nombre"></b>, quien a su vez es miembro de la Fuerza Armada Nacional Bolivariana.</p>
+                la cédula de identidad Nº <b id="cedulaafil"></b> se encuentra afiliado(a) al
+                Instituto de Previsión Social de la Fuerza Armada por ser  <b id="lblparentezco"></b> del (la) <b id="lblgrado"></b>
+                <b id="nombre"></b>, quien es miembro de la Fuerza Armada Nacional Bolivariana.</p>
             <p class="sangria" id="tit" style="display: none;">
                 Por medio de la presente, hacemos constar que el (la) cuidadano(a): <b id="nombreafil2"></b>, titular de
                 la cédula de identidad Nº <b id="cedulaafil2"></b> se encuentra afiliado(a) al Intituto de Prevision
@@ -140,12 +140,15 @@
                 quedando una diferencia de <b id="txtmontoipsfa"></b> (<b id="lblmontot"></b> BS.) el cual este
                 instituto se compromete a cancelar en su totalidad. </p>
             <p class="sangria" id="masto" style="display: none;">
-                Por lo antes expuesto, este Instituto se compromete a cancelar los gastos por concepto de <b
-                id="motivoafil"></b>, la suma de <b id="txtmontoipsfa2"></b> (<b id="lblmontot2"></b> BS.) que representa un <b id="lblporipsfa"></b>% del costo total del examen y el (la) afiliado(a) cancelara el <b id="lblporafi"></b> % restante lo que representa (<b id="montoafi"></b> BS.)  para un total de <b id="txtmontopre2"></b> (<b id="lblmontopresupuesto2"></b> BS). </p>
+                Por lo antes expuesto, este Instituto se compromete a pagar por concepto de <b
+                id="motivoafil"></b>, la suma de <b id="txtmontoipsfa2"></b> (<b id="lblmontot2">
+                </b> BS.) que representa el <b id="lblporipsfa"></b>% del costo del examen y el (la) precitado afiliado(a) pagará la suma de
+                 (<b id="montoafi"></b> BS.) equivalente al <b id="lblporafi"></b>% restante, para cubrir el importe total del examen,
+                <b id="txtmontopre2"></b> (<b id="lblmontopresupuesto2"></b> BS). </p>
             <p class="sangria">
-                Asi mismo le informamos que cualquier información requerida para la tramitación del presente caso, puede
-                ser comunicada a nuestros telefonos directos: (0212)-6931408 y (0212)-6092545, Departamento de Cuidado
-                Integral de la Salud.</p>
+              Así mismo, se informa que cualquier información requerida para la tramitación del presente caso,
+              puede ser solicitada a nuestros teléfonos directos: (0212)-6931408 y (0212)-6092545, Departamento de
+              Cuidado Integral de la Salud.</p>
             <p class="sangria">
                 Sin mas a que hacer referencia y como siempre a sus gratas ordenes.</p>
             <p class="centrar">
@@ -335,7 +338,7 @@
             $("#lblmontoseguro").html(numeral(parseFloat(this.montoseguro)).format('0,0.00'));
             $("#lblfechaseguro").html(Util.ConvertirFechaHumana(this.fechaseguro));
             $("#lblnombrec").html(this.DatoFactura.Beneficiario.razonsocial);
-            $("#motivoafil").html(this.descripcion);
+            $("#motivoafil").html(this.descripcion.trim());
             $("#lblmotivo").html(this.motivo);
             $("#lblconcepto").html(this.descripcion);
             $("#lbldiagnostico").html(this.diagnostico);
@@ -358,7 +361,7 @@
             $("#nombreafil").html(nombrea);
             $("#cedulaafil2").html(cedulaa);
             $("#nombreafil2").html(nombrea);
-            $("#motivoafil").html(motivo);
+            $("#motivoafil").html(motivo.trim());
             $("#lblrifclinica").html(rifclinica);
             $("#lblnombrec").html(nombreclinica);
             $("#lblmotivo").html(razonc);

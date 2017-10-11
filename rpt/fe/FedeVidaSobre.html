@@ -120,7 +120,7 @@
                 $("#lblcedula2").text(Persona.DatoBasico.cedula);
                 // $("#lblcedulaex").text(militar.Persona.DatoBasico.cedula);
                 // $("#lblsituacion1").text(militar.situacion);
-                // $("#lbltelefono").html(militar.Persona.Telefono.movil);
+
                 var edad2 = Util.CalcularEdad(Util.ConvertirFechaHumana(Persona.DatoBasico.fechanacimiento));
                 $("#edad2").html(edad2);
 
@@ -181,7 +181,7 @@
             $("#lblnumero").html(fdv.numero);
             $("#lblnumconst").html(fdv.numero);
             $("#lblnumero1").html(fdv.numero);
-
+            $("#lbltelefono").html(fdv.DatoBasico.Telefono.movil);
             var DIR1 = fdv.DatoBasico.Direccion;
 
             var rirec1 = Estados.ObtenerCodigo(DIR1.estado) + ", " + DIR1.ciudad + ", municipio " + DIR1.municipio + ", parroquia " + DIR1.parroquia + ", Av/Calle " + DIR1.calleavenida + ", casa/apt " + DIR1.casa + "|" + DIR1.apartamento
@@ -347,7 +347,7 @@
                 Certifico y doy fe que hoy
                 <labe id="lblfechacreacion1"></labe>
                 se presentó, la (el) ciudadana(o) <b id="nombreafil"></b> C.I. N°:
-                <b id="cedulaafi"></b>, Edad <b id="edadafi"></b>, Residenciado(o) en: <b
+                <b id="cedulaafi"></b>, de <b id="edadafi"></b> años de edad, Residenciado(o) en: <b
                     id="lbldireccionafi"></b> Teléfono <b id="lbltelefonoafi"></b>, con la finalidad de cumplir con el
                 requisito exigido por el I.P.S.F.A, como beneficiario (a) de Pensión de Sobreviviente causada por ser <b
                     id="lblparentesco"></b> del Militar Fallecido.
@@ -358,7 +358,7 @@
                 Certifico y doy fe que hoy
                 <labe id="lblfechacreacion2"></labe>
                 se presentó, la (el) ciudadana(o) <b id="nombre"></b> C.I. N°:
-                <b id="lblcedula"></b>, Edad <b id="edad"></b>, Residenciado(o) en: <b
+                <b id="lblcedula"></b>, de <b id="edad"></b> años de edad, Residenciado(o) en: <b
                     id="lbldireccion"></b> Teléfono <b id="lbltelefono"></b>, con la finalidad de cumplir con el
                 requisito exigido por el I.P.S.F.A,
 
