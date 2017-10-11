@@ -75,28 +75,38 @@
             if (formato != undefined) {
 
             }
-            if (militar.Persona != undefined) {
-                var ncompleto = militar.Persona.DatoBasico.nombreprimero + " " + militar.Persona.DatoBasico.apellidoprimero;
+            if (pos == null) {
+              pos = militar.CIS.Investigacion.FeDeVida.length;
+              pos--;
+            }
+            var fdv = militar.CIS.Investigacion.FeDeVida[pos];
+            Persona = militar.Persona;
+            if(militar.id != fdv.idf){
+                Persona = ObtenerFamiliar(fdv.idf);
+            }
+            console.log(Persona);
+            if (Persona != undefined) {
+                var ncompleto = Persona.DatoBasico.nombreprimero + " " + Persona.DatoBasico.apellidoprimero;
                 $("#nombre").html(ncompleto);
                 $("#nombre2").html(ncompleto);
                 $("#nombre3").html(ncompleto);
                 $("#nombreex").html(ncompleto);
-                $("#lblgrado").text(militar.Grado.descripcion);
-                $("#lblcedula").text(militar.Persona.DatoBasico.cedula);
-                $("#lblcedula3").text(militar.Persona.DatoBasico.cedula);
+                // $("#lblgrado").text(militar.Grado.descripcion);
+                $("#lblcedula").text(Persona.DatoBasico.cedula);
+                // $("#lblcedula3").text(militar.Persona.DatoBasico.cedula);
                 $("#lblcedula2").text(militar.Persona.DatoBasico.cedula);
-                $("#lblcedulaex").text(militar.Persona.DatoBasico.cedula);
-                $("#lblsituacion1").text(militar.situacion);
-                $("#lbltelefono").html(militar.Persona.Telefono.movil);
-                var edad2 = Util.CalcularEdad(Util.ConvertirFechaHumana(militar.Persona.DatoBasico.fechanacimiento));
+                // $("#lblcedulaex").text(militar.Persona.DatoBasico.cedula);
+                // $("#lblsituacion1").text(militar.situacion);
+                // $("#lbltelefono").html(militar.Persona.Telefono.movil);
+                var edad2 = Util.CalcularEdad(Util.ConvertirFechaHumana(Persona.DatoBasico.fechanacimiento));
                 $("#edad2").html(edad2);
 
-                var edad = Util.CalcularEdad(Util.ConvertirFechaHumana(militar.Persona.DatoBasico.fechanacimiento));
+                var edad = Util.CalcularEdad(Util.ConvertirFechaHumana(Persona.DatoBasico.fechanacimiento));
                 $("#edad").html(edad);
 
-                var edadex = Util.CalcularEdad(Util.ConvertirFechaHumana(militar.Persona.DatoBasico.fechanacimiento));
+                var edadex = Util.CalcularEdad(Util.ConvertirFechaHumana(Persona.DatoBasico.fechanacimiento));
                 $("#edadex").html(edadex);
-                $("#lblsituacion").text(Util.ConvertirSitucacion(militar.situacion));
+                // $("#lblsituacion").text(Util.ConvertirSitucacion(situacion));
 
             if (militar.situacion == "FCP") {
                 $("#sobre").css("display", "block");
@@ -114,40 +124,39 @@
 
 
 
-            militar.Familiar.forEach(v => {
-                if (v.Persona.DatoBasico.cedula == idf) {
-                    var ncompletoafi = v.Persona.DatoBasico.nombreprimero + " " + militar.Persona.DatoBasico.apellidoprimero;
-                    $("#nombreafil").html(ncompletoafi);
-                    $("#nombreafil2").html(ncompletoafi);
-                    $("#nombreafilex").html(ncompletoafi);
-                    $("#cedulaafi").html(v.Persona.DatoBasico.cedula);
-                    $("#cedulaafiex").html(v.Persona.DatoBasico.cedula);
-                    $("#cedulaafi2").html(v.Persona.DatoBasico.cedula);
-                    $("#lblparentesco").html(Util.ConvertirParentesco(v.parentesco, v.Persona.DatoBasico.sexo));
-                    $("#lblparentescoex").html(Util.ConvertirParentesco(v.parentesco, v.Persona.DatoBasico.sexo));
-                    $("#lbltelefonoafi").html(v.Persona.Telefono.movil);
-                    var edadafi = Util.CalcularEdad(Util.ConvertirFechaHumana(v.Persona.DatoBasico.fechanacimiento));
-                    $("#edadafi").html(edadafi);
 
-                    var edadafiex = Util.CalcularEdad(Util.ConvertirFechaHumana(v.Persona.DatoBasico.fechanacimiento));
-                    $("#edadafiex").html(edadafiex);
-                }
-            });
-
-
-            if (pos == null) {
-                pos = militar.CIS.Investigacion.FeDeVida.length;
-                pos--;
-            }
-            var fdv = militar.CIS.Investigacion.FeDeVida[pos];
-
+            // militar.Familiar.forEach(v => {
+            //     if (v.Persona.DatoBasico.cedula == idf) {
+            //         var ncompletoafi = v.Persona.DatoBasico.nombreprimero + " " + militar.Persona.DatoBasico.apellidoprimero;
+            //         $("#nombreafil").html(ncompletoafi);
+            //         $("#nombreafil2").html(ncompletoafi);
+            //         $("#nombreafilex").html(ncompletoafi);
+            //         $("#cedulaafi").html(v.Persona.DatoBasico.cedula);
+            //         $("#cedulaafiex").html(v.Persona.DatoBasico.cedula);
+            //         $("#cedulaafi2").html(v.Persona.DatoBasico.cedula);
+            //         $("#lblparentesco").html(Util.ConvertirParentesco(v.parentesco, v.Persona.DatoBasico.sexo));
+            //         $("#lblparentescoex").html(Util.ConvertirParentesco(v.parentesco, v.Persona.DatoBasico.sexo));
+            //         $("#lbltelefonoafi").html(v.Persona.Telefono.movil);
+            //         var edadafi = Util.CalcularEdad(Util.ConvertirFechaHumana(v.Persona.DatoBasico.fechanacimiento));
+            //         $("#edadafi").html(edadafi);
+            //
+            //         var edadafiex = Util.CalcularEdad(Util.ConvertirFechaHumana(v.Persona.DatoBasico.fechanacimiento));
+            //         $("#edadafiex").html(edadafiex);
+            //     }
+            // });
+            //
+            //
+            //
             $("#lblfechacreacion1").html(Util.ConvertirFechaHumana(fdv.fechacreacion));
             $("#lblfechacreacion2").html(Util.ConvertirFechaHumana(fdv.fechacreacion));
+
             $("#lblfechacreacion3").html(Util.ConvertirFechaHumana(fdv.fechacreacion));
             $("#lblfechacreacion4").html(Util.ConvertirFechaHumana(fdv.fechacreacion));
-            $("#lblfechacreacion5").html(Util.ConvertirFechaHumana(fdv.fechacreacion));
+            // $("#lblfechacreacion5").html(Util.ConvertirFechaHumana(fdv.fechacreacion));
 
+            $("#lblfechaconst").html(Util.ConvertirFechaHumana(fdv.fechacreacion));
             $("#lblnumero").html(fdv.numero);
+            $("#lblnumconst").html(fdv.numero);
             $("#lblnumero1").html(fdv.numero);
 
             var DIR1 = fdv.DatoBasico.Direccion;
@@ -161,8 +170,17 @@
 
         }
 
-
-    </script>
+    function ObtenerFamiliar(idf){
+        var Persona = {};
+        militar.Familiar.forEach(v => {
+          if (v.Persona.DatoBasico.cedula == idf) {
+            Persona = v.Persona;
+            return true;
+          }
+        });
+        return Persona;
+    }
+</script>
 
 
     <style>
@@ -325,7 +343,7 @@
 
             <br>
          <div id="datosmilitar" style="display:none">
-                <table  border="0" align="center" width="100%">
+                <table  border="0" align="center" width="100%" style="display:none" id="_tipopension">
                     <tr>
                       <td class="btop bajo biz bde texto14"><strong>TIPO DE PENSION </strong></td>
                     </tr>
@@ -391,10 +409,10 @@
                         <td width="486" rowspan="3">
                             <div align="center"><strong>CONSTANCIA DE CONSIGNACIÓN DE FE DE VIDA</strong></div>
                         </td>
-                        <td colspan="3" class="texto14">1.Número:</td>
+                        <td colspan="3" class="texto14">1.NÚMERO: <b id="lblnumconst"></b></td>
                     </tr>
                     <tr>
-                        <td colspan="3" class="texto14 ">2.Fecha:</td>
+                        <td colspan="3" class="texto14 ">2.FECHA: <b id="lblfechaconst"></b></td>
                     </tr>
                     <tr>
                         <td width="135" height="23" class="texto14 "><b id="lblfechacreacion2"></b></td>

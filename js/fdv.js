@@ -1,6 +1,5 @@
 class WFedeVida {
     constructor () {
-
         this.id = "";
         this.nombre = "";
         this.Direccion = new Direccion();
@@ -11,10 +10,7 @@ class WFedeVida {
         this.paisex = "";
         this.residenciadoex = "";
         this.fechaex = "";
-
-         }
-
-
+   }
 }
 
 
@@ -36,23 +32,7 @@ $(function () {
     });
 });
 
-/*function consultarRif(){
-    var rif = $("#rif").val();
-    var rz = '';
-    var encontrado = 0;
-    console.log(lstProveedores);
-    $.each(lstProveedores,function () {
-        if(this.rif == rif){
-            rz= this.razonsocial;
-            encontrado = 1;
-        }
-    });
-    if(encontrado == 1){
-        $("#razonsocial").val(rz);
-    }else{
-        $("#mdlEmpresa").modal("show");
-    }
-}*/
+
 
 function habilitarDireccion(estatus){
     $("#collapseTree select").attr("disabled",estatus);
