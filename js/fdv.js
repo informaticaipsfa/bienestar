@@ -1,20 +1,30 @@
 
 $(function () {
-    llenarfe();
-    $(".btnvolverentrada").click(function(){
-        $("#mdldesea").modal("show");
+llenarfe();
 
-        $("#btnsalir").click(function () {
-            $("#opciones").hide();
-            $("#panelentrada").show();
-            $("#panellista").hide();
-            $("#panelregistro").hide();
-            $('#mdldesea').modal('hide');
-            limpiarfe();
-            $("#rifnuevo").remove();
-            $("#sefue").remove();
-        })
-    });
+$(".btnvolverentradafe").click(function(){
+    $("#opciones").show();
+    $("#panelentrada").hide();
+    $("#panellista").hide();
+    $("#panelregistro").hide();
+});
+
+
+$(".btnvolverentrada").click(function(){
+    $("#mdldesea").modal("show");
+
+    $("#btnsalir").click(function () {
+        $("#opciones").hide();
+        $("#panelentrada").show();
+        $("#panellista").hide();
+        $("#panelregistro").hide();
+        $('#mdldesea').modal('hide');
+        limpiarfe();
+        $("#rifnuevo").remove();
+        $("#sefue").remove();
+    })
+});
+
 });
 
 

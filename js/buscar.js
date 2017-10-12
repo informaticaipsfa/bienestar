@@ -1,5 +1,98 @@
 let lstProveedores;
 
+function ActivarBuscar() {
+    $(location).attr('href','starter.html');
+}
+
+function Buscar(id) {
+    if (id != undefined) {
+        $("#_cedula").val(id);
+    }
+    if ($("#_cedula").val() == "") {
+        $("#_contenido").html("Debe introducir una cédula");
+        $("#_botonesmsj").html('<button type="button" class="btn btn-default" data-dismiss="modal" id="_aceptar" onClick="IrCedula()">Aceptar</button>');
+        $("#modMsj").modal("show");
+        return false;
+    }
+    $("#_cargando").show();
+    var url = Conn.URL + "militar/crud/" + $("#_cedula").val();
+    var promesa = CargarAPI({
+        sURL: url,
+        metodo: 'GET',
+        valores: '',
+        Objeto: militar
+    });
+    promesa.then(function (xhRequest) {
+
+        militar = JSON.parse(xhRequest.responseText);
+        ficha();
+    });
+    var promesaPro = CargarAPI({
+        sURL: 'js/proveedores.js',
+        metodo: 'GET',
+        valores: '',
+    });
+    promesaPro.then(function (xhRequest) {
+        lstProveedores = JSON.parse(xhRequest.responseText);
+
+    });
+}
+
+function ficha() {
+    $("#_cargando").hide();
+    if (militar.Persona != undefined) {
+        var ncompleto = militar.Persona.DatoBasico.nombreprimero + " " + militar.Persona.DatoBasico.apellidoprimero;
+        $("#lblnombre").text(ncompleto);
+        url = "images/grados/" + militar.Grado.abreviatura + ".png";
+        url = url.toLowerCase();
+        $("#imgrango").attr("src", url);
+        var rutaimg = Conn.URLIMG;
+        url = rutaimg + $("#_cedula").val() + ".jpg";
+        if (militar.Persona.foto != undefined) {
+            rutaimg = Conn.URLTEMP;
+            url = rutaimg + $("#_cedula").val() + "/foto.jpg";
+        }
+
+        $("#fotoperfil").attr("src", url);
+        $("#lblcomponente").text(militar.Componente.descripcion);
+
+        $("#lblgrado").text(militar.Grado.descripcion);
+
+        $("#lblcedula").text(militar.Persona.DatoBasico.cedula);
+
+
+        var estcivil = Util.GenerarEstadoCivil(militar.Persona.DatoBasico.estadocivil, militar.Persona.DatoBasico.sexo);
+
+        $("#lblfnacimiento").html(Util.ConvertirFechaHumana(militar.Persona.DatoBasico.fechanacimiento));
+        $("#lblestcivil").text(estcivil)
+        $("#lblsituacion").text(Util.ConvertirSitucacion(militar.situacion));
+        var CIS = militar.CIS;
+        if (militar.CIS.Investigacion.FeDeVida != undefined){
+          var ffevida = "";
+          militar.CIS.Investigacion.FeDeVida.forEach(v => { ffevida = v.fechacreacion; });
+          if(ffevida != ""){
+            $("#lblfevida").html(Util.ConvertirFechaHumana(ffevida));
+          }
+        }
+        // if(CIS.ServicioMedico.Programa.Reembolso != undefined)$("#_Crm").html(CIS.ServicioMedico.Programa.Reembolso.length);
+        // if(CIS.ServicioMedico.Programa.Apoyo != undefined)$("#_Cam").html(CIS.ServicioMedico.Programa.Apoyo.length);
+        // if(CIS.ServicioMedico.Programa.CartaAval != undefined)$("#_Cca").html(CIS.ServicioMedico.Programa.CartaAval.length);
+
+        $("#paneldatos").show();
+        $("#panelperfil").show();
+        $("#opciones").show();
+        $("#_bxBuscar").hide();
+    } else {
+        alert("Cedula no se encuentra registrada como militar dentro del sistema");
+        $("#paneldatos").hide();
+    }
+    historico();
+    historicoApoyo();
+    historicoCarta();
+    historicoBadan();
+    historicoFeDeVida();
+}
+
 function formatoCombo(state) {
     if (!state.id) {
         return state.text;
@@ -167,8 +260,9 @@ function HCargarBuzonReembolso(numero, est){
     $('#lblcedulaReembolso').text(militar.Persona.DatoBasico.cedula);
     var ncompleto = militar.Persona.DatoBasico.nombreprimero + " " + militar.Persona.DatoBasico.apellidoprimero;
     $('#lblnombre').text(ncompleto);
-    $('#lblgrado').text(militar.Grado.descripcion);
-    $('#lblsituacion').text(Util.ConvertirSitucacion(militar.situacion));
+    $('#lblgradoReembolso').text(militar.Grado.descripcion);
+    $('#lblsituacionReembolso').text(Util.ConvertirSitucacion(militar.situacion));
+    $('#lblcomponenteReembolso').text(militar.Componente.descripcion);
     $('#lblnumero').text(numero);
     militar.CIS.ServicioMedico.Programa.Reembolso.forEach(v => {
 
@@ -177,7 +271,6 @@ function HCargarBuzonReembolso(numero, est){
       }
     });
 
-    $('#lblcomponente').text(militar.Componente.descripcion);
 
     var rutaimg = Conn.URLIMG;
     url = rutaimg + militar.Persona.DatoBasico.cedula + ".jpg";
@@ -293,95 +386,7 @@ function HCargarDetalleConcepto(v, est){
 
 }
 
-function ActivarBuscar() {
-    $(location).attr('href','starter.html');
-}
 
-function Buscar(id) {
-    if (id != undefined) {
-        $("#_cedula").val(id);
-    }
-    if ($("#_cedula").val() == "") {
-        $("#_contenido").html("Debe introducir una cédula");
-        $("#_botonesmsj").html('<button type="button" class="btn btn-default" data-dismiss="modal" id="_aceptar" onClick="IrCedula()">Aceptar</button>');
-        $("#modMsj").modal("show");
-        return false;
-    }
-    $("#_cargando").show();
-    var url = Conn.URL + "militar/crud/" + $("#_cedula").val();
-    var promesa = CargarAPI({
-        sURL: url,
-        metodo: 'GET',
-        valores: '',
-        Objeto: militar
-    });
-    promesa.then(function (xhRequest) {
-
-        militar = JSON.parse(xhRequest.responseText);
-        ficha();
-    });
-    var promesaPro = CargarAPI({
-        sURL: 'js/proveedores.js',
-        metodo: 'GET',
-        valores: '',
-    });
-    promesaPro.then(function (xhRequest) {
-        lstProveedores = JSON.parse(xhRequest.responseText);
-
-    });
-}
-
-function ficha() {
-    $("#_cargando").hide();
-    if (militar.Persona != undefined) {
-        var ncompleto = militar.Persona.DatoBasico.nombreprimero + " " + militar.Persona.DatoBasico.apellidoprimero;
-        $("#lblnombre").text(ncompleto);
-        url = "images/grados/" + militar.Grado.abreviatura + ".png";
-        url = url.toLowerCase();
-        $("#imgrango").attr("src", url);
-        var rutaimg = Conn.URLIMG;
-        url = rutaimg + $("#_cedula").val() + ".jpg";
-        if (militar.Persona.foto != undefined) {
-            rutaimg = Conn.URLTEMP;
-            url = rutaimg + $("#_cedula").val() + "/foto.jpg";
-        }
-
-        $("#fotoperfil").attr("src", url);
-        $("#lblcomponente").text(militar.Componente.descripcion);
-
-        $("#lblgrado").text(militar.Grado.descripcion);
-
-        $("#lblcedula").text(militar.Persona.DatoBasico.cedula);
-
-
-        var estcivil = Util.GenerarEstadoCivil(militar.Persona.DatoBasico.estadocivil, militar.Persona.DatoBasico.sexo);
-
-        $("#lblfnacimiento").html(Util.ConvertirFechaHumana(militar.Persona.DatoBasico.fechanacimiento));
-        $("#lblestcivil").text(estcivil)
-        $("#lblsituacion").text(Util.ConvertirSitucacion(militar.situacion));
-
-        if (militar.CIS.Investigacion.FeDeVida != undefined){
-          var ffevida = "";
-          militar.CIS.Investigacion.FeDeVida.forEach(v => { ffevida = v.fechacreacion; });
-          if(ffevida != ""){
-            $("#lblfevida").html(Util.ConvertirFechaHumana(ffevida));
-          }
-        }
-
-        $("#paneldatos").show();
-        $("#panelperfil").show();
-        $("#opciones").show();
-        $("#_bxBuscar").hide();
-    } else {
-        alert("Cedula no se encuentra registrada como militar dentro del sistema");
-        $("#paneldatos").hide();
-    }
-    historico();
-    historicoApoyo();
-    historicoCarta();
-    historicoBadan();
-    historicoFeDeVida();
-}
 
 function cargaPrograma(tipo) {
     switch (tipo) {
@@ -411,9 +416,10 @@ function cargaPrograma(tipo) {
             titulos("Prestamo <br> de Equipo");
             break;
         case "fdv":
-            CargarUrl("panelentrada", "inc/opcionesFedeVida");
-            CargarUrl("modalgeneral", "inc/modals");
+            //CargarUrl("modalgeneral", "inc/modalsfdv");
+            // CargarUrl("panelentrada", "inc/opcionesFedeVida");
             CargarUrl("panelregistro", "inc/crearFedeVida");
+            titulos("Fe de Vida");
             break;
         case "ca":
             CargarUrl("modalgeneral", "inc/modalscarta");
@@ -448,7 +454,7 @@ function verificarNuevo(val) {
           $.notify("Este afiliado tiene apoyos pendientes por culminar.", "error");
         }
     }
-    if (val == false) {
+    if (val == false || $(".lbltituloopt").html() == "Fe de Vida") {
       crearPrograma();
     } else {
       $("#requisitos").modal("show");

@@ -732,7 +732,17 @@ class Clave {
         	}
         });
 			}else{
+				$.notify({
+        	title: '<strong>Error: </strong>',
+        	message: 'Su clave no ha sido cambiada, verifique los datos he intente nuevamente'
 
+        },{
+        	type: 'danger',
+          animate: {
+        		enter: 'animated rollIn',
+        		exit: 'animated rollOut'
+        	}
+        });
 			}
 		});
 	}

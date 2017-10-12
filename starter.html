@@ -18,7 +18,9 @@
     <link rel="stylesheet" href="../bower_components/animate/animate.css">
     <link rel="stylesheet" href="../bower_components/fancy/dist/jquery.fancybox.css">
     <link rel="stylesheet" href="../bower_components/jquery-ui/themes/ui-lightness/jquery-ui.css">
+    <link rel="stylesheet" href="../bower_components/pace/themes/orange/pace-theme-minimal.css">
 
+      <script src="../bower_components/pace/pace.min.js"></script>
     <script src="../bower_components/jquery/dist/jquery.min.js"></script>
     <script src="../bower_components/jquery/dist/jquery-migrate-3.0.0.min.js"></script>
     <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -123,17 +125,7 @@
 
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
-            <!-- Sidebar Menu -->
-          <!-- <ul class="sidebar-menu" data-widget="tree">
 
-                <li class='header'>Menu</li>
-                <li><a href="starter.html"><i class="fa fa-television"></i> <span>Inicio</span></a></li>
-                <li><a href="#" onclick="buzon(0)"><i class="fa fa-file-archive-o"></i> <span>Recepción</span></a></li>
-                <li><a href="#" onclick="buzon(1)"><i class="fa fa-file-archive-o"></i> <span>Jefe de Sección</span></a></li>
-                <li><a href="#" onclick="buzon(2)"><i class="fa fa-file-archive-o"></i> <span>Jefe Departamaneto</span></a></li>
-                <li><a href="#" onclick="buzon(3)"><i class="fa fa-file-archive-o"></i> <span>Gerente De BYSS</span></a></li>
-                <li><a href="#" onclick="buzon(4)"><i class="fa fa-file-archive-o"></i> <span>Aprobado</span></a></li>
-            </ul> -->
             <ul class="sidebar-menu" data-widget="tree"  id='_menu' >
             </ul>
             <!-- /.sidebar-menu -->
@@ -144,7 +136,12 @@
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <div id="modalgeneral"></div>
+        <section class="content-header">
+          <h1>
+            Bienestar y Seguridad Social
+          </h1>
 
+        </section>
         <!-- Main content -->
         <section class="content" id="panelderecho">
             <div class="row" id="_bxBuscar"></div>
