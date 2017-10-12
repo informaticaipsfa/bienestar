@@ -148,9 +148,13 @@ class Utilidad {
           return this.MensajeFormulario(_frm,ele);
         }
     }
-
+    ValidarCampo(ele){
+      var id = $(ele).attr('id');
+      console.log(ele);
+      $("#" + id).attr('style', 'border:1px solid #CCC;');
+      $("body").find("[aria-labelledby='select2-"+id+"-container']").attr("style", "border: 1px solid #ccc;");
+    }
     MensajeFormulario(_frm,ele) {
-
         $("#" + _frm + " :input").each(function (i) {
             var valor = $(this).val();
             var dis = $(this).attr('required');
@@ -158,7 +162,13 @@ class Utilidad {
 
             if (dis == "required") {
                 if (valor == "") {
-                    $(this).attr({sytle: "border: 1px solid red;"});
+                  //$("#" + this).attr('style', 'border:1px solid red;');
+                  $("#" + id).attr("style", "border:1px solid red");
+                  var accion = "Util.ValidarCampo(this);";
+                  if(id == "nfactura") accion += "Util.ValidarFactura();" 
+                  $("#" + id).attr("onblur", accion);
+                }else{
+                  $("#" + id).attr('style', 'border:1px solid #CCC;');
                 }
             }
         });
@@ -170,13 +180,28 @@ class Utilidad {
 
             if (dis == "required") {
                 if (valor == "S" || valor == "") {
-                    $("#select2-"+this.id+"-container").notify("*",{position:"top left"})
-                    $(this).attr({sytle: "border: 1px solid red;"});
 
+                    $("body").find("[aria-labelledby='select2-"+id+"-container']").attr("style", "border: 1px solid red;");
+                    $("#" + id).attr('style', 'border:1px solid red;');
+                    $("#" + id).attr("onchange", "Util.ValidarCampo(this);");
+                }else{
+                    $("#" + id).attr('style', 'border:1px solid #CCC;');
+                    $("body").find("[aria-labelledby='select2-"+id+"-container']").attr("style", "border: 1px solid #ccc;");
                 }
             }
         });
-        $("#"+ele).notify("Recuerde de ingresar todos los campos requeridos","warn");
+        $.notify({
+        	title: '<strong>Error!</strong>',
+        	message: 'Recuerde ingresar todos los campos requeridos'
+
+        },{
+        	type: 'danger',
+          animate: {
+        		enter: 'animated rollIn',
+        		exit: 'animated rollOut'
+        	}
+        });
+
         return false;
     }
 

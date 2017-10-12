@@ -720,7 +720,17 @@ class Clave {
 		promesa.then(function (xhRequest) {
 			var respuesta = JSON.parse(xhRequest.responseText);
 			if ( respuesta.tipo == 1){
-				$.notify("Su clave ha sido cambiada exitosamente", "success");
+				$.notify({
+        	title: '<strong>Felicitaciones: </strong>',
+        	message: 'Su clave ha sido cambiada exitosamente'
+
+        },{
+        	type: 'success',
+          animate: {
+        		enter: 'animated rollIn',
+        		exit: 'animated rollOut'
+        	}
+        });
 			}else{
 
 			}
@@ -735,6 +745,7 @@ function CerrarSession(){
 }
 
 $(function (){
+	$('[data-toggle="tooltip"]').tooltip();
 	if (sessionStorage.getItem('ipsfaToken') == undefined ){
 		$(location).attr("href","../index.html");
 	}else{

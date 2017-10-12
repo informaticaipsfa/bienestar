@@ -263,7 +263,7 @@ function agregarConcepto() {
         var bene = $("#cmbbeneficiario option:selected").val().split('|');
         var beneficiario = bene[1] + "-" + $("#cmbbeneficiario option:selected").text();
         var concepto = $("#concepto option:selected").text();
-        var monto = $("#monto").val();
+        var monto = $("#txtmonto").val();
         var rif = $("#rif").val();
         var razon = $("#razonsocial").val();
         var factura = $("#nfactura").val();

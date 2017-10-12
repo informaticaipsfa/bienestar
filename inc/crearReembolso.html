@@ -178,11 +178,12 @@
                     <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
                          aria-labelledby="headingOne">
                         <div class="panel-body">
+
                             <form id="frmreembolso" action="#" method="post">
                                 <div class="row">
                                     <div class="col-md-6 col-sm-12">
                                         <label>Beneficiario:</label>
-                                        <select class="form-control" style="width: 100%" id="cmbbeneficiario" required>
+                                        <select class="form-control" style="width: 100%" id="cmbbeneficiario"  required >
                                             <option selected="selected" value="S"></option>
                                         </select>
                                     </div>
@@ -221,7 +222,7 @@
                                     </div>
                                     <div class="col-md-3 col-sm-12">
                                         <label>N° de Factura:</label>
-                                        <input type="text" class="form-control" id="nfactura" onblur="ValidarFactura()" required>
+                                        <input type="text" class="form-control" id="nfactura" onblur="ValidarFactura()"  required>
                                     </div>
                                     <div class="col-md-3 col-sm-12">
                                         <label>F.Factura:</label>
@@ -230,8 +231,7 @@
                                                 <i class="fa fa-calendar"></i>
                                             </div>
                                             <div class="input-group input-group" style="width: 100%;">
-                                                <input type="text" class="form-control" id="fechafactura"
-                                                       required>
+                                                <input type="text" class="form-control" id="fechafactura" required>
                                             </div>
                                         </div>
                                         <div class="alert alert-danger" role="alert" id="alert_fecha"
@@ -241,13 +241,14 @@
                                     </div>
                                     <div class="col-md-3 col-sm-12">
                                         <label>Monto:</label>
-                                        <div class="input-group date" style="z-index: 1030;">
-                                            <input class="form-control" id="monto"  onkeypress="return Util.SoloNumero(event,this,true)" required>
-
+                                        <div class="input-group">
+                                            <input id="txtmonto" class="form-control" type="text" required
+                                            onkeypress="return Util.SoloNumero(event,this);">
                                             <div class="input-group-addon">
-                                                <label>Bs.</label>
+                                              <label>Bs.</label>
                                             </div>
                                         </div>
+
                                     </div>
                                     <div class="col-md-4 col-sm-12">
                                         <button class="btn btn-primary btn-success" type="button"

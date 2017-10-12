@@ -15,10 +15,12 @@
     <link rel="stylesheet" href="../dist/css/fonts.googleapis.css">
     <link rel="stylesheet" href="../bower_components/select2/dist/css/select2.min.css">
     <link rel="stylesheet" href="../bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="../bower_components/animate/animate.css">
     <link rel="stylesheet" href="../bower_components/fancy/dist/jquery.fancybox.css">
     <link rel="stylesheet" href="../bower_components/jquery-ui/themes/ui-lightness/jquery-ui.css">
 
     <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="../bower_components/jquery/dist/jquery-migrate-3.0.0.min.js"></script>
     <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="../bower_components/jquery-ui/jquery-ui.min.js"></script>
     <script src="../bower_components/notify/bootstrap-notify.min.js"></script>
@@ -203,8 +205,8 @@
  form-control-feedback"></span>
                         </div>
                     </form>
-                    <label id="lblalert1" >Su clave debe tener al menos 8 caracteres.</label>
-                    <label id="lblalert2" >Las contraseñas no coinciden.</label>
+                    <label id="lblalert1" style="display:none">Su clave debe tener al menos 8 caracteres.</label>
+                    <label id="lblalert2" style="display:none">Las contraseñas no coinciden.</label>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" onclick="limpiarclave()" data-dismiss="modal">Cancelar</button>
