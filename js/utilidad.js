@@ -158,7 +158,7 @@ class Utilidad {
 
             if (dis == "required") {
                 if (valor == "") {
-                    $(this).notify("*");
+                    $(this).attr({sytle: "border: 1px solid red;"});
                 }
             }
         });
@@ -171,7 +171,7 @@ class Utilidad {
             if (dis == "required") {
                 if (valor == "S" || valor == "") {
                     $("#select2-"+this.id+"-container").notify("*",{position:"top left"})
-                    $(this).notify("*");
+                    $(this).attr({sytle: "border: 1px solid red;"});
 
                 }
             }

@@ -300,6 +300,7 @@ $(function () {
   numeral.locale('es-es');
   IniciarSesion();
   Mnu.Crear("Cargar...");
+  
 });
 
 
@@ -397,4 +398,18 @@ function ConsultarID(e){
   if (e.keyCode == 13) {
       Buscar();
   }
+}
+
+
+function VerCambiarClave(){
+    $("#modCambiarClaveUsuario").modal("show");
+}
+
+function cambiarClave(){
+    var clave = new Clave();
+    if (Util.ValidarFormulario("formcusuario") == false) {
+        Util.MensajeFormulario("formcusuario","msjcambio");
+    }else{
+        clave.Salvar();
+    }
 }
