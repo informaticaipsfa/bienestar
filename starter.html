@@ -18,9 +18,15 @@
     <link rel="stylesheet" href="../bower_components/animate/animate.css">
     <link rel="stylesheet" href="../bower_components/fancy/dist/jquery.fancybox.css">
     <link rel="stylesheet" href="../bower_components/jquery-ui/themes/ui-lightness/jquery-ui.css">
-    <link rel="stylesheet" href="../bower_components/pace/themes/orange/pace-theme-minimal.css">
+    <link rel="stylesheet" href="../bower_components/pace/themes/orange/pace-theme-loading-bar.css">
+    <style>
+      #xpage-pace{
+        display: none;
+      };
+    </style>
 
-      <script src="../bower_components/pace/pace.min.js"></script>
+
+    <script data-pace-options='{ "ajax": false }' src="../bower_components/pace/pace.min.js"></script>
     <script src="../bower_components/jquery/dist/jquery.min.js"></script>
     <script src="../bower_components/jquery/dist/jquery-migrate-3.0.0.min.js"></script>
     <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -48,180 +54,183 @@
 </head>
 
 <body class="hold-transition skin-yellow">
-<header class="header" style="background-color:#3c8dbc">
-    <div class="row">
-        <div class="col-md-3 hidden-xs"><img src='images/ng.png' class="img-responsive" alt="Responsive image"
-                                             style='float: left;'></div>
-        <div class="col-md-6 hidden-xs">
-            <center><img src='images/rv.png' class="img-responsive" alt="Responsive image" style="margin-top:6px">
-            </center>
-        </div>
-        <div class="col-md-3 hidden-xs"><img src='images/lg.png' class="img-responsive" alt="Responsive image"
-                                             style="float:right;"></div>
-    </div>
-</header>
 
-<div class="wrapper">
+<div id="xpage-pace">
 
-    <header class="main-header">
-        <a href="starter.html" class="logo">
-            <span class="logo-mini"><b>S</b>FNB</span>
+  <header class="header" style="background-color:#3c8dbc">
+      <div class="row">
+          <div class="col-md-3 hidden-xs"><img src='images/ng.png' class="img-responsive" alt="Responsive image"
+                                               style='float: left;'></div>
+          <div class="col-md-6 hidden-xs">
+              <center><img src='images/rv.png' class="img-responsive" alt="Responsive image" style="margin-top:6px">
+              </center>
+          </div>
+          <div class="col-md-3 hidden-xs"><img src='images/lg.png' class="img-responsive" alt="Responsive image"
+                                               style="float:right;"></div>
+      </div>
+  </header>
 
-            <span class="logo-lg"><b>SSSI</b>FANB</span>
+  <div class="wrapper">
 
-        </a>
-        <nav class="navbar navbar-static-top" role="navigation">
-            <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-                <span class="sr-only">Toggle navigation</span>
-            </a>
-            <span class="logo1 hidden-xs">Sistema de Seguridad Social Integral de la Fuerza Armada Nacional Bolivariana</span>
-            <div class="navbar-custom-menu">
+      <header class="main-header">
+          <a href="starter.html" class="logo">
+              <span class="logo-mini"><b>S</b>FNB</span>
 
-                <ul class="nav navbar-nav">
-                    <li class="dropdown messages-menu" style="" id="_search" onclick="ActivarBuscar()">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-search"></i>
-                        </a>
-                    </li>
+              <span class="logo-lg"><b>SSSI</b>FANB</span>
 
-                    <li class="dropdown user user-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="images/ndisponible.jpg" onerror="this.src='images/ndisponible.jpg'"
-                                 class="user-image" alt="User Image">
-                            <span class="hidden-xs" id="_PerfilUsuario"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <!-- The user image in the menu -->
-                            <li class="user-header">
-                                <img src="images/ndisponible.jpg" class="img-circle"
-                                     onerror="this.src='images/ndisponible.jpg'" alt="User Image">
-                                <p id="_NombreUsuario">
+          </a>
+          <nav class="navbar navbar-static-top" role="navigation">
+              <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                  <span class="sr-only">Toggle navigation</span>
+              </a>
+              <span class="logo1 hidden-xs">Sistema de Seguridad Social Integral de la Fuerza Armada Nacional Bolivariana</span>
+              <div class="navbar-custom-menu">
+
+                  <ul class="nav navbar-nav">
+                      <li class="dropdown messages-menu" style="" id="_search" onclick="ActivarBuscar()">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                              <i class="fa fa-search"></i>
+                          </a>
+                      </li>
+
+                      <li class="dropdown user user-menu">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                              <img src="images/ndisponible.jpg" onerror="this.src='images/ndisponible.jpg'"
+                                   class="user-image" alt="User Image">
+                              <span class="hidden-xs" id="_PerfilUsuario"></span>
+                          </a>
+                          <ul class="dropdown-menu">
+                              <!-- The user image in the menu -->
+                              <li class="user-header">
+                                  <img src="images/ndisponible.jpg" class="img-circle"
+                                       onerror="this.src='images/ndisponible.jpg'" alt="User Image">
+                                  <p id="_NombreUsuario">
 
 
-                                </p>
+                                  </p>
 
-                            </li>
+                              </li>
 
-                            <!-- Menu Footer-->
-                            <li class="user-footer">
-                                <div class="pull-left">
-                                    <a href="#" class="btn btn-default btn-flat" onclick="VerCambiarClave()">Cambiar
-                                        clave</a>
-                                </div>
-                                <div class="pull-right">
-                                    <a href="#" class="btn btn-default btn-flat" onclick="CerrarSession()">Cerrar
-                                        Sesión</a>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
+                              <!-- Menu Footer-->
+                              <li class="user-footer">
+                                  <div class="pull-left">
+                                      <a href="#" class="btn btn-default btn-flat" onclick="VerCambiarClave()">Cambiar
+                                          clave</a>
+                                  </div>
+                                  <div class="pull-right">
+                                      <a href="#" class="btn btn-default btn-flat" onclick="CerrarSession()">Cerrar
+                                          Sesión</a>
+                                  </div>
+                              </li>
+                          </ul>
+                      </li>
 
-                </ul>
-            </div>
-        </nav>
-    </header>
-    <!-- Left side column. contains the logo and sidebar -->
-    <aside class="main-sidebar">
+                  </ul>
+              </div>
+          </nav>
+      </header>
+      <!-- Left side column. contains the logo and sidebar -->
+      <aside class="main-sidebar">
 
-        <!-- sidebar: style can be found in sidebar.less -->
-        <section class="sidebar">
+          <!-- sidebar: style can be found in sidebar.less -->
+          <section class="sidebar">
 
-            <ul class="sidebar-menu" data-widget="tree"  id='_menu' >
-            </ul>
-            <!-- /.sidebar-menu -->
-        </section>
-        <!-- /.sidebar -->
-    </aside>
+              <ul class="sidebar-menu" data-widget="tree"  id='_menu' >
+              </ul>
+              <!-- /.sidebar-menu -->
+          </section>
+          <!-- /.sidebar -->
+      </aside>
 
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <div id="modalgeneral"></div>
-        <section class="content-header">
-          <h1>
-            Bienestar y Seguridad Social
-          </h1>
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+          <div id="modalgeneral"></div>
+          <section class="content-header">
+            <h1>
+              Bienestar y Seguridad Social
+            </h1>
 
-        </section>
-        <!-- Main content -->
-        <section class="content" id="panelderecho">
-            <div class="row" id="_bxBuscar"></div>
-            <div class="row" id="paneldatos" style="display: none">
-                <div class="col-md-9" id="opciones" style="display: none;"></div>
-                <div class="col-md-9" id="panelentrada" style="display: none"></div>
-                <div class="col-md-12" id="panellista" style="display: none"></div>
-                <div class="col-md-9" id="panelregistro" style="display: none"></div>
-                <div class="col-md-3" id="panelperfil"></div>
-            </div>
-        </section>
-        <!-- /.content -->
-    </div>
-    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" id="modMsj">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="_titulo">Mensaje</h4>
-                </div>
-                <div class="modal-body" id="_contenido">
+          </section>
+          <!-- Main content -->
+          <section class="content" id="panelderecho">
+              <div class="row" id="_bxBuscar"></div>
+              <div class="row" id="paneldatos" style="display: none">
+                  <div class="col-md-9" id="opciones" style="display: none;"></div>
+                  <div class="col-md-9" id="panelentrada" style="display: none"></div>
+                  <div class="col-md-12" id="panellista" style="display: none"></div>
+                  <div class="col-md-9" id="panelregistro" style="display: none"></div>
+                  <div class="col-md-3" id="panelperfil"></div>
+              </div>
+          </section>
+          <!-- /.content -->
+      </div>
+      <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" id="modMsj">
+          <div class="modal-dialog modal-sm" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="_titulo">Mensaje</h4>
+                  </div>
+                  <div class="modal-body" id="_contenido">
 
-                </div>
-                <div class="modal-footer" id="_botonesmsj">
+                  </div>
+                  <div class="modal-footer" id="_botonesmsj">
 
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div>
-    <!-- /.content-wrapper -->
-    <!-- Main Footer -->
+                  </div>
+              </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+      </div>
+      <!-- /.content-wrapper -->
+      <!-- Main Footer -->
 
-    <!--CLAVE-->
-    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" id="modCambiarClaveUsuario">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="exampleModalLabel">Cambia tu contraseña</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row" id="msjcambio"></div>
-                    <form id="formcusuario">
-                        <div class="form-group has-feedback">
-                            <label for="recipient-name"  class="control-label">Contraseña actual:</label>
-                            <input type="text" required name="claveA" id="claveA" class="form-control contrasena" onkeypress="return Util.Especiales(event,this)" onblur="Util.cmbField(this,0)" onfocus="Util.cmbField(this,1)" >
-                            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-                        </div>
-                        <div class="form-group has-feedback">
-                            <label for="recipient-name" class="control-label">Nueva contraseña:</label>
-                            <input type="text" required name="claveN" id="claveN" class="form-control" onkeypress="return Util.Especiales(event,this)" onblur="Util.cmbField(this,0)" onfocus="Util.cmbField(this,1)">
-                            <span class="glyphicon glyphicon glyphicon-pencil form-control-feedback"></span>
-                        </div>
-                        <div class="form-group has-feedback">
-                            <label for="recipient-name" class="control-label">Repita la contraseña:</label>
-                            <input type="text" required name="claveN2" id="claveN2" class="form-control" onkeypress="return Util.Especiales(event,this)" onblur="Util.cmbField(this,0)" onfocus="Util.cmbField(this,1)">
-                            <span class="glyphicon glyphicon glyphicon-repeat
- form-control-feedback"></span>
-                        </div>
-                    </form>
-                    <label id="lblalert1" style="display:none">Su clave debe tener al menos 8 caracteres.</label>
-                    <label id="lblalert2" style="display:none">Las contraseñas no coinciden.</label>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" onclick="limpiarclave()" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="cambiarClave()" id="btnmodclave">Guardar
-                        <span class="fa fa-save"></span></button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <footer class="main-footer">
-        <!-- To the right -->
-        <div class="pull-right hidden-xs">
+      <!--CLAVE-->
+      <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" id="modCambiarClaveUsuario">
+          <div class="modal-dialog modal-sm" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="exampleModalLabel">Cambia tu contraseña</h4>
+                  </div>
+                  <div class="modal-body">
+                      <div class="row" id="msjcambio"></div>
+                      <form id="formcusuario">
+                          <div class="form-group has-feedback">
+                              <label for="recipient-name"  class="control-label">Contraseña actual:</label>
+                              <input type="text" required name="claveA" id="claveA" class="form-control contrasena" onkeypress="return Util.Especiales(event,this)" onblur="Util.cmbField(this,0)" onfocus="Util.cmbField(this,1)" >
+                              <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                          </div>
+                          <div class="form-group has-feedback">
+                              <label for="recipient-name" class="control-label">Nueva contraseña:</label>
+                              <input type="text" required name="claveN" id="claveN" class="form-control" onkeypress="return Util.Especiales(event,this)" onblur="Util.cmbField(this,0)" onfocus="Util.cmbField(this,1)">
+                              <span class="glyphicon glyphicon glyphicon-pencil form-control-feedback"></span>
+                          </div>
+                          <div class="form-group has-feedback">
+                              <label for="recipient-name" class="control-label">Repita la contraseña:</label>
+                              <input type="text" required name="claveN2" id="claveN2" class="form-control" onkeypress="return Util.Especiales(event,this)" onblur="Util.cmbField(this,0)" onfocus="Util.cmbField(this,1)">
+                              <span class="glyphicon glyphicon glyphicon-repeat
+   form-control-feedback"></span>
+                          </div>
+                      </form>
+                      <label id="lblalert1" style="display:none">Su clave debe tener al menos 8 caracteres.</label>
+                      <label id="lblalert2" style="display:none">Las contraseñas no coinciden.</label>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-default" onclick="limpiarclave()" data-dismiss="modal">Cancelar</button>
+                      <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="cambiarClave()" id="btnmodclave">Guardar
+                          <span class="fa fa-save"></span></button>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <footer class="main-footer">
+          <!-- To the right -->
+          <div class="pull-right hidden-xs">
 
-        </div>
-        <!-- Default to the left -->
-        <strong>Derechos reservados &copy; 2017 <a href="#">IPSFA</a>.</strong>
-    </footer>
+          </div>
+          <!-- Default to the left -->
+          <strong>Derechos reservados &copy; 2017 <a href="#">IPSFA</a>.</strong>
+      </footer>
+  </div>
 </div>
-
 </body>
 </html>

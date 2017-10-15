@@ -261,6 +261,7 @@ var Mnu = new Menu();
 $(function () {
 
 
+
   var promesa = CargarAPI({
       sURL: Conn.URL + "estado",
       metodo: 'GET',
@@ -301,6 +302,10 @@ $(function () {
   IniciarSesion();
   Mnu.Crear("Cargar...");
   
+  Pace.on("done", function (){
+    $("#xpage-pace").fadeIn(1500);
+  });
+
 });
 
 
