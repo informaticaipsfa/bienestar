@@ -755,7 +755,7 @@ function CerrarSession(){
 }
 
 $(function (){
-	$('[data-toggle="tooltip"]').tooltip();
+	
 	if (sessionStorage.getItem('ipsfaToken') == undefined ){
 		$(location).attr("href","../index.html");
 	}else{
