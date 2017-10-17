@@ -15,6 +15,7 @@
         let idf = null;
         let num = null;
         let pos = null;
+        let fdv = null;
         $(function () {
             numeral.locale('es-es');
             $.obtener = function (key) {
@@ -104,16 +105,17 @@
             }
 
 
-            var fdv = militar.CIS.Investigacion.FeDeVida[pos];
+            fdv = militar.CIS.Investigacion.FeDeVida[pos];
             Persona = militar.Persona;
             if(militar.id != fdv.idf){
                 Persona = ObtenerFamiliar(fdv.idf);
             }
             if (Persona != undefined) {
                 var ncompleto = Persona.DatoBasico.nombreprimero + " " + Persona.DatoBasico.apellidoprimero;
+                var militarcompleto = militar.Persona.DatoBasico.nombreprimero + " " + militar.Persona.DatoBasico.apellidoprimero;
                 $("#nombre").html(ncompleto);
                 $("#nombre2").html(ncompleto);
-                $("#nombre3").html(ncompleto);
+                $("#nombre3").html(militarcompleto);
                 $("#nombreex").html(ncompleto);
                 $("#lblgrado").text(militar.Grado.descripcion);
                 $("#lblcedula").text(Persona.DatoBasico.cedula);
@@ -168,6 +170,8 @@
                     $("#edadafiex").html(edadafiex);
                 }
             });
+
+
             //
             //
             //
@@ -176,13 +180,15 @@
 
             $("#lblfechacreacion3").html(Util.ConvertirFechaHumana(fdv.fechacreacion));
             $("#lblfechacreacion4").html(Util.ConvertirFechaHumana(fdv.fechacreacion));
-            // $("#lblfechacreacion5").html(Util.ConvertirFechaHumana(fdv.fechacreacion));
+            $("#lblfechacreacion5").html(Util.ConvertirFechaHumana(fdv.fechacreacion));
+            $("#lblfechadefuncion3").html(Util.ConvertirFechaHumana(militar.Persona.DatoBasico.fechadefuncion));
 
             $("#lblfechaconst").html(Util.ConvertirFechaHumana(fdv.fechacreacion));
             $("#lblnumero").html(fdv.numero);
             $("#lblnumconst").html(fdv.numero);
             $("#lblnumero1").html(fdv.numero);
             $("#lbltelefono").html(fdv.DatoBasico.Telefono.movil);
+            $("#lbltelefonoafi").html(fdv.DatoBasico.Telefono.movil);  
             var DIR1 = fdv.DatoBasico.Direccion;
 
             var rirec1 = Estados.ObtenerCodigo(DIR1.estado) + ", " + DIR1.ciudad + ", municipio " + DIR1.municipio + ", parroquia " + DIR1.parroquia + ", Av/Calle " + DIR1.calleavenida + ", casa/apt " + DIR1.casa + "|" + DIR1.apartamento
@@ -491,7 +497,7 @@
                         <tr>
                             <td class="texto14 bde biz bajo btop"><b id="nombre3"></b></td>
                             <td class="texto14 bde biz bajo btop"><b id="lblcedula3"></b></td>
-                            <td class="texto14 bde biz bajo btop"><b id=""></b></td>
+                            <td class="texto14 bde biz bajo btop"><b id="lblfechadefuncion3"></b></td>
                         </tr>
                     </table>
                 </div>
