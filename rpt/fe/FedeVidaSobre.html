@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="../../../bower_components/pace/themes/orange/pace-theme-loading-bar.css">
-    <script data-pace-options='{ "ajax": false }' src="../../../bower_components/pace/pace.min.js"></script>    
+    <script data-pace-options='{ "ajax": false }' src="../../../bower_components/pace/pace.min.js"></script>
     <script src="../../../bower_components/jquery/dist/jquery.min.js"></script>
     <script src="../../../bower_components/formato/numeral.js"></script>
 
@@ -115,12 +115,12 @@
                 $("#nombre2").html(ncompleto);
                 $("#nombre3").html(ncompleto);
                 $("#nombreex").html(ncompleto);
-                // $("#lblgrado").text(militar.Grado.descripcion);
+                $("#lblgrado").text(militar.Grado.descripcion);
                 $("#lblcedula").text(Persona.DatoBasico.cedula);
-                // $("#lblcedula3").text(militar.Persona.DatoBasico.cedula);
+                $("#lblcedula3").text(militar.Persona.DatoBasico.cedula);
                 $("#lblcedula2").text(Persona.DatoBasico.cedula);
-                // $("#lblcedulaex").text(militar.Persona.DatoBasico.cedula);
-                // $("#lblsituacion1").text(militar.situacion);
+                $("#lblcedulaex").text(militar.Persona.DatoBasico.cedula);
+                $("#lblsituacion1").text(militar.situacion);
 
                 var edad2 = Util.CalcularEdad(Util.ConvertirFechaHumana(Persona.DatoBasico.fechanacimiento));
                 $("#edad2").html(edad2);
@@ -149,25 +149,25 @@
 
 
 
-            // militar.Familiar.forEach(v => {
-            //     if (v.Persona.DatoBasico.cedula == idf) {
-            //         var ncompletoafi = v.Persona.DatoBasico.nombreprimero + " " + militar.Persona.DatoBasico.apellidoprimero;
-            //         $("#nombreafil").html(ncompletoafi);
-            //         $("#nombreafil2").html(ncompletoafi);
-            //         $("#nombreafilex").html(ncompletoafi);
-            //         $("#cedulaafi").html(v.Persona.DatoBasico.cedula);
-            //         $("#cedulaafiex").html(v.Persona.DatoBasico.cedula);
-            //         $("#cedulaafi2").html(v.Persona.DatoBasico.cedula);
-            //         $("#lblparentesco").html(Util.ConvertirParentesco(v.parentesco, v.Persona.DatoBasico.sexo));
-            //         $("#lblparentescoex").html(Util.ConvertirParentesco(v.parentesco, v.Persona.DatoBasico.sexo));
-            //         $("#lbltelefonoafi").html(v.Persona.Telefono.movil);
-            //         var edadafi = Util.CalcularEdad(Util.ConvertirFechaHumana(v.Persona.DatoBasico.fechanacimiento));
-            //         $("#edadafi").html(edadafi);
-            //
-            //         var edadafiex = Util.CalcularEdad(Util.ConvertirFechaHumana(v.Persona.DatoBasico.fechanacimiento));
-            //         $("#edadafiex").html(edadafiex);
-            //     }
-            // });
+            militar.Familiar.forEach(v => {
+                if (v.Persona.DatoBasico.cedula == idf) {
+                    var ncompletoafi = v.Persona.DatoBasico.nombreprimero + " " + militar.Persona.DatoBasico.apellidoprimero;
+                    $("#nombreafil").html(ncompletoafi);
+                    $("#nombreafil2").html(ncompletoafi);
+                    $("#nombreafilex").html(ncompletoafi);
+                    $("#cedulaafi").html(v.Persona.DatoBasico.cedula);
+                    $("#cedulaafiex").html(v.Persona.DatoBasico.cedula);
+                    $("#cedulaafi2").html(v.Persona.DatoBasico.cedula);
+                    $("#lblparentesco").html(Util.ConvertirParentesco(v.parentesco, v.Persona.DatoBasico.sexo));
+                    $("#lblparentescoex").html(Util.ConvertirParentesco(v.parentesco, v.Persona.DatoBasico.sexo));
+                    $("#lbltelefonoafi").html(v.Persona.Telefono.movil);
+                    var edadafi = Util.CalcularEdad(Util.ConvertirFechaHumana(v.Persona.DatoBasico.fechanacimiento));
+                    $("#edadafi").html(edadafi);
+
+                    var edadafiex = Util.CalcularEdad(Util.ConvertirFechaHumana(v.Persona.DatoBasico.fechanacimiento));
+                    $("#edadafiex").html(edadafiex);
+                }
+            });
             //
             //
             //
