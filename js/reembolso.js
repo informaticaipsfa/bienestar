@@ -150,6 +150,8 @@ function llenarReembolso() {
             $("#cmbminstfinanciera").val(militar.Persona.DatoFinanciero.institucion);
             $("#cmbmtipofinanciera").val(militar.Persona.DatoFinanciero.tipo);
             listaCuentas();
+        }else{
+          $("#datosbancarios").append(new Option("OTRA", "otra", true, true));
         }
         Estados.ObtenerEstados();
         if (militar.Persona.Direccion != undefined) {
