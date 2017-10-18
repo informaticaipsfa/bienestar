@@ -34,7 +34,7 @@
         }else{
           $('#_gerente').html($("#nomrepre").val().toUpperCase() + `<br>` + $("#nombcargo").val().toUpperCase());
         }
-
+        $("#btnImprimir").hide();
         window.print();
         window.close();
     }
@@ -232,7 +232,6 @@ function crearCarta() {
 </head>
 
 <div class="contenedor">
-<center>
     <table border="0">
         <tr>
             <td style="width: 38%"><img src="../../../images/lg.png" style="float: left; width:15%;">
@@ -310,7 +309,6 @@ function crearCarta() {
         </tr>
     </table>
 
-</center>
 </div>
 
 </body>
