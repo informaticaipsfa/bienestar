@@ -436,9 +436,10 @@
 
         var tipoc = apo.CuentaBancaria.tipo=="CA" ? "CUENTA DE AHORRO":"CUENTA CORRIENTE";
         $("#lbltipoc").text(tipoc);
-        $("#lblmontotApro").text(numeral(parseFloat(apo.montosolicitado)).format('0,0.00'));
+
         var concep = militar.CIS.ServicioMedico.Programa.Apoyo[pos];
         var fila ="";
+        var totalAs = 0;
         concep.Concepto.forEach(v => {
             var porcen = v.DatoFactura.montoaprobado * 100 / v.DatoFactura.monto;
             var bene = v.afiliado.split("-");
@@ -449,8 +450,9 @@
             var mntaseguradora = numeral(parseFloat(v.montoaseguradora)).format('0,0.00');
             var mntotrosaportes = numeral(parseFloat(v.montoaportar)).format('0,0.00');
             var mntformato2 = numeral(parseFloat(apo.montosolicitado)).format('0,0.00');
-            console.log(apo);
+            //console.log(apo);
             var montoIPSFA = parseFloat(v.montosolicitado) - (parseFloat(v.montoaportar)+parseFloat(v.montoaseguradora));
+            totalAs +=  montoIPSFA;
             var mntIPSFA = numeral(montoIPSFA).format('0,0.00');
             fila += `<tr class='filaconcep'>
                 <td>${paren[1].substring(0,(tam-1))}</td>
@@ -459,12 +461,13 @@
                 <td>${v.descripcion}</td>
                 <td>${v.DatoFactura.numero}</td>
                 <td>${Util.ConvertirFechaHumana(v.DatoFactura.fecha)}</td>
-                <td style=\"text-align: right\">${mntformato}</td>
+                <td style='text-align: right'>${mntformato}</td>
                 <td style='text-align: right'>${mntaseguradora}</td>
                 <td style='text-align: right'>${mntotrosaportes}</td>
                 <td style='text-align: right'>${mntIPSFA}</td>
                 </tr>`;
         });
+        $("#lblmontotApro").text(numeral(parseFloat(totalAs)).format('0,0.00'));
         $("#cuerpoConceptos").html(fila);
     }
 </script>
