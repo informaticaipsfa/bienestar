@@ -755,7 +755,7 @@ function CerrarSession(){
 }
 
 $(function (){
-	
+
 	if (sessionStorage.getItem('ipsfaToken') == undefined ){
 		$(location).attr("href","../index.html");
 	}else{
