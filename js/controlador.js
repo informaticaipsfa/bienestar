@@ -301,7 +301,7 @@ $(function () {
   numeral.locale('es-es');
   IniciarSesion();
   Mnu.Crear("Cargar...");
-  
+
   Pace.on("done", function (){
     $("#xpage-pace").fadeIn(1500);
   });
@@ -350,6 +350,11 @@ function SeleccionarParroquia(valor){
 
 function buzon(est){
     CargarUrl("panelderecho","inc/buzon");
+    listaBuzon(est);
+}
+
+function ReporteEstadistica(){
+    CargarUrl("panelderecho","inc/reporte");
     listaBuzon(est);
 }
 

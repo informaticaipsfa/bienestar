@@ -395,7 +395,7 @@ function validadDatosBancarios(){
 
 function CargarDatosFarmacia(){
     var TP = new TratamientoProlongado();
-    TP.fechainforme = $("#fechainformemedico").val();
+    TP.fechainforme = new Date(Util.ConvertirFechaUnix($("#fechainformemedico").val())).toISOString();
   	TP.tipocentro = $("#cmbtipo option:selected").text();
   	TP.nombrecentro = $("#nombrecS").val();
   	var medico = new Medico();
@@ -437,22 +437,22 @@ function CargarDatosFarmacia(){
     TP.Correo.principal = $("#txtmcorreo").val().toUpperCase();
 
 
-    var prov = new Beneficiario();
-    prov.rif = $("#rif").val();
-    prov.razonsocial = $("#razonsocial").val();
-    prov.tipoempresa = 'J';
-    prov.direccion = $("#empdirec").val();
+    // var prov = new Beneficiario();
+    // prov.rif = $("#rif").val();
+    // prov.razonsocial = $("#razonsocial").val();
+    // prov.tipoempresa = 'J';
+    // prov.direccion = $("#empdirec").val();
 
     var medicosavala = new Array();
     if($("#medicoagregado tr").length >0) {
         $("#medicoagregado tr").each(function () {
             var medicoA = new MedicoAvala();
-            medico.nombrecentro = $(this).find("td").eq(0).html();
-            medico.nombre = $(this).find("td").eq(1).html();
-            medico.cedula = $(this).find("td").eq(2).html();
-            medico.especialidad =$(this).find("td").eq(3).html();
-            medico.codigo = $(this).find("td").eq(4).html();
-            medico.codigoMPPS = $(this).find("td").eq(5).html();
+            medicoA.nombrecentro = $(this).find("td").eq(0).html();
+            medicoA.nombre = $(this).find("td").eq(1).html();
+            medicoA.cedula = $(this).find("td").eq(2).html();
+            medicoA.especialidad =$(this).find("td").eq(3).html();
+            medicoA.codigo = $(this).find("td").eq(4).html();
+            medicoA.codigoMPPS = $(this).find("td").eq(5).html();
             medicosavala.push(medicoA);
         });
     }
@@ -460,12 +460,13 @@ function CargarDatosFarmacia(){
     if($("#tratamientoagregado tr").length >0) {
         $("#tratamientoagregado tr").each(function () {
             var tratamientos = new Tratamiento();
-            this.principio = $(this).find("td").eq(0).html();
-            this.nombre = $(this).find("td").eq(1).html();
-            this.presentacion = $(this).find("td").eq(2).html();
-            this.dosis = $(this).find("td").eq(3).html();
-            this.cantidad = $(this).find("td").eq(4).html();
-            this.fechavencimiento = $(this).find("td").eq(5).html();
+            tratamientos.principio = $(this).find("td").eq(0).html();
+            tratamientos.nombre = $(this).find("td").eq(1).html();
+            tratamientos.presentacion = $(this).find("td").eq(2).html();
+            tratamientos.dosis = $(this).find("td").eq(3).html();
+            tratamientos.cantidad = $(this).find("td").eq(4).html();
+            var fvencimiento = $(this).find("td").eq(5).html();
+            tratamientos.fechavencimiento = new Date(Util.ConvertirFechaUnix(fvencimiento)).toISOString();
             tratamientoafi.push(tratamientos);
         });
     }else{
@@ -486,46 +487,39 @@ function CargarDatosFarmacia(){
     var wtratamiento = new WTratamiento();
     wtratamiento.id = militar.Persona.DatoBasico.cedula;
 
-    wtratamiento.nombre = militar.Persona.DatoBasico.nombreprimero.trim()+' '+militar.Persona.DatoBasico.apellidoprimero.trim();
+    wtratamiento.nombre = militar.Persona.DatoBasico.nombreprimero.trim() + ' ' + militar.Persona.DatoBasico.apellidoprimero.trim();
     TP.MedicoAvala = medicosavala;
-    TP.Tratamiento=tratamientoafi;
+    TP.Tratamiento = tratamientoafi;
     TP.Patologia = patologiaag;
     wtratamiento.TratamientoProlongado = TP;
 
     console.log(wtratamiento);
-    //probar
-    // $("#medicoagregado").html("");
-    // $("#tratamientoagregado").html("");
-    // $("#patologiaagregada").html("");
-    // llenartratamiento();
+    var urlGuardar = Conn.URL + "wtratamiento";
+    console.log(urlGuardar);
+
+    var request2 = CargarAPI({
+        sURL: urlGuardar,
+        metodo: 'POST',
+        valores: wtratamiento,
+    });
+    console.log("Controles... ");
     //
-    // $("#opciones").hide();
-    // $("#panelentrada").show();
-    // $("#panellista").hide();
-    // $("#panelregistro").hide();
-    // var ventana = window.open("inc/reciboApoyo.html?id="+militar.Persona.DatoBasico.cedula, "_blank");
-    // var urlGuardar = Conn.URL + "wfarmacia";
-    // var request2 = CargarAPI({
-    //     sURL: urlGuardar,
-    //     metodo: 'POST',
-    //     valores: datos,
-    // });
-    //
-    // request2.then(function (xhRequest) {
-    //     respuesta = JSON.parse(xhRequest.responseText);
-    //     if (respuesta.msj == "") respuesta.msj = "Se proceso con exito....";
-    //     msjRespuesta(respuesta.msj);
-    //     $("#medicoagregado").html("");
-    //     $("#tratamientoagregado").html("");
-    //     $("#patologiaagregada").html("");
-    //     llenartratamiento();
-    //
-    //     $("#opciones").hide();
-    //     $("#panelentrada").show();
-    //     $("#panellista").hide();
-    //     $("#panelregistro").hide();
-    //     var ventana = window.open("PlanillaApoyo.html?id="+militar.Persona.DatoBasico.cedula, "_blank");
-    // });
+    request2.then(function (xhRequest) {
+        respuesta = JSON.parse(xhRequest.responseText);
+        console.log("Control de Base...");
+        if (respuesta.msj == "") respuesta.msj = "Se proceso con exito....";
+        msjRespuesta(respuesta.msj);
+        // $("#medicoagregado").html("");
+        // $("#tratamientoagregado").html("");
+        // $("#patologiaagregada").html("");
+        // llenartratamiento();
+        //
+        // $("#opciones").hide();
+        // $("#panelentrada").show();
+        // $("#panellista").hide();
+        // $("#panelregistro").hide();
+        // var ventana = window.open("PlanillaApoyo.html?id="+militar.Persona.DatoBasico.cedula, "_blank");
+    });
 }
 
 function limpiarMedico(){
