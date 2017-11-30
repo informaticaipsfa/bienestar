@@ -49,7 +49,7 @@ function ConsultarReembolsoReporte(){
   t.clear().draw();
   promesa.then(function(xhRequest) {
       respuesta = JSON.parse(xhRequest.responseText);
-      console.log(respuesta);
+      // console.log(respuesta);
 
       //
       var i = 0;
@@ -82,18 +82,22 @@ function ConsultarReembolsoReporte(){
 }
 
 function GenerarOficio(){
-  var num = $("#txtnumwrr").val();
-  var mont = $("#txtmontwrr").val();
   var t = $('#lstReporte').DataTable();
-  // console.log( t.rows().data().length );
+  var num = t.rows().data().length;
+  var mont = 0;
+
   for(i = 0; i <= t.rows().data().length - 1; i++) {
     t.rows( i )
       .data()
       .each( function ( value, index ) {
-          var valor = value.split(",");
-          console.log( valor );
+          // var valor = value.split(",");
+          //console.log( value[7] );
+
+          mont += parseFloat(value[7])
       } );
   }
+  var ventana = window.open(`rpt/reembolso/oficiofinanza.html?num=${num}&mont=${mont}`, "_blank");
+}
+function GenerarReporte(){
 
-  // var ventana = window.open(`rpt/reembolso/oficiofinanza.html?num=${num}&mont=${mont}`, "_blank");
 }
