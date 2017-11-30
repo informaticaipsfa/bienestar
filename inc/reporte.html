@@ -12,7 +12,7 @@
   </div>
   <!-- /.box-header -->
   <div class="box-body" id="listasProgramas">
-    <div class="row">
+    <div class="row" style="display:none">
       <div class="col-md-4 col-sm-12">
         <label>Seleccionar Sucursal:</label>
         <select class="form-control" id="cmbsucursal" >
@@ -37,13 +37,13 @@
       </div>
       <div class="col-md-4 col-sm-12">
         <label>Seleccionar Componente:</label>
-        <select class="form-control" id="cmbcomponente" onchange="SeleccionarComponente(0)">
+        <select class="form-control" id="cmbcomponentewrr" onchange="SeleccionarComponente(0)">
           <option selected="selected" value="99">TODOS</option>
         </select>
       </div>
       <div class="col-md-4 col-sm-12">
         <label>Seleccionar Grado:</label>
-        <select class="form-control" id="cmbgrado" onchange="SeleccionarComponente(0)">
+        <select class="form-control" id="cmbgradowrr" onchange="SeleccionarComponente(0)">
           <option selected="selected" value="99">TODOS</option>
         </select>
       </div>
@@ -51,30 +51,41 @@
 
     </div>
     <div class="row">
-      <div class="col-md-4 col-sm-12">
-        <label>Fecha Desde:</label>
-        <div class="input-group input-group">
-        <input type="text" class="form-control" id="txtfechadesde">
-             <span class="input-group-btn">
-               <button type="button" class="btn btn-success btn-flat btn-md"><i class="fa fa-calendar"></i></button>
-             </span>
-         </div>
+      <div class="col-md-3 col-sm-12">
+        <label>Seleccionar Reporte:</label>
+        <select class="form-control" id="cmbreportewrr">
+          <option selected="selected" value="reembolso">REEMBOLSO</option>
+          <option selected="selected" value="apoyo">APOYO</option>
+        </select>
       </div>
-      <div class="col-md-4 col-sm-12">
-        <label>Fecha Hasta:</label>
-        <div class="input-group input-group">
-        <input type="text" class="form-control" id="txtfechahasta">
-             <span class="input-group-btn">
-               <button type="button" class="btn btn-success btn-flat btn-md"><i class="fa fa-calendar"></i></button>
-             </span>
-         </div>
+      <div class="col-md-3 col-sm-12" id="datepicker">
+          <label>Fecha Desde:</label>
+          <div class="input-group date" style="z-index: 1030;">
+              <div class="input-group-addon">
+                  <i class="fa fa-calendar"></i>
+              </div>
+              <div class="input-group input-group" style="width: 100%;">
+                  <input type="text" class="form-control" id="txtfechadesdewrr" required>
+              </div>
+          </div>
+      </div>
+      <div class="col-md-3  col-sm-12" id="datepicker">
+          <label>Fecha Hasta:</label>
+          <div class="input-group date" style="z-index: 1030;">
+              <div class="input-group-addon">
+                  <i class="fa fa-calendar"></i>
+              </div>
+              <div class="input-group input-group" style="width: 100%;">
+                  <input type="text" class="form-control" id="txtfechahastawrr" required>
+              </div>
+          </div>
       </div>
 
-      <div class="col-md-4 col-sm-12">
+      <div class="col-md-3 col-sm-12">
         <label>&nbsp;</label>
         <div class="input-group input-group">
 
-               <button type="button" class="btn btn-success btn-md" onclick="crearReporte()"><i class="fa fa-check"></i>&nbsp;Consultar</button>
+               <button type="button" class="btn btn-success btn-md" onclick="crearReporte()"><i class="fa fa-check"></i>&nbsp;&nbsp;Consultar</button>
 
          </div>
       </div>
@@ -89,15 +100,18 @@
     </div>
     <br>
 
-
+<input type="hidden" id="txtnumwrr">
+<input type="hidden" id="txtmontwrr">
 <div id="detallesProgramas">
 
   <div class="col-md-12 col-sm-12 ">
     <br>
     <label>&nbsp;</label>
-    <div class="input-group input-group pull-right">
 
-           <button type="button" class="btn btn-success btn-md " onclick="GenerarReporte()"><i class="fa fa-print"></i>&nbsp;Generar Reporte</button>
+    <div class="input-group input-group pull-right">
+       <button type="button" class="btn btn-primary btn-md " onclick="GenerarReporte()"><i class="fa fa-print"></i>&nbsp; Reporte</button>
+       &nbsp;&nbsp;&nbsp;
+       <button type="button" class="btn btn-warning btn-md " onclick="GenerarOficio()"><i class="fa fa-book"></i>&nbsp; Oficio</button>
 
      </div>
   </div>
@@ -121,15 +135,29 @@
 <!-- /.box -->
 
 <script type="text/javascript">
-  $('#txtfechadesde').datepicker({
+  $('#txtfechadesdewrr').datepicker({
       autoclose: true,
       format: "dd/mm/yyyy",
-      language: 'es'
+      language: 'es',
+      endDate: "+0d",
+      changeDate: function () {
+          validaFechaFactura(30)
+      }
+  }).on("changeDate", function (e) {
+      validaFechaFactura(60);
   });
 
-  $('#txtfechahasta').datepicker({
+  $('#txtfechahastawrr').datepicker({
       autoclose: true,
       format: "dd/mm/yyyy",
-      language: 'es'
+      language: 'es',
+      endDate: "+0d",
+      changeDate: function () {
+          validaFechaFactura(30)
+      }
+  }).on("changeDate", function (e) {
+      validaFechaFactura(60);
   });
+
+
 </script>

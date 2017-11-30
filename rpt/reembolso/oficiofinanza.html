@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../../bower_components/pace/themes/orange/pace-theme-loading-bar.css">
+    <script data-pace-options='{ "ajax": false }' src="../../../bower_components/pace/pace.min.js"></script>
+    <script src="../../../bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="../../../bower_components/formato/numeral.js"></script>
+
+    <script src="../../js/utilidad.js"></script>
+    <script src="../../js/militar.js"></script>
+    <script src="../../js/config.js"></script>
+    <script src="../../js/controlador.js"></script>
+    <script>
+        let num = null;
+        let monto = null;
+        $(function () {
+            numeral.locale('es-es');
+            $.obtener = function (key) {
+                key = key.replace(/[\[]/, '\\[');
+                key = key.replace(/[\]]/, '\\]');
+                var pattern = "[\\?&]" + key + "=([^&#]*)";
+                var regex = new RegExp(pattern);
+                var url = unescape(window.location.href);
+                var results = regex.exec(url);
+                if (results === null) {
+                    return null;
+                } else {
+                    return results[1];
+                }
+            };
+
+            num = $.obtener("num");
+            monto = $.obtener("mont");
+            $("#lblmonto").html(monto + " Bs.");
+            $("#lblmontol").html(numeroALetras(monto));
+
+            $("#lblnumero").html(num);
+            $("#lblnumerol").html(numeroALetrasSM(num));
+            var meses = new Array ("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+            var f = new Date();
+            $("#lblfecha").html("Caracas, " + f.getDate() + " de " + meses[f.getMonth()] + " de " + f.getFullYear());
+
+        });
+
+
+        function imprimir() {
+            $('#boton').html('');
+            $("#nomrepre").hide();
+            $("#cedrepre").hide();
+            $("#nombcargo").hide();
+            $("#representante").html($("#nomrepre").val().toUpperCase());
+            $("#cedularepresentante").html($("#cedrepre").val().toUpperCase());
+            $("#cargogerente").html($("#nombcargo").val().toUpperCase());
+            window.print();
+            window.close();
+        }
+
+
+
+
+        var numeroALetras = (function () {
+
+
+            function Unidades(num) {
+
+                switch (num) {
+                    case 1:
+                        return 'UN';
+                    case 2:
+                        return 'DOS';
+                    case 3:
+                        return 'TRES';
+                    case 4:
+                        return 'CUATRO';
+                    case 5:
+                        return 'CINCO';
+                    case 6:
+                        return 'SEIS';
+                    case 7:
+                        return 'SIETE';
+                    case 8:
+                        return 'OCHO';
+                    case 9:
+                        return 'NUEVE';
+                }
+
+                return '';
+            }//Unidades()
+
+            function Decenas(num) {
+
+                let decena = Math.floor(num / 10);
+                let unidad = num - (decena * 10);
+
+                switch (decena) {
+                    case 1:
+                        switch (unidad) {
+                            case 0:
+                                return 'DIEZ';
+                            case 1:
+                                return 'ONCE';
+                            case 2:
+                                return 'DOCE';
+                            case 3:
+                                return 'TRECE';
+                            case 4:
+                                return 'CATORCE';
+                            case 5:
+                                return 'QUINCE';
+                            default:
+                                return 'DIECI' + Unidades(unidad);
+                        }
+                    case 2:
+                        switch (unidad) {
+                            case 0:
+                                return 'VEINTE';
+                            default:
+                                return 'VEINTI' + Unidades(unidad);
+                        }
+                    case 3:
+                        return DecenasY('TREINTA', unidad);
+                    case 4:
+                        return DecenasY('CUARENTA', unidad);
+                    case 5:
+                        return DecenasY('CINCUENTA', unidad);
+                    case 6:
+                        return DecenasY('SESENTA', unidad);
+                    case 7:
+                        return DecenasY('SETENTA', unidad);
+                    case 8:
+                        return DecenasY('OCHENTA', unidad);
+                    case 9:
+                        return DecenasY('NOVENTA', unidad);
+                    case 0:
+                        return Unidades(unidad);
+                }
+            }//Unidades()
+
+            function DecenasY(strSin, numUnidades) {
+                if (numUnidades > 0)
+                    return strSin + ' Y ' + Unidades(numUnidades)
+
+                return strSin;
+            }//DecenasY()
+
+            function Centenas(num) {
+                let centenas = Math.floor(num / 100);
+                let decenas = num - (centenas * 100);
+
+                switch (centenas) {
+                    case 1:
+                        if (decenas > 0)
+                            return 'CIENTO ' + Decenas(decenas);
+                        return 'CIEN';
+                    case 2:
+                        return 'DOSCIENTOS ' + Decenas(decenas);
+                    case 3:
+                        return 'TRESCIENTOS ' + Decenas(decenas);
+                    case 4:
+                        return 'CUATROCIENTOS ' + Decenas(decenas);
+                    case 5:
+                        return 'QUINIENTOS ' + Decenas(decenas);
+                    case 6:
+                        return 'SEISCIENTOS ' + Decenas(decenas);
+                    case 7:
+                        return 'SETECIENTOS ' + Decenas(decenas);
+                    case 8:
+                        return 'OCHOCIENTOS ' + Decenas(decenas);
+                    case 9:
+                        return 'NOVECIENTOS ' + Decenas(decenas);
+                }
+
+                return Decenas(decenas);
+            }//Centenas()
+
+            function Seccion(num, divisor, strSingular, strPlural) {
+                let cientos = Math.floor(num / divisor)
+                let resto = num - (cientos * divisor)
+
+                let letras = '';
+
+                if (cientos > 0)
+                    if (cientos > 1)
+                        letras = Centenas(cientos) + ' ' + strPlural;
+                    else
+                        letras = strSingular;
+
+                if (resto > 0)
+                    letras += '';
+
+                return letras;
+            }//Seccion()
+
+            function Miles(num) {
+                let divisor = 1000;
+                let cientos = Math.floor(num / divisor)
+                let resto = num - (cientos * divisor)
+
+                let strMiles = Seccion(num, divisor, 'UN MIL', 'MIL');
+                let strCentenas = Centenas(resto);
+
+                if (strMiles == '')
+                    return strCentenas;
+
+                return strMiles + ' ' + strCentenas;
+            }//Miles()
+
+            function Millones(num) {
+                let divisor = 1000000;
+                let cientos = Math.floor(num / divisor)
+                let resto = num - (cientos * divisor)
+
+                let strMillones = Seccion(num, divisor, 'UN MILLON ', 'MILLONES ');
+                let strMiles = Miles(resto);
+
+                if (strMillones == '')
+                    return strMiles;
+
+                return strMillones + ' ' + strMiles;
+            }//Millones()
+
+            return function NumeroALetras(num, currency) {
+                currency = currency || {};
+                let data = {
+                    numero: num,
+                    enteros: Math.floor(num),
+                    centavos: (((Math.round(num * 100)) - (Math.floor(num) * 100))),
+                    letrasCentavos: '',
+                    letrasMonedaPlural: currency.plural || 'BOLÍVARES',
+                    letrasMonedaSingular: currency.singular || 'BOLIVAR',
+                    letrasMonedaCentavoPlural: currency.centPlural || 'CENTIMOS',
+                    letrasMonedaCentavoSingular: currency.centSingular || 'CENTIMOS'
+                };
+
+                if (data.centavos > 0) {
+                    data.letrasCentavos = 'CON ' + (function () {
+                        if (data.centavos == 1)
+                            return Millones(data.centavos) + ' ' + data.letrasMonedaCentavoSingular;
+                        else
+                            return Millones(data.centavos) + ' ' + data.letrasMonedaCentavoPlural;
+                    })();
+                }
+                ;
+
+                if (data.enteros == 0)
+                    return 'CERO ' + data.letrasMonedaPlural + ' ' + data.letrasCentavos;
+                if (data.enteros == 1)
+                    return Millones(data.enteros) + ' ' + data.letrasMonedaSingular + ' ' + data.letrasCentavos;
+                else
+                    return Millones(data.enteros) + ' ' + data.letrasMonedaPlural + ' ' + data.letrasCentavos;
+            };
+
+        })();
+
+        var numeroALetrasSM = (function () {
+
+
+            function Unidades(num) {
+
+                switch (num) {
+                    case 1:
+                        return 'UN';
+                    case 2:
+                        return 'DOS';
+                    case 3:
+                        return 'TRES';
+                    case 4:
+                        return 'CUATRO';
+                    case 5:
+                        return 'CINCO';
+                    case 6:
+                        return 'SEIS';
+                    case 7:
+                        return 'SIETE';
+                    case 8:
+                        return 'OCHO';
+                    case 9:
+                        return 'NUEVE';
+                }
+
+                return '';
+            }//Unidades()
+
+            function Decenas(num) {
+
+                let decena = Math.floor(num / 10);
+                let unidad = num - (decena * 10);
+
+                switch (decena) {
+                    case 1:
+                        switch (unidad) {
+                            case 0:
+                                return 'DIEZ';
+                            case 1:
+                                return 'ONCE';
+                            case 2:
+                                return 'DOCE';
+                            case 3:
+                                return 'TRECE';
+                            case 4:
+                                return 'CATORCE';
+                            case 5:
+                                return 'QUINCE';
+                            default:
+                                return 'DIECI' + Unidades(unidad);
+                        }
+                    case 2:
+                        switch (unidad) {
+                            case 0:
+                                return 'VEINTE';
+                            default:
+                                return 'VEINTI' + Unidades(unidad);
+                        }
+                    case 3:
+                        return DecenasY('TREINTA', unidad);
+                    case 4:
+                        return DecenasY('CUARENTA', unidad);
+                    case 5:
+                        return DecenasY('CINCUENTA', unidad);
+                    case 6:
+                        return DecenasY('SESENTA', unidad);
+                    case 7:
+                        return DecenasY('SETENTA', unidad);
+                    case 8:
+                        return DecenasY('OCHENTA', unidad);
+                    case 9:
+                        return DecenasY('NOVENTA', unidad);
+                    case 0:
+                        return Unidades(unidad);
+                }
+            }//Unidades()
+
+            function DecenasY(strSin, numUnidades) {
+                if (numUnidades > 0)
+                    return strSin + ' Y ' + Unidades(numUnidades)
+
+                return strSin;
+            }//DecenasY()
+
+            function Centenas(num) {
+                let centenas = Math.floor(num / 100);
+                let decenas = num - (centenas * 100);
+
+                switch (centenas) {
+                    case 1:
+                        if (decenas > 0)
+                            return 'CIENTO ' + Decenas(decenas);
+                        return 'CIEN';
+                    case 2:
+                        return 'DOSCIENTOS ' + Decenas(decenas);
+                    case 3:
+                        return 'TRESCIENTOS ' + Decenas(decenas);
+                    case 4:
+                        return 'CUATROCIENTOS ' + Decenas(decenas);
+                    case 5:
+                        return 'QUINIENTOS ' + Decenas(decenas);
+                    case 6:
+                        return 'SEISCIENTOS ' + Decenas(decenas);
+                    case 7:
+                        return 'SETECIENTOS ' + Decenas(decenas);
+                    case 8:
+                        return 'OCHOCIENTOS ' + Decenas(decenas);
+                    case 9:
+                        return 'NOVECIENTOS ' + Decenas(decenas);
+                }
+
+                return Decenas(decenas);
+            }//Centenas()
+
+            function Seccion(num, divisor, strSingular, strPlural) {
+                let cientos = Math.floor(num / divisor)
+                let resto = num - (cientos * divisor)
+
+                let letras = '';
+
+                if (cientos > 0)
+                    if (cientos > 1)
+                        letras = Centenas(cientos) + ' ' + strPlural;
+                    else
+                        letras = strSingular;
+
+                if (resto > 0)
+                    letras += '';
+
+                return letras;
+            }//Seccion()
+
+            function Miles(num) {
+                let divisor = 1000;
+                let cientos = Math.floor(num / divisor)
+                let resto = num - (cientos * divisor)
+
+                let strMiles = Seccion(num, divisor, 'UN MIL', 'MIL');
+                let strCentenas = Centenas(resto);
+
+                if (strMiles == '')
+                    return strCentenas;
+
+                return strMiles + ' ' + strCentenas;
+            }//Miles()
+
+            function Millones(num) {
+                let divisor = 1000000;
+                let cientos = Math.floor(num / divisor)
+                let resto = num - (cientos * divisor)
+
+                let strMillones = Seccion(num, divisor, 'UN MILLON ', 'MILLONES ');
+                let strMiles = Miles(resto);
+
+                if (strMillones == '')
+                    return strMiles;
+
+                return strMillones + ' ' + strMiles;
+            }//Millones()
+
+            return function NumeroALetras(num, currency) {
+                currency = currency || {};
+                let data = {
+                    numero: num,
+                    enteros: Math.floor(num),
+                    centavos: (((Math.round(num * 100)) - (Math.floor(num) * 100))),
+                    letrasCentavos: '',
+                    letrasMonedaPlural: currency.plural || '',
+                    letrasMonedaSingular: currency.singular || '',
+                    letrasMonedaCentavoPlural: currency.centPlural || '',
+                    letrasMonedaCentavoSingular: currency.centSingular || ''
+                };
+
+                if (data.centavos > 0) {
+                    data.letrasCentavos = 'CON ' + (function () {
+                        if (data.centavos == 1)
+                            return Millones(data.centavos) + ' ' + data.letrasMonedaCentavoSingular;
+                        else
+                            return Millones(data.centavos) + ' ' + data.letrasMonedaCentavoPlural;
+                    })();
+                }
+                ;
+
+                if (data.enteros == 0)
+                    return 'CERO ' + data.letrasMonedaPlural + ' ' + data.letrasCentavos;
+                if (data.enteros == 1)
+                    return Millones(data.enteros) + ' ' + data.letrasMonedaSingular + ' ' + data.letrasCentavos;
+                else
+                    return Millones(data.enteros) + ' ' + data.letrasMonedaPlural + ' ' + data.letrasCentavos;
+            };
+
+        })();
+</script>
+
+
+    <style>
+        @media screen, print {
+        }
+
+        .bordeado {
+            border: black 0px solid;
+        }
+
+        .biz {
+            border-left: black 0px solid;
+        }
+
+        .bde {
+            border-right: black 0px solid;
+        }
+
+        .btop {
+            border-top: black 0px solid;
+        }
+
+        .bajo {
+            border-bottom: black 0px solid;
+        }
+
+        .contenedor {
+            width: 1000px;
+
+        }
+
+        .tcontenedor {
+            width: 100%;
+        }
+
+        .textoCenter {
+            text-align: center;
+        }
+
+        .texto14 {
+            font-size: 14px;
+        }
+
+        .texto12 {
+            font-size: 12px;
+        }
+
+        .texto10 {
+            font-size: 10px;
+        }
+
+        .texto20 {
+            font-size: 20px;
+        }
+
+        .texto25 {
+            font-size: 25px;
+        }
+
+        .doble {
+            height: 40px;
+        }
+
+        .simple {
+            height: 20px;
+        }
+
+        .fondo {
+            background-color: #979a93;
+        }
+
+        .junta {
+            border-collapse: collapse;
+        }
+
+        .sangria {
+            text-indent: 1cm;
+        }
+
+        .justificar {
+            text-align: justify;
+        }
+
+    </style>
+</head>
+<body>
+<center>
+    <div class="contenedor">
+        <div id="col4" align="center">
+
+            </h2>
+            <table width="100%" class="bde biz bajo btop">
+                <tr>
+                    <td width="106" height="102"><img src="../../../images/lg.png" width="106" height="100"></td>
+                    <td width="288" class="texto10">REPÚBLICA BOLIVARIANA DE VENEZUELA <br>
+                        MINISTERIO DEL PODER POPULAR PARA LA DEFENSA<br>
+                        VICEMINISTERIO DE SERVICIOS<br>
+                        DIRECCIÓN GENERAL DE EMPRESAS Y SERVICIOS<br>
+                        INSTITUTO DE PREVISIÓN SOCIAL DE LA FUERZA ARMADA<br>
+                        GERECIA DE BIENESTAR Y SEGURIDAD
+                  </td>
+                    <td width="350" class="texto14">
+
+                  </td>
+                    <td width="236">
+
+                  </td>
+                </tr>
+            </table>
+            <br><br>
+            <table>
+              <tr>
+                  <td>
+                    <p align="right"><label id="lblfecha"></label></p>
+                    <center><b>MEMORÁNDUM </b></center><br>
+                    <table>
+                      <tr><td>PARA: </td><td>CNEL. GERENTE DE BIENESTAR Y SEGURIDAD SOCIAL.</td></tr>
+                      <tr><td>DE: </td><td>CNEL. GERENTE DE FINANZAS.</td></tr>
+                      <tr><td>ASUNTO: </td><td>REMISIÓN DE SERVICIO MÉDICO.</td></tr>
+                      <tr><td>REFERENCIA: </td><td>P.A.V.</td></tr>
+                    </table><br>
+                    <p align="justify">
+                      Tengo el honor de dirigirme a usted en la oportunidad de enviarle un atento saludo Bolivariano,
+                      Revolucionario, Socialista, Antiimperialista y profundamente Chavista, extensivo a quienes
+                      le acompañan en su gestión; aprovecho la ocasión para remitir (<label id="lblnumero"></label>) <label id="lblnumerol"></label>
+                      solicitud (es) por concepto de servicios médicos prestados a prestados a los afiliados y familiares con
+                      derecho, por un monto de (<label id="lblmonto"></label>)  (<label id="lblmontol"></label>) a fin sea conformado para el pago
+                      correspondiente (ver relación anexa).
+                      <br><br>
+                      El monto a pagar debe ser cargado a la Acción 1, Servicio Médico Ambulatorio, Proyecto Administración del
+                      Fondo C.I.S, partida 4.07.00.00.00, ACCIÓN ESPECÍFICA: ATENCIÓN MEDICA AMBULATORIA, SUB-PARTIDA: 4.07.01.01.99/04,
+                      UNIDAD EJECUTORA: GERENCIA DE BIENESTAR Y SEGURIDAD SOCIAL, DEPARTAMENTO DE CUIDADO INTEGRAL DE LA SALUD,
+                      GASTOS MÉDICOS Y HOSPITALIZACIÓN, FAMILIAR INMEDIATO (COTIZACIÓN AFILIADOS)
+                      <br><br>
+                      Remisión que muy respetuosamente hago llegar a usted para su conocimiento y demás fines.
+                    </p>
+                  </td>
+              </tr>
+            </table>
+
+        </div>
+
+
+
+
+            </div>
+
+        <div id="boton"><br>
+            <input type="button" value="Imprimir" onClick="imprimir()">
+        </div>
+
+</body>
+
+
+
+</html>
