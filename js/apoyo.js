@@ -90,7 +90,7 @@ function agregarConcepto() {
           <td>${beneficiario}</td>
           <td>${concepto}</td>
           <td>${patologia}</td>
-          <td>${tipo}</td>
+          <td style="display:none">${tipo}</td>
           <td>${rif}</td>
           <td>${razon}</td>
           <td>${numerofactura}</td>
