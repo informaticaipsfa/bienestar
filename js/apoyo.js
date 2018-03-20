@@ -492,7 +492,11 @@ function requisitosAyudas() {
         inactivarCheck(modal);
         $("#btnGenerar").attr("disabled", true);
         $("#" + modal).modal("show");
+        $("#lblnpresupuesto").text("N° de Factura:");
+        $("#lblfpresupuesto").text("Fecha de Factura:");
     } else {
+        $("#lblnpresupuesto").text("N° de Presupuesto:");
+        $("#lblfpresupuesto").text("Fecha de Presupuesto:");
         $("#btnGenerar").attr("disabled", false);
     }
 }
