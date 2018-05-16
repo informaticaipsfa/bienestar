@@ -1,7 +1,7 @@
 let lstBuzon = null;
 let militarActivo = null;
 let lstBuzonApoyo = null;
-
+let EstatusBusqueda = 0;
 let apoyoActivo = null;
 let CReembolso = {};
 let copia = null;
@@ -11,7 +11,7 @@ let opciones = {
     destroy: true,
     'paging': true,
     'lengthChange': true,
-    'searching': false,
+    'searching': true,
     'ordering': true,
     'info': false,
     'autoWidth': false,
@@ -141,15 +141,16 @@ function TipoBuzon(tipo ){
 * @param int
 * @return void
 */
-function listaBuzon(est) {
-
+function listaBuzon() {
+    est = EstatusBusqueda;
     //$("#cmbsucursal").select2();
+    $("#_cargando").show();
     $("#DistribucionApoyo").hide();
     $("#DistribucionReembolso").hide();
     posicionModificar = est;
     //Reembolso
     $("#lista").html('');
-    var url = Conn.URL + "wreembolso/listar/" + est;
+    var url = Conn.URL + "wreembolso/listar/" + est + "/" + $("#cmbsucursal option:selected").val();
     var promesa = CargarAPI({
         sURL: url,
         metodo: 'GET',
@@ -160,11 +161,12 @@ function listaBuzon(est) {
         if(lstBuzon != null) crearBuzon(est);
         $("#_htitulo").html(TipoBuzon(est));
         if(est > 3)$("#DistribucionReembolso").show();
+        $("#_cargando").hide();
     });
 
     //Apoyo
     $("#listaApoyo").html('');
-    var url2 = Conn.URL + "wapoyo/listar/" + est;
+    var url2 = Conn.URL + "wapoyo/listar/" + est + "/" + $("#cmbsucursal option:selected").val();
     var promesaApoyo = CargarAPI({
         sURL: url2,
         metodo: 'GET',
@@ -175,6 +177,7 @@ function listaBuzon(est) {
         if(lstBuzonApoyo != null) crearBuzonApoyo(est);
         $("#_htitulo").html(TipoBuzon(est));
         if(est > 3)$("#DistribucionApoyo").show();
+        
     });
 
 

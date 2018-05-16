@@ -350,12 +350,13 @@ function SeleccionarParroquia(valor){
 
 function buzon(est){
     CargarUrl("panelderecho","inc/buzon");
-    listaBuzon(est);
+    EstatusBusqueda = est;
+    //listaBuzon(est);
 }
 
 function ReporteEstadistica(){
     CargarUrl("panelderecho","inc/reporte");
-    listaBuzon(est);
+    //listaBuzon(est);
 }
 
 function msjRespuesta(texto) {
