@@ -63,7 +63,8 @@ function ConsultarReembolsoReporte(){
             v.institucion,
             v.cuenta,
             Util.ConvertirFechaHumana(v.fechaaprobado),
-            v.montoaprobado
+            //v.montoaprobado
+            numeral(parseFloat(v.montoaprobado)).format('0,0[.]00 $') //MODIFICADO 19JUL18
           ]
         ).draw(false);
       });
@@ -110,7 +111,50 @@ function GenerarReporte(){
           mont += parseFloat(value[7])
       } );
   };
+  //MODIFICADO 19JUL18
   var cabecera = `
+  <style>
+  .footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+
+    text-align: center;
+  }
+  </style>
+
+    <table width="100%">
+        <tr>
+            <td width="106" height="102"><img src="images/lg.png" width="106" height="100"></td>
+            <td width="288" style="font-size: 10px;">REPÚBLICA BOLIVARIANA DE VENEZUELA <br>
+                MINISTERIO DEL PODER POPULAR PARA LA DEFENSA<br>
+                VICEMINISTERIO DE SERVICIOS<br>
+                DIRECCIÓN GENERAL DE EMPRESAS Y SERVICIOS<br>
+                INSTITUTO DE PREVISIÓN SOCIAL DE LA FUERZA ARMADA<br>
+                GERECIA DE BIENESTAR Y SEGURIDAD
+          </td>
+            <td width="350" >
+          </td>
+            <td width="236">
+          </td>
+        </tr>
+    </table>
+    <br><br><p align="right">` + fecha + `</p><br>RELACION DE CASOS APROBADOS<br>
+    POR LA GERENCIA DE BIENESTAR SOCIAL NUMERO: __________<br><br>`;
+   var pie = `
+  <div class="footer">
+
+
+  QUINTERO MORALES JUAN MIGUEL
+
+  <center style="font-size: 10px;">“CHAVEZ VIVE LA PATRIA SIGUE”<br>
+  “INDEPENDENCIA Y PATRIA SOCIALISTA... “¡VIVIREMOS Y VENCEREMOS!</center>
+
+  </div>`;
+  //////
+
+  /*var cabecera = `
     <table width="100%">
         <tr>
             <td width="106" height="102"><img src="images/lg.png" width="106" height="100"></td>
@@ -134,7 +178,7 @@ function GenerarReporte(){
 
   <center style="font-size: 10px;">“CHAVEZ VIVE LA PATRIA SIGUE”<br>
   “INDEPENDENCIA Y PATRIA SOCIALISTA... “¡VIVIREMOS Y VENCEREMOS!</center>`;
-
+*/
   var html = `<center><div style="width: 1000px;">` + cabecera + `<table width="100%" border=1>` + tabla + `</table>` + pie + `</div></center>`;
   var ventana = window.open("", "_blank");
   ventana.document.write(html);
