@@ -150,6 +150,7 @@ function listaBuzon() {
     posicionModificar = est;
     //Reembolso
     $("#lista").html('');
+    console.log('Entrando.. ', Conn);
     var url = Conn.URL + "wreembolso/listar/" + est + "/" + $("#cmbsucursal option:selected").val();
     var promesa = CargarAPI({
         sURL: url,
@@ -162,7 +163,10 @@ function listaBuzon() {
         $("#_htitulo").html(TipoBuzon(est));
         if(est > 3)$("#DistribucionReembolso").show();
         $("#_cargando").hide();
+    }).catch( function (err) {
+      console.error(err)
     });
+
 
     //Apoyo
     $("#listaApoyo").html('');
@@ -178,7 +182,11 @@ function listaBuzon() {
         $("#_htitulo").html(TipoBuzon(est));
         if(est > 3)$("#DistribucionApoyo").show();
         
-    });
+    }).catch( function (err) {
+      console.error(err)
+    }
+
+    );
 
 
 }
