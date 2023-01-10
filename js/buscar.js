@@ -59,6 +59,8 @@ function ficha() {
         $("#lblgrado").text(militar.Grado.descripcion);
 
         $("#lblcedula").text(militar.Persona.DatoBasico.cedula);
+        $("#lblnombre").text(militar.Persona.DatoBasico.nombreprimero);
+        $("#lblapellido").text(militar.Persona.DatoBasico.apellidoprimero);
 
 
         var estcivil = Util.GenerarEstadoCivil(militar.Persona.DatoBasico.estadocivil, militar.Persona.DatoBasico.sexo);
