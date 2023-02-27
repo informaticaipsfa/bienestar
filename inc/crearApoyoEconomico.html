@@ -272,7 +272,8 @@
                                         <div class="col-md-6 col-sm-12">
                                             <label>Monto Total del Presupuesto:</label>
                                             <div class="input-group date" style="z-index: 1030;">
-                                                <input class="form-control " id="montofactura" required onblur="calcularSolicitado()" onkeypress="return Util.SoloNumero(event,this,true)">
+                                                <input class="form-control " id="montofactura" 
+                                                    required onblur="calcularSolicitado()" onkeypress="return Util.SoloNumero(event,this,true)">
                                                 <div class="input-group-addon">
                                                     <label>Bs.</label>
                                                 </div>
@@ -282,7 +283,8 @@
 
                                             <label>Monto a Cubrir por la Aseguradora:</label>
                                             <div class="input-group date" style="z-index: 1030;">
-                                                <input class="form-control" id="montoacubrir" required onblur="calcularSolicitado()" onkeypress="return Util.SoloNumero(event,this,true)">
+                                                <input class="form-control" id="montoacubrir" value="0.00"
+                                                required onblur="calcularSolicitado()" onkeypress="return Util.SoloNumero(event,this,true)">
                                                 <div class="input-group-addon">
                                                     <label>Bs.</label>
                                                 </div>
@@ -294,7 +296,7 @@
                                         <div class="col-md-6 col-sm-12">
                                             <label>Otros Aportes:</label>
                                             <div class="input-group date" style="z-index: 1030;">
-                                                <input class="form-control" id="montootroaporte" value="0"
+                                                <input class="form-control" id="montootroaporte"  value="0.00"
                                                 onclick="limpiarcaja()" onblur="calcularSolicitado()"
                                                 onkeypress="return Util.SoloNumero(event,this,true)" required>
                                                 <div class="input-group-addon">
