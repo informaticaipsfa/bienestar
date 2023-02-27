@@ -327,7 +327,7 @@ function verificarRechazo(num, esta, id) {
 * @return void
 */
 function aprobarReembolso(num, est, id) {
-    var url = Conn.URL + "wreembolso/estatus";
+    var url = Conn.URL + "wreembolso/estatusx";
 
 
     var datos = {
@@ -338,7 +338,7 @@ function aprobarReembolso(num, est, id) {
     };
     var promesa = CargarAPI({
         sURL: url,
-        metodo: 'PUT',
+        metodo: 'POST',
         valores: datos,
     });
     promesa.then(function (xhRequest) {
@@ -373,7 +373,7 @@ function obtenerPosicion(num){
 * @return void
 */
 function rechazarReembolso(num, est, id) {
-    var url = Conn.URL + "wreembolso/estatus";
+    var url = Conn.URL + "wreembolso/estatusx";
     //Object {object} Estatus
     var datos = {
       ID: id,
@@ -382,7 +382,7 @@ function rechazarReembolso(num, est, id) {
     };
     var promesa = CargarAPI({
         sURL: url,
-        metodo: 'PUT',
+        metodo: 'POST',
         valores: datos
     });
     promesa.then(function (xhRequest) {
@@ -708,10 +708,10 @@ function EnviarReembolso(OReembolso, observaciones){
   }
   wreembolso.Reembolso = OReembolso;
   wreembolso.posicion = obtenerPosicion($('#lblnumero').text());
-  var urlGuardar = Conn.URL + "wreembolso";
+  var urlGuardar = Conn.URL + "wreembolsox";
   var promesa = CargarAPI({
       sURL: urlGuardar,
-      metodo: 'PUT',
+      metodo: 'POST',
       valores: wreembolso,
   });
   promesa.then(function(xhRequest) {
@@ -832,7 +832,7 @@ function verificarRechazoApoyo(num, esta, id) {
 }
 
 function aprobarApoyo(num, est, id) {
-    var url = Conn.URL + "wapoyo/estatus";
+    var url = Conn.URL + "wapoyo/estatusx";
     var datos = {
       id: id,
       numero: num,
@@ -840,7 +840,7 @@ function aprobarApoyo(num, est, id) {
     };
     var promesa = CargarAPI({
         sURL: url,
-        metodo: 'PUT',
+        metodo: 'POST',
         valores: datos,
     });
     promesa.then(function (xhRequest) {
@@ -854,7 +854,7 @@ function aprobarApoyo(num, est, id) {
 }
 
 function rechazarApoyo(num, est, id) {
-    var url = Conn.URL + "wapoyo/estatus";
+    var url = Conn.URL + "wapoyo/estatusx";
     var datos = {
       ID: id,
       numero: num,
@@ -862,7 +862,7 @@ function rechazarApoyo(num, est, id) {
     };
     var promesa = CargarAPI({
         sURL: url,
-        metodo: 'PUT',
+        metodo: 'POST',
         valores: datos
     });
     promesa.then(function (xhRequest) {
@@ -1206,10 +1206,10 @@ function actualizarApoyo(est) {
 
     // console.log(JSON.stringify(datos));
 
-    var urlGuardar = Conn.URL + "wapoyo";
+    var urlGuardar = Conn.URL + "wapoyox";
     var request2 = CargarAPI({
         sURL: urlGuardar,
-        metodo: 'PUT',
+        metodo: 'POST',
         valores: datos,
     });
 
