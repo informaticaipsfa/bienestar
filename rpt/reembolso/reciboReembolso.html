@@ -189,6 +189,7 @@
                     "<td class='bordeado'></td><td class='bordeado'></td><td class='bordeado'>" +
                     "</td><td style=\"text-align: right\" class='bordeado'>"+
                     numeral(parseFloat(total)).format('0,0.00');+"</td></tr>";
+            $("#cuerpoconceptos").html(fila); //Agregado total a la fila
 
             $("#lblgrado").html(militar.Grado.descripcion);
             $("#lblcomponente").html(militar.Componente.descripcion);
@@ -250,6 +251,25 @@
 
             </tbody>
         </table>
+
+        <br><br>
+
+        <table class="tcontenedor junta" border=0>
+            <tbody>
+                <tr class="texto12 simple" style="height: 30px;">
+                    <td style="width:50%;" class="biz bde btop">
+                        FIRMA DEL AFILIADO:<BR><br>
+                        <b id="lblcedula"></b>
+                    </td>
+                    <td style="width:50%;" colspan="3" class="biz bde bajo btop">
+                        RECIBIDO POR: <br>
+                        SELLO: <b id="lblnombre"></b>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
         <div id="boton">
             <br>
             <input type="button" id="btnImprimir" value="Imprimir" onclick="imprimir()">
