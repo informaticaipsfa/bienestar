@@ -167,15 +167,29 @@
 
             var concep = militar.CIS.ServicioMedico.Programa.Reembolso[pos];
             var fila ="";
+            var total = 0;
             $.each(concep.Concepto,function () {
                 var bene = this.afiliado.split("-");
                 var paren = bene[1].split("(");
                 var tam = paren[1].length;
+
                 var mntformato = numeral(parseFloat(this.DatoFactura.monto)).format('0,0.00');
-                fila+= "<tr class='filaconcep'><td class='bordeado'>"+paren[1].substring(0,(tam-1))+"</td><td class='bordeado'>"+bene[0]+"</td><td class='bordeado'>"+paren[0]+"</td>" +
-                    "<td class='bordeado'>"+this.descripcion+"</td><td class='bordeado'>"+this.DatoFactura.numero+"</td><td class='bordeado'>"+Util.ConvertirFechaHumana(this.DatoFactura.fecha)+"</td><td style=\"text-align: right\" class='bordeado'>"+mntformato+"</td></tr>";
+                total += parseFloat(this.DatoFactura.monto);
+
+                fila+= "<tr class='filaconcep'><td class='bordeado'>"+paren[1].substring(0,(tam-1))+
+                    "</td><td class='bordeado'>"+bene[0]+"</td><td class='bordeado'>"+paren[0]+"</td>" +
+                    "<td class='bordeado'>"+this.descripcion+"</td><td class='bordeado'>"+
+                        this.DatoFactura.numero+"</td><td class='bordeado'>"+
+                        Util.ConvertirFechaHumana(this.DatoFactura.fecha)+
+                        "</td><td style=\"text-align: right\" class='bordeado'>"+mntformato+"</td></tr>";
             });
             $("#cuerpoconceptos").html(fila);
+
+            fila+= "<tr class='filaconcep'><td class='bordeado'></td><td class='bordeado'></td><td class='bordeado'></td>" +
+                    "<td class='bordeado'></td><td class='bordeado'></td><td class='bordeado'>" +
+                    "</td><td style=\"text-align: right\" class='bordeado'>"+
+                    numeral(parseFloat(total)).format('0,0.00');+"</td></tr>";
+
             $("#lblgrado").html(militar.Grado.descripcion);
             $("#lblcomponente").html(militar.Componente.descripcion);
         }
