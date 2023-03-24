@@ -484,12 +484,12 @@ function validaFechaFactura(n) {
     var ff = $("#fechafactura").val();
     var fecha2 = moment(ff, "DD-MM-YYYY");
     var dif = fecha1.diff(fecha2, 'days');
-    if (dif > n) {
-        $("#alerta_fecha").text("Fecha fuera de rango");
-        $("#alert_fecha").show();
-    } else {
-        $("#alert_fecha").hide();
-    }
+    // if (dif > n) {
+    //     $("#alerta_fecha").text("Fecha fuera de rango");
+    //     $("#alert_fecha").show();
+    // } else {
+    //     $("#alert_fecha").hide();
+    // }
 }
 
 function conviertEstatus(est) {
