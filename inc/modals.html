@@ -494,6 +494,91 @@
 </div>
 
 
+<!--Complemento de hospitalización e intervención quirúrgica -->
+<div class="modal fade" id="requisitosintervencion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="border-radius: 8px;border:2px #337ab7 solid; ">
+            <div class="modal-header" style="background-color:#337ab7;color:white;">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Requisitos</h4>
+            </div>
+            <div class="modal-body">
+                <div class="panel panel-primary">
+                    <!-- Default panel contents -->
+                    <!-- List group -->
+                    <ul class="list-group">
+
+
+                        <li class="list-group-item">
+                            Constancia de agotamiento de cobertura
+                            <div class="material-switch pull-right">
+                                <input id="chm10-1" name="chm10-1" value="10" class="mdl-requisitos10"
+                                       type="checkbox"/>
+                                <label for="chm10-1"
+                                       class="label-success"></label>
+                            </div>
+                        </li>
+
+
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary btnrequisitos" data-dismiss="modal"
+                        onclick="inactivarCheck('requisitosintervencion')" disabled="true">Continuar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Funerarios -->
+<div class="modal fade" id="requisitofunerario" tabindex="-1"
+     role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content"
+             style="border-radius: 8px;border:2px #337ab7 solid; ">
+            <div class="modal-header"
+                 style="background-color:#337ab7;color:white;">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Requisitos</h4>
+            </div>
+            <div class="modal-body">
+                <div class="panel panel-primary">
+                    <!-- Default panel contents -->
+                    <!-- List group -->
+                    <ul class="list-group">
+
+
+
+                        <li class="list-group-item">
+                            Acta de defuncion original
+                            <div class="material-switch pull-right">
+                                <input id="chm11-1" name="chm11-1" type="checkbox" class="mdl-requisitos11"/>
+                                <label for="chm11-1"  class="label-success"></label>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary btnrequisitos" data-dismiss="modal"
+                        onclick="inactivarCheck('requisitofunerario')" disabled="true">Continuar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" id="modCambiarClaveUsuario">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">

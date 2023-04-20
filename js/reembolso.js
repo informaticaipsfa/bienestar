@@ -35,6 +35,13 @@ $(function () {
     $(".mdl-requisitos9").on("change", function () {
         verificaCheckModal("requisitoslentes", "btnAgconcepto");
     });
+    $(".mdl-requisitos10").on("change", function () {
+        verificaCheckModal("requisitosintervencion", "btnAgconcepto");
+    });
+    $(".mdl-requisitos11").on("change", function () {
+        verificaCheckModal("requisitofunerario", "btnAgconcepto");
+    });
+
 
 
     llenarReembolso();
