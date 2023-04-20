@@ -92,6 +92,7 @@
     </div>
 
 </div><!-- /.modal -->
+
 <!-- MODAL DE REQUISITOS -->
 <div class="modal fade" id="requisitos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
@@ -162,7 +163,7 @@
 
 
 
-<!--Tratamiento psicopedagógico y geriátrico -->
+<!--Tratamiento odontologico-->
 <div class="modal fade" id="requisitostratamiento" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
@@ -181,7 +182,7 @@
                     <ul class="list-group">
 
                         <li class="list-group-item">
-                            Presupuesto
+                            Opinión de la Clínica Odontológica del IPSFA
                             <div class="material-switch pull-right">
                                 <input id="chm0-1" value="0" class="mdl-requisitos0"
                                        name="chm0-1" type="checkbox"/>
@@ -207,15 +208,15 @@
                                        class="label-success"></label>
                             </div>
                         </li>
-                        <li class="list-group-item">
-                            Opinión de la Clínica Odontológica del IPSFA
+                        <!-- <li class="list-group-item">
+                            
                             <div class="material-switch pull-right">
                                 <input id="chm0-4" class="mdl-requisitos0"
                                        name="chm0-4" value="4" type="checkbox"/>
                                 <label for="chm0-4"
                                        class="label-success"></label>
                             </div>
-                        </li>
+                        </li> -->
 
                     </ul>
                 </div>
@@ -229,6 +230,52 @@
         </div>
     </div>
 </div>
+
+
+
+<!--Tratamiento psicopedagógico -->
+<div class="modal fade" id="requisitospsicopedagogico" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content"
+             style="border-radius: 8px;border:2px #337ab7 solid; ">
+            <div class="modal-header" style="background-color:#337ab7;color:white;">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Requisitos</h4>
+            </div>
+            <div class="modal-body">
+                <div class="panel panel-primary">
+                    <!-- Default panel contents -->
+                    <!-- List group -->
+                    <ul class="list-group">
+
+                        <li class="list-group-item">
+                            Sin requisitos
+                            <div class="material-switch pull-right">
+                                <input id="chm13-1" value="13" class="mdl-requisitos13"
+                                       name="chm13-1" type="checkbox"/>
+                                <label for="chm13-1"
+                                       class="label-success"></label>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary btnrequisitos" data-dismiss="modal"
+                        onclick="inactivarCheck('requisitospsicopedagogico')" disabled="true">Continuar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <!--REQUISITOS CONSULTAS MEDICAS ETC-->
 <div class="modal fade" id="requisitosconsultas" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">

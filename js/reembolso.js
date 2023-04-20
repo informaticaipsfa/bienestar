@@ -13,7 +13,7 @@ $(function () {
     $(".mdl-requisitos0").on("change", function () {
         verificaCheckModal("requisitostratamiento", "btnAgconcepto");
     });
-
+    
     $(".mdl-requisitos2").on("change", function () {
         verificaCheckModal("requisitosconsultas", "btnAgconcepto");
     });
@@ -23,9 +23,7 @@ $(function () {
     $(".mdl-requisitos4").on("change", function () {
         verificaCheckModal("requisitosmedicos", "btnAgconcepto");
     });
-    $(".mdl-requisitos5").on("change", function () {
-        verificaCheckModal("requisitostratamiento", "btnAgconcepto");
-    });
+    
     $(".mdl-requisitos6").on("change", function () {
         verificaCheckModal("requisitosgeriatrico", "btnAgconcepto");
     });
@@ -44,7 +42,9 @@ $(function () {
     $(".mdl-requisitos12").on("change", function () {
         verificaCheckModal("requisitoshospitalizacion", "btnAgconcepto");
     });
-
+    $(".mdl-requisitos13").on("change", function () {
+        verificaCheckModal("requisitospsicopedagogico", "btnAgconcepto");
+    });
 
 
     llenarReembolso();
