@@ -41,6 +41,9 @@ $(function () {
     $(".mdl-requisitos11").on("change", function () {
         verificaCheckModal("requisitofunerario", "btnAgconcepto");
     });
+    $(".mdl-requisitos12").on("change", function () {
+        verificaCheckModal("requisitoshospitalizacion", "btnAgconcepto");
+    });
 
 
 
